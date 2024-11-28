@@ -10,6 +10,7 @@ import { Post } from "./models/postSchema.js";
 
 //route imports
 import authRoutes from "./routes/auth.js";
+import postRoutes from "./routes/posts.js";
 
 //.env
 dotenv.config();
@@ -22,7 +23,8 @@ app.use(express.json());
 app.use(cors({
     origin: "https://localhost:3000",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type']
+    allowedHeaders: ['Content-Type'],
+    credentials: true
 }));
 
 //server connection
@@ -35,8 +37,10 @@ mongoose.connect(process.env.MONGO_URI)
 const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
+    console.log("Connected to QualveDB!");
 });
 
 //middleware
 app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
 

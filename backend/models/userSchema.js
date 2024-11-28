@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const UserSchema = new mongoose.Schema({
     username: {
       type: String,
-      required: false,
+      required: true,
       unique: true
     },
     email: {
@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
       type: Number,
       required: false
     },
+    posts: [{ 
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post'
+    }],
     created_at: {
       type: Date,
       default: Date.now
@@ -32,4 +36,4 @@ const UserSchema = new mongoose.Schema({
 });
   
 // Create a model from the schema
-export const User = mongoose.model('users', UserSchema);
+export const User = mongoose.model('User', UserSchema);

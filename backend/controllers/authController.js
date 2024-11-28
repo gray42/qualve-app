@@ -26,7 +26,11 @@ export const register = async (req, res) => {
     await newUser.save();
 
     //sign token
-    const token = jwt.sign({_id: newUser._id, role: newUser.role}, JWT_SECRET, {expiresIn: '1h'});
+    const token = jwt.sign({_id: newUser._id, role: newUser.role}, process.env.JWT_SECRET, {expiresIn: '1h'});
+
+    //cookie
+    res.cookie("access_token", token, { httpOnly: true, expires: new Date(Date.now() + 2 * 3600000) });
+    res.status(200).send("User created!");
 };
 
 //login
@@ -47,5 +51,9 @@ export const login = async (req,res) => {
     }
 
     //sign token
-    const token = jwt.sign({_id: user._id, role: user.role, email: user.email}, JWT_SECRET, {expiresIn: '1h'});
+    const token = jwt.sign({_id: user._id, role: user.role, email: user.email}, process.env.JWT_SECRET, {expiresIn: '1h'});
+
+    //cookie
+    res.cookie("access_token", token, { httpOnly: true, expires: new Date(Date.now() + 2 * 3600000) });
+    res.status(200).json({message: "User logged in!", token: token});
 };

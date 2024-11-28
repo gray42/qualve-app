@@ -1,14 +1,22 @@
 import mongoose from "mongoose";
 
 const answerSchema = new mongoose.Schema({
-    user_id: {
+    author: {
       type: mongoose.Schema.Types.ObjectId, 
-      ref: 'users', 
+      ref: 'User', 
       required: false
     },
-    answer: {
+    body: {
       type: String,
       required: false
+    },
+    votes: {
+      type: Number,
+      default: 0
+    },
+    questionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post'
     },
     created_at: {
       type: Date,
@@ -18,16 +26,16 @@ const answerSchema = new mongoose.Schema({
 
 // Define a schema for a simple user
 const questionSchema = new mongoose.Schema({
-    user_id: {
+    author: {
       type: mongoose.Schema.Types.ObjectId, 
-      ref: 'users', 
-      required: false
+      ref: 'User', 
+      required: true
     },  
     title: {
       type: String,
       required: true
     },
-    description: {
+    body: {
       type: String,
       required: false
     },
@@ -36,7 +44,7 @@ const questionSchema = new mongoose.Schema({
       required: false,
       default: []
     },
-    upVotes: {
+    votes: {
       type: Number,
       default: 0
     },
@@ -44,6 +52,7 @@ const questionSchema = new mongoose.Schema({
       type: Number,
       default: 0
     },
+    answers: [answerSchema],
     views: {
       type: Number,
       default: 0
@@ -51,12 +60,10 @@ const questionSchema = new mongoose.Schema({
     created_at: {
       type: Date,
       default: Date.now
-    },
-
-    answers: [answerSchema],
-
-}, { timestamps: true });
+    }
+}, 
+{ timestamps: true });
   
 // Create a model from the schema
-export const Post = mongoose.model('questions', questionSchema);
+export const Post = mongoose.model('Post', questionSchema);
   

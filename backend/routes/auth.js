@@ -14,3 +14,5 @@ router.get("/admin", authenticateToken, (req, res) => {
 })
 
 export default router;
+
+//todo add protected route authtoken to methods
