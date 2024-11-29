@@ -3,10 +3,12 @@ import { Post } from "../models/postSchema.js";
 //get all questions
 export const getPost = async (req, res) => {
     try {
-        const posts = await Post.find().populate('author', 'username').sort({createdAt: -1});
+        const posts = await Post.find()
+            .populate("author", "username")
+            .sort({ createdAt: -1 });
         res.status(200).json(posts);
     } catch (error) {
-        res.status(500).send({message: 'error fetching posts', error});
+        res.status(500).send({ message: "error fetching posts", error });
     }
 };
 
@@ -14,14 +16,17 @@ export const getPost = async (req, res) => {
 export const getPostWithId = async (req, res) => {
     try {
         const questionId = req.params.id;
-        const question = await Post.findById(questionId).populate('author', 'username'); 
-        
+        const question = await Post.findById(questionId).populate(
+            "author",
+            "username"
+        );
+
         if (!question) {
-            return res.status(404).send({message: 'post not found'});
+            return res.status(404).send({ message: "post not found" });
         }
         res.status(200).json(question);
     } catch (error) {
-        res.status(500).send({message: 'server error', error});
+        res.status(500).send({ message: "server error", error });
     }
 };
 
@@ -29,11 +34,11 @@ export const getPostWithId = async (req, res) => {
 export const createPost = async (req, res) => {
     const { title } = req.body;
     try {
-        const newQuestion = new Post({ title, author: req.user._id});
+        const newQuestion = new Post({ title, author: req.user._id });
         await newQuestion.save();
         res.status(201).send("Post created!");
     } catch (error) {
-        console.error('Error during post-question:', error);
-        res.status(500).send({message: error.message});
+        console.error("Error during post-question:", error);
+        res.status(500).send({ message: error.message });
     }
 };

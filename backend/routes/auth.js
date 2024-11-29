@@ -10,9 +10,10 @@ router.post("/login", login);
 
 //authorized pathway
 router.get("/admin", authenticateToken, (req, res) => {
-    res.json({message: "You have been granted access to the admin page.", user: req.user});
-})
+	res.json({
+		message: "You have been granted access to the admin page.",
+		user: req.user,
+	});
+});
 
 export default router;
-
-//todo add protected route authtoken to methods

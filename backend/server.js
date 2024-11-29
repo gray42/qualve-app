@@ -4,10 +4,6 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
-//model imports
-import { User } from "./models/userSchema.js";
-import { Post } from "./models/postSchema.js";
-
 //route imports
 import authRoutes from "./routes/auth.js";
 import postRoutes from "./routes/posts.js";
@@ -20,18 +16,22 @@ const app = express();
 app.use(express.json());
 
 //cors
-app.use(cors({
-    origin: "https://localhost:3000",
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type'],
-    credentials: true
-}));
+app.use(
+    cors({
+        origin: "https://localhost:3000",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type"],
+        credentials: true,
+    })
+);
 
 //server connection
-mongoose.connect(process.env.MONGO_URI)
-.then().catch((err) => {
-    console.error("Could not connect to MongoDB", err);
-})  
+mongoose
+    .connect(process.env.MONGO_URI)
+    .then()
+    .catch((err) => {
+        console.error("Could not connect to MongoDB", err);
+    });
 
 //server start
 const port = process.env.PORT;
@@ -43,4 +43,3 @@ app.listen(port, () => {
 //middleware
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
-
