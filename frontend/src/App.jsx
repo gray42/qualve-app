@@ -1,5 +1,12 @@
+import Navbar from "./components/common/Navbar";
+
 function App() {
-	return <>Hello World!</>;
+	return (
+		<>
+			<Navbar />
+			<div className="bg-blue-600">Hello World!</div>
+		</>
+	);
 }
 
 export default App;
