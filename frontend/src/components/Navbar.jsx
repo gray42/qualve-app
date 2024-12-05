@@ -1,12 +1,17 @@
+import Profile from "./Profile";
+import Searchbar from "./Searchbar";
+
 export default function Navbar() {
   return (
     <>
-      <nav className="bg-slate-400">
-        <div className="bg-slate-300">Navbar</div>
+      <div className="flex items-center justify-between bg-white px-4 py-2 drop-shadow-md">
+        <h1 className="font-roboto text-xl text-black">Qualve</h1>
         {/* navbar component */}
         {/* searchbar component component */}
+        <Searchbar />
         {/* profile component */}
-      </nav>
+        <Profile />
+      </div>
     </>
   );
 }
