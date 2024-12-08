@@ -10,7 +10,7 @@ function App() {
         <Route path="/" element={<Home />} />
       </Routes>
 
-      <div className="bg-blue-600">Hello World!</div>
+      <div className=""></div>
     </>
   );
 }

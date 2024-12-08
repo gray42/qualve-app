@@ -4,12 +4,9 @@ import Searchbar from "./Searchbar";
 export default function Navbar() {
   return (
     <>
-      <nav className="flex items-center justify-between bg-white px-4 py-2 drop-shadow-md">
-        <h1 className="font-roboto text-2xl text-black">Qualve</h1>
-        {/* navbar component */}
-        {/* searchbar component component */}
+      <nav className="relative flex items-center justify-between bg-white px-4 py-2 drop-shadow-md">
+        <h1 className="font-lato text-2xl text-black">Qualve</h1>
         <Searchbar />
-        {/* profile component */}
         <Profile />
       </nav>
     </>
