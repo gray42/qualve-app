@@ -23,18 +23,18 @@ export default function Profile() {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [isOpen]);
-  //need a useState() that closes dropdown when click outside
+
   return (
     <div ref={dropdownRef} className="flex cursor-pointer items-center gap-3">
       <div
         onClick={toggleDropdown}
-        className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 font-medium text-slate-950"
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 font-medium text-slate-950 ring-black"
       >
         {getInitials("Gavin Traylor")}
       </div>
 
       {isOpen && (
-        <div className="absolute right-0 top-[65px] mr-2 rounded-lg bg-slate-100 ring-1 ring-black ring-opacity-5">
+        <div className="absolute right-0 top-[65px] mr-2 rounded-lg bg-slate-100">
           <ul className="py-1 pl-4 pr-16">
             <li className="cursor-pointer py-2 text-black">Profile</li>
             <li className="cursor-pointer py-2 text-black">Your Questions</li>
