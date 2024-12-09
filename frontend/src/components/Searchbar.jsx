@@ -6,7 +6,7 @@ export default function Searchbar() {
       <input
         type="text"
         placeholder="Search"
-        className="w-full bg-transparent outline-none"
+        className="text-md w-full bg-transparent outline-none"
       />
 
       <FaSearch />

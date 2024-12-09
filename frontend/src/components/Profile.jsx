@@ -34,11 +34,17 @@ export default function Profile() {
       </div>
 
       {isOpen && (
-        <div className="absolute right-0 top-[65px] mr-2 rounded-lg bg-slate-100">
-          <ul className="py-1 pl-4 pr-16">
-            <li className="cursor-pointer py-2 text-black">Profile</li>
-            <li className="cursor-pointer py-2 text-black">Your Questions</li>
-            <li className="cursor-pointer py-2 text-black">Notifications</li>
+        <div className="absolute right-0 top-[65px] rounded-lg bg-slate-100">
+          <ul className="my-2 ml-2 mr-8">
+            <li className="cursor-pointer rounded-full px-2 py-2 text-black hover:bg-slate-200">
+              Profile
+            </li>
+            <li className="cursor-pointer rounded-full px-2 py-2 pr-4 text-black hover:bg-slate-200">
+              Your Questions
+            </li>
+            <li className="cursor-pointer rounded-full px-2 py-2 text-black hover:bg-slate-200">
+              Notifications
+            </li>
           </ul>
         </div>
       )}
