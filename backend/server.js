@@ -16,13 +16,7 @@ const app = express();
 app.use(express.json());
 
 //cors
-app.use(
-	cors({
-		origin: "https://localhost:5173",
-		methods: ["GET", "POST", "PUT", "DELETE"],
-		credentials: true,
-	})
-);
+app.use(cors());
 
 //server connection
 mongoose

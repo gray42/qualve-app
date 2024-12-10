@@ -20,7 +20,7 @@ export default function PostList() {
   return (
     <div className="">
       {posts.map((post) => (
-        <PostCard key={post._id} post={post} />
+        <PostCard key={post._id} title={post.title} />
       ))}
     </div>
   );
