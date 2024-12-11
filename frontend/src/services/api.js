@@ -1,6 +1,6 @@
 import axios from "axios";
 
-//const API_URL = "http://localhost:3000/api";
+//TODO: make axios instance, configure .env, look at best frontend + backend config
 
 export const fetchPosts = async () => {
   try {
