@@ -24,8 +24,9 @@ export default function PostList() {
           key={post._id}
           title={post.title}
           author={post.author?.username || "Guest"}
-          views={post.views}
+          votes={post.votes}
           time={post.createdAt}
+          answers={post.answers.length}
         />
       ))}
     </div>
