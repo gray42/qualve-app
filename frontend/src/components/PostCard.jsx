@@ -1,5 +1,7 @@
 import TimeAgo from "../utils/TimeAgo";
 
+//TODOS: finish up card layout - add individual question view page - home page
+
 // eslint-disable-next-line react/prop-types
 export default function PostCard({ title, author, votes, time, answers }) {
   return (
