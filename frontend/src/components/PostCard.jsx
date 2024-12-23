@@ -8,6 +8,7 @@ export default function PostCard({ title, author, votes, time, answers }) {
     <div className="m-4 mx-auto w-[50%] rounded-lg bg-white p-6 drop-shadow-md hover:bg-gray-200">
       {/* Post Header */}
       <div className="flex items-center gap-4">
+        {/* may not need profile icon*/}
         <img
           className="h-12 w-12 rounded-full object-cover"
           src="https://via.placeholder.com/150"

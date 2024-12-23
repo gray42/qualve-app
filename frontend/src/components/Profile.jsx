@@ -1,6 +1,8 @@
 import { getInitials } from "../utils/helper";
 import { useEffect, useState, useRef } from "react";
 
+//TODOS: fix hover background layout
+
 export default function Profile() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
