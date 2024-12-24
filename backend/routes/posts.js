@@ -15,7 +15,7 @@ const router = express.Router();
 router.get("/", getPost);
 
 //show a question (:id)
-router.get("/:id", authenticateToken, getPostWithId);
+router.get("/:id", getPostWithId);
 
 //post a question
 router.post("/", authenticateToken, createPost);

@@ -1,14 +1,19 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import NavBar from "./components/Navbar";
+import HomePage from "./pages/HomePage";
+import PostPage from "./pages/PostPage";
+import NavBar from "./components/nav/Navbar";
+import PostProvider from "./context/PostContext";
 
 function App() {
   return (
     <>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
+      <PostProvider>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/post/:id" element={<PostPage />} />
+        </Routes>
+      </PostProvider>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { getInitials } from "../utils/helper";
+import { getInitials } from "../../utils/helper";
 import { useEffect, useState, useRef } from "react";
 
 //TODOS: fix hover background layout

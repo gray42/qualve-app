@@ -1,4 +1,4 @@
-import TimeAgo from "../utils/TimeAgo";
+import TimeAgo from "../../utils/TimeAgo";
 
 //TODOS: finish up card layout - add individual question view page - home page
 
@@ -9,11 +9,7 @@ export default function PostCard({ title, author, votes, time, answers }) {
       {/* Post Header */}
       <div className="flex items-center gap-4">
         {/* may not need profile icon*/}
-        <img
-          className="h-12 w-12 rounded-full object-cover"
-          src="https://via.placeholder.com/150"
-          alt="User Avatar"
-        />
+
         <div>
           <h2 className="text-lg font-bold">{title}</h2>
           <p className="text-sm text-gray-500">

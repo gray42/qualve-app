@@ -18,3 +18,14 @@ export const fetchPosts = async () => {
     throw error;
   }
 };
+
+//new function to fetch post by id
+export const fetchPostById = async (postId) => {
+  try {
+    const response = await apiClient.get(`/posts/${postId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error occurred fetching data", error);
+    throw error;
+  }
+};
