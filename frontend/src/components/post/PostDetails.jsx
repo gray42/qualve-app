@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 
+//post details component to display individual post
+
 export default function PostDetails({ post }) {
   if (!post) return <p>Post not available.</p>;
 
