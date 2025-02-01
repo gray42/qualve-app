@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { fetchPosts, fetchPostById } from "../services/api";
 
-//TODO: fix context for posts
+//TODO: fix context for posts - look into book for reference
 
 // Create a context
 const PostContext = createContext();
