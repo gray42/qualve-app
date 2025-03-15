@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 
 //cors
-app.use(cors());
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 
 //server connection
 mongoose
