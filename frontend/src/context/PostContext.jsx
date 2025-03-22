@@ -6,6 +6,7 @@ import { getPosts, getPostsById } from "../services/api";
 // Create a context
 const PostContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export default function PostProvider({ children }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,12 +30,13 @@ export default function PostProvider({ children }) {
   const fetchPostById = async (postId) => {
     try {
       setLoading(true);
-      setError(null)
+      setError(null);
       const data = await getPostsById(postId);
       setSelectedPost(data);
     } catch (error) {
       setError(error);
       console.error("Error loading posts", error);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -45,20 +47,21 @@ export default function PostProvider({ children }) {
   }, []);
 
   const value = {
-    posts, loading, error, fetchPosts, fetchPostById
+    posts,
+    loading,
+    error,
+    fetchPosts,
+    fetchPostById,
+    selectedPost,
   };
 
-  return (
-    <PostContext.Provider value={value}>
-      {children}
-    </PostContext.Provider>
-  );
+  return <PostContext.Provider value={value}>{children}</PostContext.Provider>;
 }
 
 export function usePosts() {
   const context = useContext(PostContext);
   if (!context) {
-    throw new Error('usePosts has to be used inside PostProvider');
+    throw new Error("usePosts must be used within a PostProvider");
   }
   return context;
 }

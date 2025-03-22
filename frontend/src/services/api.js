@@ -14,8 +14,8 @@ const api = axios.create({
 //backend calls
 export const getPosts = async () => {
   try {
-    const { response } = await api.get("/api/posts");
-    return response.data;
+    const { data } = await api.get("/api/posts");
+    return data;
   } catch (error) {
     console.error("Error occurred fetching data", error);
     throw error;
@@ -25,8 +25,9 @@ export const getPosts = async () => {
 //new function to fetch post by id
 export const getPostsById = async (postId) => {
   try {
-    const { response } = await api.get(`/posts/${postId}`);
-    return response.data;
+    const { data } = await api.get(`/api/posts/${postId}`);
+    console.log(data);
+    return data;
   } catch (error) {
     console.error("Error occurred fetching data", error);
     throw error;

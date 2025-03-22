@@ -1,48 +1,40 @@
 import PropTypes from "prop-types";
-import { usePosts } from '../../context/PostContext';
+import TimeAgo from "../../utils/TimeAgo";
 
 //post details component to display individual post
 
-export function PostDetails() {
-  const { postId } = useParams();
-  const { loading, error, fetchPostById } = usePosts();
-  const [post, setPost] = useState(null);
+export default function PostDetails({ post }) {
+  if (!post) {
+    return <div className="text-center text-gray-600">Post not found...</div>;
+  }
 
-  useEffect (() => {
-    const fetchPost = async () => {
-      try {
-        const data = await fetchPostById(postId);
-        setPost(data);
-      } catch (error) {
-        console.error('Error fetching post:', error);
-      }
-    }
-    fetchPost();
-  }, [postId]);
-
-  if (loading) {return <div>Loading...</div>};
-  if (!post) {return <div>Post not found...</div>};
+  PostDetails.propTypes = {
+    post: PropTypes.shape({
+      title: PropTypes.string,
+      author: PropTypes.shape({
+        username: PropTypes.string,
+      }),
+      createdAt: PropTypes.string,
+    }),
+  };
 
   return (
     //make the formatting better (MVP as of now)
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="font-lato text-3xl text-black">{post.title}</h1>
-      <p>{post.content}</p>
-      <p>
-        <strong>Author:</strong> {post.author}
-      </p>
-      <p>
-        <strong>Published:</strong> {post.date}
-      </p>
+    <div className="m-4 mx-auto w-[50%] rounded-lg bg-white p-6 drop-shadow-md">
+      <h1 className="mb-4 text-3xl font-semibold text-gray-900">
+        {post.title}
+      </h1>
+      {/* <p>{post.content}</p> */}
+      <div className="space-y-2 text-gray-700">
+        <p>
+          <strong className="text-gray-900">Author:</strong>{" "}
+          {post.author?.username}
+        </p>
+        <p>
+          <strong className="text-gray-900">Published:</strong>{" "}
+          <TimeAgo createdAt={post.createdAt} />
+        </p>
+      </div>
     </div>
   );
 }
-
-PostDetails.propTypes = {
-  post: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-  }).isRequired,
-};

@@ -7,15 +7,17 @@ export default function PostList({ posts }) {
     // map through the posts array and render a PostCard component for each post with an anchor tag that links to the post's unique page
     <div className="">
       {posts.map((post) => (
-        <Link key={post._id} to={`/post/${post._id}`}>
-          <PostCard
-            title={post.title}
-            author={post.author?.username || "Guest"}
-            votes={post.votes}
-            time={post.createdAt}
-            answers={post.answers.length}
-          />
-        </Link>
+        <div key={post._id} className="mx-auto w-[50%]">
+          <Link to={`/post/${post._id}`} className="block w-full">
+            <PostCard
+              title={post.title}
+              author={post.author?.username || "Guest"}
+              votes={post.votes}
+              time={post.createdAt}
+              answers={post.answers.length}
+            />
+          </Link>
+        </div>
       ))}
     </div>
   );
