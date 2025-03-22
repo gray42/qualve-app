@@ -4,7 +4,7 @@ import axios from "axios";
 //const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 //axios instance
-const apiClient = axios.create({
+const api = axios.create({
   baseURL: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
@@ -12,10 +12,10 @@ const apiClient = axios.create({
 });
 
 //backend calls
-export const fetchPosts = async () => {
+export const getPosts = async () => {
   try {
-    const { data } = await apiClient.get("/api/posts");
-    return data;
+    const { response } = await api.get("/api/posts");
+    return response.data;
   } catch (error) {
     console.error("Error occurred fetching data", error);
     throw error;
@@ -23,10 +23,10 @@ export const fetchPosts = async () => {
 };
 
 //new function to fetch post by id
-export const fetchPostById = async (postId) => {
+export const getPostsById = async (postId) => {
   try {
-    const { data } = await apiClient.get(`/posts/${postId}`);
-    return data;
+    const { response } = await api.get(`/posts/${postId}`);
+    return response.data;
   } catch (error) {
     console.error("Error occurred fetching data", error);
     throw error;

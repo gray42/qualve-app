@@ -1,13 +1,12 @@
 import PostList from "../components/post/PostList";
 import { useEffect } from "react";
-import { usePostContext } from "../context/PostContext";
+import { usePosts } from "../context/PostContext";
 
 export default function Home() {
-  const { posts, getPosts } = usePostContext();
+  const { posts, loading, error } = usePosts();
 
-  useEffect(() => {
-    getPosts();
-  }, [getPosts]);
+  if (loading) {return <div>Loading...</div>};
+  if (error) {return <div>Error: {error}</div>};
 
   return (
     <div className="bg-white">

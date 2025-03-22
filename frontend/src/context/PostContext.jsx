@@ -1,46 +1,64 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { fetchPosts, fetchPostById } from "../services/api";
+import { getPosts, getPostsById } from "../services/api";
 
 //TODO: fix context for posts - look into book for reference
 
 // Create a context
 const PostContext = createContext();
 
-// Create a provider
-export const usePostContext = () => useContext(PostContext);
-
 export default function PostProvider({ children }) {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
 
-  const getPosts = async () => {
+  const fetchPosts = async () => {
     try {
-      const fetchedPosts = await fetchPosts();
-      setPosts(fetchedPosts);
+      setLoading(true);
+      setError(null);
+      const data = await getPosts();
+      setPosts(data);
     } catch (error) {
+      setError(error);
       console.error("Error loading posts", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const getPostById = async (postId) => {
+  const fetchPostById = async (postId) => {
     try {
-      const fetchedPost = await fetchPostById(postId);
-      console.log("Fetched post:", fetchedPost);
-      setSelectedPost(fetchedPost);
+      setLoading(true);
+      setError(null)
+      const data = await getPostsById(postId);
+      setSelectedPost(data);
     } catch (error) {
+      setError(error);
       console.error("Error loading posts", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    getPosts();
+    fetchPosts();
   }, []);
 
+  const value = {
+    posts, loading, error, fetchPosts, fetchPostById
+  };
+
   return (
-    <PostContext.Provider
-      value={{ posts, selectedPost, getPosts, getPostById }}
-    >
+    <PostContext.Provider value={value}>
       {children}
     </PostContext.Provider>
   );
+}
+
+export function usePosts() {
+  const context = useContext(PostContext);
+  if (!context) {
+    throw new Error('usePosts has to be used inside PostProvider');
+  }
+  return context;
 }
