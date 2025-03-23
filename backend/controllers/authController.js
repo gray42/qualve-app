@@ -33,8 +33,7 @@ export const register = async (req, res) => {
 	//sign token
 	const token = jwt.sign(
 		{ _id: newUser._id, role: newUser.role },
-		process.env.JWT_SECRET,
-		{ expiresIn: "1h" }
+		process.env.JWT_SECRET
 	);
 
 	//cookie
@@ -65,8 +64,7 @@ export const login = async (req, res) => {
 	//sign token
 	const token = jwt.sign(
 		{ _id: user._id, role: user.role, email: user.email },
-		process.env.JWT_SECRET,
-		{ expiresIn: "1h" }
+		process.env.JWT_SECRET
 	);
 
 	//cookie

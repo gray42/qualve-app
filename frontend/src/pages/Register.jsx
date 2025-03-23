@@ -31,46 +31,74 @@ export default function Register() {
   };
 
   return (
-    <>
-      <h1>Register</h1>
+    <div className="mx-auto my-10 max-w-md rounded-lg border border-gray-300 bg-white p-6 shadow-lg">
+      <h1 className="mb-4 text-left text-xl text-indigo-900">Qualve</h1>
+      <h2 className="mb-6 text-center text-2xl font-bold">Register</h2>
 
-      <form onSubmit={registerUser}>
-        <label>Username</label>
+      <form onSubmit={registerUser} className="space-y-4">
+        <label className="block text-sm font-medium text-gray-700">
+          Username
+        </label>
         <input
           type="text"
           name="username"
           value={userData.username}
           onChange={handleChange}
           placeholder="Enter a username..."
+          className="sm:text mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+          required
         />
-        <label>Email</label>
+        <label className="block text-sm font-medium text-gray-700">Email</label>
         <input
           type="text"
           name="email"
           value={userData.email}
           onChange={handleChange}
           placeholder="Enter an email..."
+          className="sm:text mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+          required
         />
-        <label>Password</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Password
+        </label>
         <input
           type="text"
           name="password"
           value={userData.password}
           onChange={handleChange}
           placeholder="Enter a password..."
+          className="sm:text mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+          required
         />
 
         {/* Add a dropdown for the role */}
-        <label>Role</label>
-        <select name="role" value={userData.role} onChange={handleChange}>
+        <label className="block text-sm font-medium text-gray-700">Role</label>
+        <select
+          className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          name="role"
+          value={userData.role}
+          onChange={handleChange}
+          required
+        >
           <option value="tutor">Tutor</option>
           <option value="learner">Learner</option>
         </select>
 
-        <label>Age</label>
-        <input type="number" name="age" placeholder="Enter your age..." />
-        <button type="submit">Register</button>
+        <label className="block text-sm font-medium text-gray-700">Age</label>
+        <input
+          type="number"
+          name="age"
+          placeholder="Enter your age..."
+          className="sm:text mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+          required
+        />
+        <button
+          className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          type="submit"
+        >
+          Register
+        </button>
       </form>
-    </>
+    </div>
   );
 }
