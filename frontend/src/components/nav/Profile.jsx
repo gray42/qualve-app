@@ -1,5 +1,6 @@
 import { getInitials } from "../../utils/helper";
 import { useEffect, useState, useRef } from "react";
+import Logout from "./Logout";
 
 //TODOS: fix hover background layout
 
@@ -47,6 +48,7 @@ export default function Profile() {
             <li className="cursor-pointer rounded-full px-2 py-2 text-black hover:bg-slate-200">
               Notifications
             </li>
+            <Logout />
           </ul>
         </div>
       )}

@@ -33,3 +33,55 @@ export const getPostsById = async (postId) => {
     throw error;
   }
 };
+
+//user calls
+
+export const getUser = async () => {
+  try {
+    const { data } = await api.get("/api/auth/user", { withCredentials: true });
+    return data;
+  } catch (error) {
+    console.error("User not authenticated", error);
+    throw error;
+  }
+};
+
+export const logUserIn = async (credentials) => {
+  try {
+    const { data } = await api.post("/api/auth/login", credentials, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error logging in user", error);
+    throw error;
+  }
+};
+
+export const signUserUp = async (credentials) => {
+  try {
+    const { data } = await api.post("/api/auth/register", credentials, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error signing user up", error);
+    throw error;
+  }
+};
+
+export const logUserOut = async () => {
+  try {
+    const { data } = await api.post(
+      "/api/auth/logout",
+      {},
+      {
+        withCredentials: true,
+      },
+    );
+    return data;
+  } catch (error) {
+    console.error("Could not log user out", error);
+    throw error;
+  }
+};

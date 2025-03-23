@@ -1,5 +1,6 @@
 //dependencies
 import express from "express";
+import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -17,6 +18,9 @@ app.use(express.json());
 
 //cors
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+
+//cookie parser
+app.use(cookieParser());
 
 //server connection
 mongoose
