@@ -1,4 +1,5 @@
 import { Post } from "../models/postSchema.js";
+import { User } from "../models/userSchema.js";
 
 //POST /:id/answer (add answer to question)
 export const addAnswer = async (req, res) => {
@@ -8,9 +9,11 @@ export const addAnswer = async (req, res) => {
 		if (!post) {
 			return res.status(404).json({ message: "Question not found." });
 		}
+
 		const answer = {
 			author: req.user._id,
 			body: req.body.answer,
+			username: req.user.username,
 			createdAt: new Date(),
 		};
 		post.answers.push(answer);

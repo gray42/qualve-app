@@ -45,6 +45,9 @@ export default function PostPage() {
         {selectedPost.answers.map((answer, index) => (
           <div key={index} className="mt-4 rounded-md border bg-gray-100 p-4">
             <p>{answer.body}</p>
+            <p className="text-sm text-gray-500">
+              Answered by: {answer.username || "unknown"}
+            </p>
           </div>
         ))}
         {/* comments section */}

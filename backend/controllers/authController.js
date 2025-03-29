@@ -32,7 +32,7 @@ export const register = async (req, res) => {
 
 	//sign token
 	const token = jwt.sign(
-		{ _id: newUser._id, role: newUser.role },
+		{ _id: newUser._id, role: newUser.role, username: newUser.username },
 		process.env.JWT_SECRET
 	);
 
@@ -63,7 +63,12 @@ export const login = async (req, res) => {
 
 	//sign token
 	const token = jwt.sign(
-		{ _id: user._id, role: user.role, email: user.email },
+		{
+			_id: user._id,
+			role: user.role,
+			email: user.email,
+			username: user.username,
+		},
 		process.env.JWT_SECRET
 	);
 
