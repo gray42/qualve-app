@@ -6,6 +6,7 @@ import PostProvider from "./context/PostContext";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserProvider from "./context/UserContext";
+import PostQuestion from "./pages/PostQuestion";
 
 //need to wrap post provider outside with BrowserRouter?
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/post/:postId" element={<PostPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/post" element={<PostQuestion />} />
           </Routes>
         </PostProvider>
       </UserProvider>

@@ -30,6 +30,10 @@ const questionSchema = new mongoose.Schema(
 			ref: "User",
 			required: true,
 		},
+		username: {
+			type: String,
+			required: false,
+		},
 		title: {
 			type: String,
 			required: true,

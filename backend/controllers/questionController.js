@@ -34,7 +34,11 @@ export const getPostWithId = async (req, res) => {
 export const createPost = async (req, res) => {
 	const { title } = req.body;
 	try {
-		const newQuestion = new Post({ title, author: req.user._id });
+		const newQuestion = new Post({
+			title,
+			author: req.user._id,
+			username: req.user.username,
+		});
 		await newQuestion.save();
 		res.status(201).json("Post created!");
 	} catch (error) {
