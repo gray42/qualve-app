@@ -18,6 +18,7 @@ export default function PostPage() {
     try {
       if (answer.trim()) {
         await addAnswerToPost(postId, answer);
+        await fetchPostById(postId);
         setAnswer("");
       }
     } catch (error) {
@@ -37,25 +38,34 @@ export default function PostPage() {
   }
 
   return (
-    <div className="bg-white">
-      <PostDetails post={selectedPost} />
-      {/* comments section */}
-      <div className="mt-4">
-        <h2>Add Answer</h2>
-        <form onSubmit={handleSubmit} className="mt-2 space-y-4">
-          <textarea
-            rows="4"
-            placeholder="Write answer here..."
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-          />
-          <button
-            className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            type="submit"
-          >
-            Submit Answer
-          </button>
-        </form>
+    <div className="min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-4xl rounded-lg bg-white p-6 shadow-md">
+        <PostDetails post={selectedPost} />
+        <h3>Answer:</h3>
+        {selectedPost.answers.map((answer, index) => (
+          <div key={index} className="mt-4 rounded-md border bg-gray-100 p-4">
+            <p>{answer.body}</p>
+          </div>
+        ))}
+        {/* comments section */}
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold text-gray-800">Add Answer</h2>
+          <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+            <textarea
+              rows="4"
+              placeholder="Write answer here..."
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            />
+            <button
+              className="w-full rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              type="submit"
+            >
+              Submit Answer
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
