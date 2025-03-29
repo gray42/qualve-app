@@ -1,19 +1,29 @@
 import PostDetails from "../components/post/PostDetails";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { usePosts } from "../context/PostContext";
 
 export default function PostPage() {
-  // get the postId from the URL
   const { postId } = useParams();
-  // Get logged-in user
-  //const { user } = useUser();
-  // get the selected post and the function to get a post by id from the context
-  const { selectedPost, fetchPostById, loading, error } = usePosts();
+  const { selectedPost, fetchPostById, loading, error, addAnswerToPost } =
+    usePosts();
+  const [answer, setAnswer] = useState("");
 
   useEffect(() => {
     fetchPostById(postId);
   }, [postId]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (answer.trim()) {
+        await addAnswerToPost(postId, answer);
+        setAnswer("");
+      }
+    } catch (error) {
+      console.error("Error submitting answer", error);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -30,9 +40,9 @@ export default function PostPage() {
     <div className="bg-white">
       <PostDetails post={selectedPost} />
       {/* comments section */}
-      {/* <div className="mt-4">
+      <div className="mt-4">
         <h2>Add Answer</h2>
-        <form onSubmit={handleAddAnswer}>
+        <form onSubmit={handleSubmit} className="mt-2 space-y-4">
           <textarea
             rows="4"
             placeholder="Write answer here..."
@@ -46,7 +56,7 @@ export default function PostPage() {
             Submit Answer
           </button>
         </form>
-      </div> */}
+      </div>
     </div>
   );
 }

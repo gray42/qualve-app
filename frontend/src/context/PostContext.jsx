@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { getPosts, getPostsById } from "../services/api";
+import { getPosts, getPostsById, addAnswer } from "../services/api";
 
 //TODO: fix context for posts - look into book for reference
 
@@ -42,6 +42,18 @@ export default function PostProvider({ children }) {
     }
   };
 
+  const addAnswerToPost = async (postId, answer) => {
+    try {
+      const updatedPost = await addAnswer(postId, answer);
+      setSelectedPost((prevPost) =>
+        prevPost && prevPost.id === postId ? updatedPost : prevPost,
+      );
+    } catch (error) {
+      setError(error);
+      console.error("Error adding answer to post", error);
+    }
+  };
+
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -52,6 +64,7 @@ export default function PostProvider({ children }) {
     error,
     fetchPosts,
     fetchPostById,
+    addAnswerToPost,
     selectedPost,
   };
 
