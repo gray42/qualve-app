@@ -32,15 +32,14 @@ export const getPostWithId = async (req, res) => {
 
 //post a question
 export const createPost = async (req, res) => {
-	const { title } = req.body;
 	try {
 		const newQuestion = new Post({
-			title,
+			title: req.body.question,
 			author: req.user._id,
 			username: req.user.username,
 		});
 		await newQuestion.save();
-		res.status(201).json("Post created!");
+		res.status(201).json(newQuestion);
 	} catch (error) {
 		console.error("Error during post-question:", error);
 		res.status(500).json({ message: error.message });

@@ -11,7 +11,7 @@ export default function PostList({ posts }) {
           <Link to={`/post/${post._id}`} className="block w-full">
             <PostCard
               title={post.title}
-              author={post.author?.username || "Guest"}
+              author={post.username || "Guest"}
               votes={post.votes}
               time={post.createdAt}
               answers={post.answers.length}
@@ -28,9 +28,7 @@ PostList.propTypes = {
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      author: PropTypes.shape({
-        username: PropTypes.string,
-      }),
+      username: PropTypes.string,
       votes: PropTypes.number.isRequired,
       createdAt: PropTypes.string.isRequired,
       answers: PropTypes.array.isRequired,

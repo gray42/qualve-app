@@ -34,6 +34,22 @@ export const getPostsById = async (postId) => {
   }
 };
 
+export const addQuestion = async (question) => {
+  try {
+    const { data } = await api.post(
+      `/api/posts`,
+      { question: question },
+      {
+        withCredentials: true,
+      },
+    );
+    return data;
+  } catch (error) {
+    console.error("Error occurred adding question", error);
+    throw error;
+  }
+};
+
 export const addAnswer = async (postId, answer) => {
   try {
     const { data } = await api.post(

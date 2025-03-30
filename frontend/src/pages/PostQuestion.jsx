@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function PostPage() {
-  const { addQuestion } = usePosts();
+  const { addQuestionToPage } = usePosts();
   const [question, setQuestion] = useState("");
   const navigate = useNavigate();
 
@@ -11,7 +11,7 @@ export default function PostPage() {
     e.preventDefault();
     try {
       if (question.trim()) {
-        await addQuestion(question);
+        await addQuestionToPage(question);
         navigate("/");
       }
     } catch (error) {

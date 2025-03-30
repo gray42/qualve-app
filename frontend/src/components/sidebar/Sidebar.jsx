@@ -1,8 +1,12 @@
+import QuestionButton from "./QuestionButton";
+
 export default function Sidebar() {
   return (
-    <div className="w-1/4 bg-gray-800 p-4 text-white">
+    <div className="w-1/4 bg-gray-300 p-4 text-gray-800">
       <h2 className="text-xl font-bold">Sidebar</h2>
-      <p className="mt-2">Some sidebar content</p>
+      <p className="mt-2">What is on your mind?</p>
+      <QuestionButton />
+
       <ul>
         <li className="mb-2">
           <a href="#link1" className="text-blue-500 hover:underline">
