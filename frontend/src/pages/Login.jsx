@@ -21,6 +21,7 @@ export default function Login() {
     try {
       await login(userData);
       navigate("/");
+      window.location.reload();
     } catch (error) {
       console.error("Error logging in", error);
       throw error;

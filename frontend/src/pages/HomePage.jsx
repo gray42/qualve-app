@@ -14,9 +14,10 @@ export default function Home() {
 
   return (
     <>
-      <Sidebar />
-      <div className="bg-white">
+      <div className="flex">
+        <Sidebar />
         <PostList posts={posts} />
+        <Sidebar />
       </div>
     </>
   );

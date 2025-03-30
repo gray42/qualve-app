@@ -2,7 +2,7 @@ import QuestionButton from "./QuestionButton";
 
 export default function Sidebar() {
   return (
-    <div className="w-1/4 bg-gray-300 p-4 text-gray-800">
+    <div className="min-h-screen w-1/4 bg-gray-100 p-4">
       <h2 className="text-xl font-bold">Sidebar</h2>
       <p className="mt-2">What is on your mind?</p>
       <QuestionButton />
