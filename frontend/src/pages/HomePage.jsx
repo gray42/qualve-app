@@ -1,4 +1,5 @@
 import PostList from "../components/post/PostList";
+import Sidebar from "../components/sidebar/Sidebar";
 import { usePosts } from "../context/PostContext";
 
 export default function Home() {
@@ -12,8 +13,11 @@ export default function Home() {
   }
 
   return (
-    <div className="bg-white">
-      <PostList posts={posts} />
-    </div>
+    <>
+      <Sidebar />
+      <div className="bg-white">
+        <PostList posts={posts} />
+      </div>
+    </>
   );
 }

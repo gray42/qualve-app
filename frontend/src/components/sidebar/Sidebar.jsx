@@ -1,7 +1,8 @@
 export default function Sidebar() {
   return (
-    <div className="bg-gray-100 p-4">
-      <h2 className="mb-4 text-xl font-bold">Sidebar</h2>
+    <div className="w-1/4 bg-gray-800 p-4 text-white">
+      <h2 className="text-xl font-bold">Sidebar</h2>
+      <p className="mt-2">Some sidebar content</p>
       <ul>
         <li className="mb-2">
           <a href="#link1" className="text-blue-500 hover:underline">
