@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { useState } from "react";
 
@@ -11,7 +10,6 @@ export default function Register() {
     role: "",
     age: "",
   });
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -23,7 +21,6 @@ export default function Register() {
 
     try {
       await register(userData);
-      navigate("/");
     } catch (error) {
       console.error("Error registering user", error);
       throw error;

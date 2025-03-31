@@ -1,5 +1,4 @@
 import { useUser } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function Login() {
@@ -8,7 +7,6 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -20,8 +18,6 @@ export default function Login() {
 
     try {
       await login(userData);
-      navigate("/");
-      window.location.reload();
     } catch (error) {
       console.error("Error logging in", error);
       throw error;

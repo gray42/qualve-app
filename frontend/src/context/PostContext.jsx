@@ -1,4 +1,10 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 import {
   getPosts,
   getPostsById,
@@ -18,7 +24,7 @@ export default function PostProvider({ children }) {
   const [error, setError] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
 
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -30,7 +36,7 @@ export default function PostProvider({ children }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const fetchPostById = async (postId) => {
     try {

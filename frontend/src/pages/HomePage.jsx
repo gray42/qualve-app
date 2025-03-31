@@ -1,9 +1,14 @@
 import PostList from "../components/post/PostList";
 import Sidebar from "../components/sidebar/Sidebar";
 import { usePosts } from "../context/PostContext";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { posts, loading, error } = usePosts();
+  const { posts, loading, error, fetchPosts } = usePosts();
+
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
 
   if (loading) {
     return <div>Loading...</div>;

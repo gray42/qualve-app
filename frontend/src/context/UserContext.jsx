@@ -1,11 +1,13 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { logUserIn, getUser, signUserUp, logUserOut } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export default function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -13,12 +15,13 @@ export default function UserProvider({ children }) {
         const user = await getUser();
         setUser(user);
       } catch (error) {
+        setUser(null);
         console.error("Error fetching user:", error);
         throw error;
       }
     };
     fetchUser();
-  }, []);
+  }, [user]);
 
   const login = async (credentials) => {
     try {
@@ -26,6 +29,7 @@ export default function UserProvider({ children }) {
         withCredentials: true,
       });
       setUser(data);
+      navigate("/");
       return data;
     } catch (error) {
       console.error("Error logging in user:", error);
@@ -39,6 +43,7 @@ export default function UserProvider({ children }) {
         withCredentials: true,
       });
       setUser(data);
+      navigate("/");
       return data;
     } catch (error) {
       console.error("Error logging in user:", error);
@@ -48,11 +53,11 @@ export default function UserProvider({ children }) {
 
   const logout = async () => {
     try {
-      const { data } = await logUserOut({
+      await logUserOut({
         withCredentials: true,
       });
-      setUser(data);
-      return data;
+      setUser(null);
+      navigate("/login");
     } catch (error) {
       console.error("Error logging in user:", error);
       throw error;
