@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserProvider from "./context/UserContext";
 import PostQuestion from "./pages/PostQuestion";
+import ProtectedRoute from "./services/ProtectedRoute";
 
 //need to wrap post provider outside with BrowserRouter?
 function App() {
@@ -17,10 +18,13 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/post/:postId" element={<PostPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/post" element={<PostQuestion />} />
+
+            <Route element={<ProtectedRoute />}>
+              <Route path="/post/:postId" element={<PostPage />} />
+              <Route path="/post" element={<PostQuestion />} />
+            </Route>
           </Routes>
         </PostProvider>
       </UserProvider>
