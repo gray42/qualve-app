@@ -66,6 +66,22 @@ export const addAnswer = async (postId, answer) => {
   }
 };
 
+export const voteOnPost = async (postId, voteType, answerId = null) => {
+  try {
+    const { data } = await api.post(
+      `/api/posts/${postId}/vote`,
+      { voteType, answerId },
+      {
+        withCredentials: true,
+      },
+    );
+    return data;
+  } catch (error) {
+    console.error("Error occurred updating vote", error);
+    throw error;
+  }
+};
+
 //user calls
 
 export const getUser = async () => {

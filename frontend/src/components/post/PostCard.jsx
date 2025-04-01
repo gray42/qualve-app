@@ -1,9 +1,17 @@
 import TimeAgo from "../../utils/TimeAgo";
+import PropTypes from "prop-types";
 
 //TODOS: finish up card layout - add individual question view page - home page
 
 // eslint-disable-next-line react/prop-types
-export default function PostCard({ title, author, votes, time, answers }) {
+export default function PostCard({
+  title,
+  author,
+  upvotes,
+  downvotes,
+  time,
+  answers,
+}) {
   return (
     <div className="m-4 rounded-lg border border-gray-200 bg-white p-6 drop-shadow-md hover:bg-gray-300">
       {/* Post Header */}
@@ -39,20 +47,9 @@ export default function PostCard({ title, author, votes, time, answers }) {
           </button>
         </div>
         <span>
-          {votes} Votes • {answers} Answers
+          {upvotes} Upvotes • {downvotes} Downvotes • {answers} Answers
         </span>
       </div>
     </div>
   );
-}
-
-{
-  /* <div className="flex items-center justify-center first:mt-4">
-      <div className="m-2 flex w-1/2 items-center justify-center gap-2 rounded-xl bg-slate-200 p-2 drop-shadow-md">
-        <h2>{title}</h2>
-        <p>Written By: {author}</p>
-        <p>Votes: {votes} </p>
-        <p>Time: {time} </p>
-      </div>
-    </div> */
 }

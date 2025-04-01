@@ -1,3 +1,4 @@
+import e from "express";
 import { Post } from "../models/postSchema.js";
 
 //update votes for question or answer - "/:postId/vote"
@@ -14,37 +15,44 @@ export const vote = async (req, res) => {
 			const answer = post.answers.id(answerId);
 			if (!answer) return res.status(404).json({ message: "Answer not found" });
 
-			answer.upvotes = answer.upvotes.filter((id) => id.toString() !== userId);
-			answer.downvotes = answer.downvotes.filter(
-				(id) => id.toString() !== userId
-			);
+			const currentVote = answer.voters.get(userId);
 
-			if (voteType === "upvote") {
-				if (!answer.upvotes.includes(userId)) {
-					answer.upvotes.push(userId);
+			if (currentVote === voteType) {
+				if (voteType === "upvote") {
+					answer.upvotes -= 1;
+				} else {
+					answer.downvotes -= 1;
 				}
-			} else if (voteType === "downvote") {
-				if (!answer.downvotes.includes(userId)) {
-					answer.downvotes.push(userId);
-				}
+				answer.voters.delete(userId);
+			} else {
+				if (currentVote === "upvote") answer.upvotes -= 1;
+				if (currentVote === "downvote") answer.downvotes -= 1;
+
+				if (voteType === "upvote") answer.upvotes += 1;
+				if (voteType === "downvote") answer.downvotes += 1;
+
+				answer.voters.set(userId, voteType);
 			}
 		} else {
-			post.upvotes = post.upvotes.filter((id) => id.toString() !== userId);
-			post.downvotes = post.downvotes.filter((id) => id.toString() !== userId);
+			const currentVote = post.voters.get(userId);
 
-			if (voteType === "upvote") {
-				if (!post.upvotes.includes(userId)) {
-					post.upvotes.push(userId);
-				}
-			} else if (voteType === "downvote") {
-				if (!post.downvotes.includes(userId)) {
-					post.downvotes.push(userId);
-				}
+			if (currentVote === voteType) {
+				if (voteType === "upvote") post.upvotes -= 1;
+				else post.downvotes -= 1;
+				post.voters.delete(userId);
+			} else {
+				if (currentVote === "upvote") post.upvotes -= 1;
+				if (currentVote === "downvote") post.downvotes -= 1;
+
+				if (voteType === "upvote") post.upvotes += 1;
+				if (voteType === "downvote") post.downvotes += 1;
+
+				post.voters.set(userId, voteType);
 			}
 		}
 
 		await post.save();
-		res.json({ message: "Vote successful", post });
+		res.json(post);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}

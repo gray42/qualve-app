@@ -15,8 +15,9 @@ const answerSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		upvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-		downvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+		upvotes: { type: Number, default: 0 },
+		downvotes: { type: Number, default: 0 },
+		voters: { type: Map, of: String, default: {} },
 	},
 	{ timestamps: true }
 );
@@ -41,8 +42,9 @@ const questionSchema = new mongoose.Schema(
 			required: false,
 		},
 		tags: [{ type: String }],
-		upvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-		downvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+		upvotes: { type: Number, default: 0 },
+		downvotes: { type: Number, default: 0 },
+		voters: { type: Map, of: String, default: {} },
 		numAnswers: {
 			type: Number,
 			default: 0,

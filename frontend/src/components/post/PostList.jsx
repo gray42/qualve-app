@@ -25,7 +25,8 @@ export default function PostList({ posts }) {
                 <PostCard
                   title={post.title}
                   author={post.username || "Guest"}
-                  votes={post.votes}
+                  upvotes={post.upvotes}
+                  downvotes={post.downvotes}
                   time={post.createdAt}
                   answers={post.answers.length}
                 />
@@ -37,16 +38,3 @@ export default function PostList({ posts }) {
     </>
   );
 }
-
-PostList.propTypes = {
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      username: PropTypes.string,
-      votes: PropTypes.number.isRequired,
-      createdAt: PropTypes.string.isRequired,
-      answers: PropTypes.array.isRequired,
-    }),
-  ).isRequired,
-};

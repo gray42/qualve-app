@@ -5,8 +5,14 @@ import { usePosts } from "../context/PostContext";
 
 export default function PostPage() {
   const { postId } = useParams();
-  const { selectedPost, fetchPostById, loading, error, addAnswerToPost } =
-    usePosts();
+  const {
+    selectedPost,
+    fetchPostById,
+    loading,
+    error,
+    addAnswerToPost,
+    handleVote,
+  } = usePosts();
   const [answer, setAnswer] = useState("");
 
   useEffect(() => {
@@ -48,6 +54,21 @@ export default function PostPage() {
             <p className="text-sm text-gray-500">
               Answered by: {answer.username || "unknown"}
             </p>
+
+            <div className="mt-2 flex space-x-4">
+              <button
+                onClick={() => handleVote(postId, "upvote", answer._id)}
+                className="text-green-500"
+              >
+                ⬆️ {answer.upvotes}
+              </button>
+              <button
+                onClick={() => handleVote(postId, "downvote", answer._id)}
+                className="text-red-500"
+              >
+                ⬇️ {answer.downvotes}
+              </button>
+            </div>
           </div>
         ))}
         {/* comments section */}

@@ -10,6 +10,7 @@ import {
   getPostsById,
   addAnswer,
   addQuestion,
+  voteOnPost,
 } from "../services/api";
 
 //TODO: fix context for posts - look into book for reference
@@ -23,6 +24,10 @@ export default function PostProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   const fetchPosts = useCallback(async () => {
     try {
@@ -75,9 +80,22 @@ export default function PostProvider({ children }) {
     }
   };
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  //manage votes
+  const handleVote = async (postId, voteType, answerId = null) => {
+    try {
+      const data = await voteOnPost(postId, voteType, answerId);
+
+      if (selectedPost && selectedPost._id === postId) {
+        setSelectedPost(data);
+      } else {
+        setPosts((prevPosts) =>
+          prevPosts.map((post) => (post._id === postId ? data : post)),
+        );
+      }
+    } catch (error) {
+      console.error("Error voting", error);
+    }
+  };
 
   const value = {
     posts,
@@ -87,6 +105,7 @@ export default function PostProvider({ children }) {
     fetchPostById,
     addAnswerToPost,
     addQuestionToPage,
+    handleVote,
     selectedPost,
   };
 
