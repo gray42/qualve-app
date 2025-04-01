@@ -21,8 +21,7 @@ export default function PostDetails({ post }) {
 
       <div className="space-y-2 text-gray-700">
         <p>
-          <strong className="text-gray-900">Author:</strong>{" "}
-          {post.author?.username}
+          <strong className="text-gray-900">Author:</strong> {post.username}
         </p>
         <p>
           <strong className="text-gray-900">Published:</strong>{" "}
