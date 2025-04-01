@@ -8,7 +8,7 @@ import { authenticateToken } from "../middleware/authMiddleware.js";
 import { addAnswer } from "../controllers/answerController.js";
 import { getQuestionByTag } from "../controllers/tagController.js";
 import { getQuestionBySearch } from "../controllers/searchController.js";
-import { votingSystem } from "../controllers/votingController.js";
+import { vote } from "../controllers/votingController.js";
 const router = express.Router();
 
 //get all questions
@@ -30,6 +30,6 @@ router.get("/tag/:tag", authenticateToken, getQuestionByTag);
 router.get("/search", authenticateToken, getQuestionBySearch);
 
 //adjust votes
-router.patch("/:id/vote", authenticateToken, votingSystem);
+router.post("/:postId/vote", authenticateToken, vote);
 
 export default router;

@@ -26,6 +26,7 @@ const UserSchema = new mongoose.Schema(
 			type: Number,
 			required: false,
 		},
+		preferredTags: [{ type: String }],
 		posts: [
 			{
 				type: mongoose.Schema.Types.ObjectId,

@@ -15,10 +15,8 @@ const answerSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		votes: {
-			type: Number,
-			default: 0,
-		},
+		upvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+		downvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 	},
 	{ timestamps: true }
 );
@@ -42,15 +40,9 @@ const questionSchema = new mongoose.Schema(
 			type: String,
 			required: false,
 		},
-		tags: {
-			type: [String],
-			required: false,
-			default: [],
-		},
-		votes: {
-			type: Number,
-			default: 0,
-		},
+		tags: [{ type: String }],
+		upvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+		downvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 		numAnswers: {
 			type: Number,
 			default: 0,
