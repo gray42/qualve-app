@@ -32,11 +32,13 @@ export const getPostWithId = async (req, res) => {
 
 //post a question
 export const createPost = async (req, res) => {
+	const { tags } = req.body;
 	try {
 		const newQuestion = new Post({
 			title: req.body.question,
 			author: req.user._id,
 			username: req.user.username,
+			tags,
 		});
 		await newQuestion.save();
 		res.status(201).json(newQuestion);

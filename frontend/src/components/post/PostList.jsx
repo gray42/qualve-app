@@ -1,6 +1,5 @@
 import PostCard from "./PostCard";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import { useUser } from "../../context/UserContext";
 
 export default function PostList({ posts }) {
@@ -29,6 +28,7 @@ export default function PostList({ posts }) {
                   downvotes={post.downvotes}
                   time={post.createdAt}
                   answers={post.answers.length}
+                  tags={post.tags}
                 />
               </Link>
             </div>

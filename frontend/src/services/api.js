@@ -9,6 +9,7 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 //backend calls
@@ -26,7 +27,6 @@ export const getPosts = async () => {
 export const getPostsById = async (postId) => {
   try {
     const { data } = await api.get(`/api/posts/${postId}`);
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error occurred fetching data", error);
@@ -34,15 +34,16 @@ export const getPostsById = async (postId) => {
   }
 };
 
-export const addQuestion = async (question) => {
+export const addQuestion = async (question, tagsArray) => {
   try {
     const { data } = await api.post(
       `/api/posts`,
-      { question: question },
+      { question, tags: tagsArray },
       {
         withCredentials: true,
       },
     );
+    console.log(data);
     return data;
   } catch (error) {
     console.error("Error occurred adding question", error);

@@ -6,7 +6,6 @@ import {
 } from "../controllers/questionController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { addAnswer } from "../controllers/answerController.js";
-import { getQuestionByTag } from "../controllers/tagController.js";
 import { getQuestionBySearch } from "../controllers/searchController.js";
 import { vote } from "../controllers/votingController.js";
 const router = express.Router();
@@ -22,9 +21,6 @@ router.post("/", authenticateToken, createPost);
 
 //add answer
 router.post("/:id/answers", authenticateToken, addAnswer);
-
-//get questions by tag
-router.get("/tag/:tag", authenticateToken, getQuestionByTag);
 
 //get questions by search
 router.get("/search", authenticateToken, getQuestionBySearch);

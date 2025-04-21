@@ -1,10 +1,10 @@
 import TimeAgo from "../../utils/TimeAgo";
-import PropTypes from "prop-types";
 
 //TODOS: finish up card layout - add individual question view page - home page
 
 // eslint-disable-next-line react/prop-types
 export default function PostCard({
+  tags,
   title,
   author,
   upvotes,
@@ -39,15 +39,24 @@ export default function PostCard({
       {/* Post Footer */}
       <div className="mt-4 flex items-center justify-between text-sm text-gray-600">
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-1 text-blue-500 hover:underline">
-            <span>⬆️</span> Vote
-          </button>
-          <button className="flex items-center gap-1 text-blue-500 hover:underline">
-            <span>💬</span> Answers
-          </button>
+          {/*tags*/}
+          {tags && tags.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-2">
+              {tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="rounded bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
         <span>
-          {upvotes} Upvotes • {downvotes} Downvotes • {answers} Answers
+          {upvotes === 1 ? `${upvotes} Upvote` : `${upvotes} Upvotes`} •{" "}
+          {downvotes === 1 ? `${downvotes} Downvote` : `${downvotes} Downvotes`}{" "}
+          • {answers === 1 ? `${answers} Answer` : `${answers} Answers`}
         </span>
       </div>
     </div>

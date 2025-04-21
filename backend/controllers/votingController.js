@@ -1,4 +1,3 @@
-import e from "express";
 import { Post } from "../models/postSchema.js";
 
 //update votes for question or answer - "/:postId/vote"

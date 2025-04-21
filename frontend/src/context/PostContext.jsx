@@ -70,9 +70,9 @@ export default function PostProvider({ children }) {
     }
   };
 
-  const addQuestionToPage = async (question) => {
+  const addQuestionToPage = async (question, selectedTags) => {
     try {
-      const newPost = await addQuestion(question);
+      const newPost = await addQuestion(question, selectedTags);
       setPosts((prevPosts) => [newPost, ...prevPosts]);
     } catch (error) {
       setError(error);
