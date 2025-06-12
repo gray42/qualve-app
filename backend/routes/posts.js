@@ -3,6 +3,7 @@ import {
 	createPost,
 	getPost,
 	getPostWithId,
+	getPostsByUserId,
 } from "../controllers/questionController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { addAnswer } from "../controllers/answerController.js";
@@ -27,5 +28,8 @@ router.get("/search", authenticateToken, getQuestionBySearch);
 
 //adjust votes
 router.post("/:postId/vote", authenticateToken, vote);
+
+// GET /api/posts/user/:userId
+router.get("/user/:userId", authenticateToken, getPostsByUserId);
 
 export default router;

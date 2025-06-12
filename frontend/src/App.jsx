@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import UserProvider from "./context/UserContext";
 import PostQuestion from "./pages/PostQuestion";
 import ProtectedRoute from "./services/ProtectedRoute";
+import ProfilePage from "./pages/ProfilePage";
 
 //need to wrap post provider outside with BrowserRouter?
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/post/:postId" element={<PostPage />} />
               <Route path="/post" element={<PostQuestion />} />
+              <Route path="/profile/:userId" element={<ProfilePage />} />
             </Route>
           </Routes>
         </PostProvider>

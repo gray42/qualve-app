@@ -34,6 +34,16 @@ export const getPostsById = async (postId) => {
   }
 };
 
+export const getPostsByUserId = async (userId) => {
+  try {
+    const { data } = await api.get(`/api/posts/user/${userId}`);
+    return data;
+  } catch (error) {
+    console.error(`Failed to fetch user with ID ${userId}`, error);
+    throw error;
+  }
+};
+
 export const addQuestion = async (question, tagsArray) => {
   try {
     const { data } = await api.post(
@@ -43,7 +53,7 @@ export const addQuestion = async (question, tagsArray) => {
         withCredentials: true,
       },
     );
-    console.log(data);
+
     return data;
   } catch (error) {
     console.error("Error occurred adding question", error);
@@ -91,6 +101,16 @@ export const getUser = async () => {
     return data;
   } catch (error) {
     console.error("User not authenticated", error);
+    throw error;
+  }
+};
+
+export const getUserById = async (userId) => {
+  try {
+    const { data } = await api.get(`/api/auth/users/${userId}`);
+    return data;
+  } catch (error) {
+    console.error(`Failed to fetch user with ID ${userId}`, error);
     throw error;
   }
 };
