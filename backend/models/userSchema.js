@@ -33,6 +33,26 @@ const UserSchema = new mongoose.Schema(
 				ref: "Post",
 			},
 		],
+		name: {
+			type: String,
+			default: "",
+		},
+		bio: {
+			type: String,
+			default: "",
+		},
+		school: {
+			type: String,
+			default: "",
+		},
+		classes: {
+			type: String,
+			default: "",
+		},
+		birthday: {
+			type: Date,
+			default: null,
+		},
 	},
 	{ timestamps: true }
 );

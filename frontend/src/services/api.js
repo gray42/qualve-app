@@ -154,3 +154,15 @@ export const logUserOut = async () => {
     throw error;
   }
 };
+
+export const updateUserById = async (userId, updatedData) => {
+  try {
+    const { data } = await api.put(`/api/auth/${userId}`, updatedData, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error signing user up", error);
+    throw error;
+  }
+};

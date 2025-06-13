@@ -1,5 +1,6 @@
 import PostList from "../components/post/PostList";
-import Sidebar from "../components/sidebar/Sidebar";
+import SidebarLeft from "../components/sidebar/SidebarLeft";
+import SidebarRight from "../components/sidebar/SidebarRight";
 import { usePosts } from "../context/PostContext";
 import { useEffect } from "react";
 
@@ -20,9 +21,9 @@ export default function Home() {
   return (
     <>
       <div className="flex">
-        <Sidebar />
+        <SidebarLeft />
         <PostList posts={posts} />
-        <Sidebar />
+        <SidebarRight />
       </div>
     </>
   );

@@ -1,5 +1,10 @@
 import express from "express";
-import { register, login, logout } from "../controllers/authController.js";
+import {
+	register,
+	login,
+	logout,
+	updateUser,
+} from "../controllers/authController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { User } from "../models/userSchema.js";
 const router = express.Router();
@@ -10,6 +15,8 @@ router.post("/register", register);
 router.post("/login", login);
 //logout
 router.post("/logout", logout);
+
+router.put("/:id", updateUser);
 
 //authorized pathway
 router.get("/admin", authenticateToken, (req, res) => {
