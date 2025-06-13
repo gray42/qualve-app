@@ -21,11 +21,10 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-
+            <Route path="/profile/:userId" element={<ProfilePage />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/post/:postId" element={<PostPage />} />
               <Route path="/post" element={<PostQuestion />} />
-              <Route path="/profile/:userId" element={<ProfilePage />} />
             </Route>
           </Routes>
         </PostProvider>

@@ -32,7 +32,7 @@ export default function Profile() {
   return (
     <div
       ref={dropdownRef}
-      className="relative flex cursor-pointer items-center gap-3"
+      className="relative z-50 flex cursor-pointer items-center gap-3"
     >
       <div
         onClick={toggleDropdown}
@@ -42,10 +42,10 @@ export default function Profile() {
       </div>
 
       {isOpen && (
-        <div className="absolute right-0 top-[65px] rounded-lg bg-slate-100">
+        <div className="absolute right-0 top-[65px] z-[9999] rounded-lg bg-slate-100 shadow-lg">
           <ul className="my-2 ml-2 mr-8">
             <li className="rounded-full px-2 py-2 hover:bg-slate-200">
-              <Link to={`/profile/${user._id}`} className="block text-black">
+              <Link to={`/profile/${user?._id}`} className="block text-black">
                 My Profile
               </Link>
             </li>
