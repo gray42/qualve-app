@@ -7,14 +7,16 @@ export default function PostList({ posts }) {
 
   return (
     <>
-      <div className="flex w-full flex-col items-center justify-center">
+      <div className="w-full">
         {user && (
-          <>
-            <h1 className="mt-8 text-2xl font-bold">
+          <div className="mb-6 text-center">
+            <h1 className="text-2xl font-bold">
               Welcome back, {user.username || "Guest"}!
             </h1>
-            <p>Help others answer their questions or ask your own!</p>
-          </>
+            <p className="text-gray-600">
+              Help others answer their questions or ask your own!
+            </p>
+          </div>
         )}
 
         <div className="p-4">
