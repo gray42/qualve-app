@@ -48,36 +48,40 @@ export default function SidebarLeft() {
     },
   ];
   return (
-    <aside className="flex flex-col p-4">
+    <aside className="sticky top-6 flex h-[calc(100vh-1.5rem)] w-48 flex-col bg-white px-4 py-6 text-sm font-medium text-gray-700">
+      {/* Brand/Logo */}
       <Link
         to="/"
-        className="mb-8 text-2xl font-bold text-blue-600 hover:text-blue-800"
+        className="mb-10 text-xl font-extrabold text-gray-900 hover:text-gray-700"
       >
         MyStack
       </Link>
 
-      <nav className="flex flex-grow flex-col space-y-2">
-        {navLinks.map(({ name, to, icon }) => (
+      {/* Navigation */}
+      <nav className="flex flex-col space-y-4">
+        {navLinks.map(({ name, to }) => (
           <Link
             key={name}
             to={to}
-            className={`flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+            className={`block rounded px-2 py-1 transition-colors ${
               isActive(to)
-                ? "bg-blue-100 text-blue-700"
-                : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                ? "bg-gray-100 font-semibold text-gray-900"
+                : "hover:bg-gray-50 hover:text-gray-900"
             }`}
           >
-            <span className="mr-3 text-gray-500">{icon}</span>
             {name}
           </Link>
         ))}
       </nav>
 
+      {/* Spacer pushes button to bottom */}
+      <div className="flex-grow" />
+
+      {/* Call-to-action button */}
       <Link
         to="/post"
-        className="mt-4 inline-flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-blue-700"
+        className="mt-8 rounded bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white transition hover:bg-blue-700"
       >
-        <PencilIcon className="mr-2 h-5 w-5" />
         Ask Question
       </Link>
     </aside>

@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import PostPage from "./pages/PostPage";
-import NavBar from "./components/nav/Navbar";
 import PostProvider from "./context/PostContext";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -19,7 +18,6 @@ function App() {
     <>
       <UserProvider>
         <PostProvider>
-          <NavBar />
           <Routes>
             <Route path="/" element={<MainLayout />}>
               <Route index element={<HomePage />} />
