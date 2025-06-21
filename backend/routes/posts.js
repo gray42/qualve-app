@@ -4,7 +4,9 @@ import {
 	getPost,
 	getPostWithId,
 	getPostsByUserId,
+	getHotPosts,
 } from "../controllers/questionController.js";
+import { getTrendingTags } from "../controllers/tagController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { addAnswer } from "../controllers/answerController.js";
 import { getQuestionBySearch } from "../controllers/searchController.js";
@@ -13,6 +15,12 @@ const router = express.Router();
 
 //get all questions
 router.get("/", getPost);
+
+//get trending tags
+router.get("/trending-tags", getTrendingTags);
+
+//get hot posts
+router.get("/hot", getHotPosts);
 
 //show a question (:id)
 router.get("/:id", getPostWithId);

@@ -1,12 +1,8 @@
 import { Link } from "react-router-dom";
+import { usePosts } from "../../context/PostContext";
 
 export default function SidebarRight() {
-  const trendingTags = ["javascript", "react", "mongodb", "express", "node.js"];
-  const topPosts = [
-    { title: "How to optimize React rendering?", link: "/questions/1" },
-    { title: "MongoDB aggregation vs joins", link: "/questions/2" },
-    { title: "Understanding closures in JavaScript", link: "/questions/3" },
-  ];
+  const { trendingTags, hotPosts } = usePosts();
 
   return (
     <div className="min-h-screen w-1/4 bg-gray-100 p-4">
@@ -18,12 +14,12 @@ export default function SidebarRight() {
           </h2>
           <ul className="space-y-2">
             {trendingTags.map((tag) => (
-              <li key={tag}>
+              <li key={tag._id}>
                 <Link
-                  to={`/tags/${tag}`}
+                  to={`/tags/${tag._id}`}
                   className="inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 transition hover:bg-blue-100"
                 >
-                  #{tag}
+                  #{tag._id} ({tag.count})
                 </Link>
               </li>
             ))}
@@ -32,18 +28,19 @@ export default function SidebarRight() {
 
         {/* Hot Posts */}
         <section>
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-700">
-            Hot Posts
-          </h2>
-          <ul className="space-y-3">
-            {topPosts.map(({ title, link }) => (
-              <li key={link}>
+          <h2 className="mb-3 text-xl font-semibold">🔥 Hot Posts</h2>
+          <ul className="space-y-2">
+            {hotPosts.map((post) => (
+              <li key={post._id}>
                 <Link
-                  to={link}
+                  to={`/posts/${post._id}`}
                   className="block text-sm text-gray-800 transition hover:text-blue-700 hover:underline"
                 >
-                  {title}
+                  {post.title}
                 </Link>
+                <div className="text-sm text-gray-500">
+                  Score: {post.upvotes - post.downvotes}
+                </div>
               </li>
             ))}
           </ul>

@@ -11,9 +11,11 @@ import {
   addAnswer,
   addQuestion,
   voteOnPost,
+  getTrendingTags,
+  getHotPosts as fetchHotPosts,
 } from "../services/api";
 
-//TODO: fix context for posts - look into book for reference
+//TODO: add state managment for getPostsByUserId
 
 // Create a context
 const PostContext = createContext();
@@ -21,12 +23,16 @@ const PostContext = createContext();
 // eslint-disable-next-line react/prop-types
 export default function PostProvider({ children }) {
   const [posts, setPosts] = useState([]);
+  const [trendingTags, setTrendingTags] = useState([]);
+  const [hotPosts, setHotPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
     fetchPosts();
+    fetchTrendingTags();
+    loadHotPosts();
   }, []);
 
   const fetchPosts = useCallback(async () => {
@@ -42,6 +48,24 @@ export default function PostProvider({ children }) {
       setLoading(false);
     }
   }, []);
+
+  const fetchTrendingTags = useCallback(async () => {
+    try {
+      const tags = await getTrendingTags();
+      setTrendingTags(tags);
+    } catch (err) {
+      console.error("Failed to fetch trending tags", err);
+    }
+  }, []);
+
+  const loadHotPosts = async () => {
+    try {
+      const posts = await fetchHotPosts();
+      setHotPosts(posts);
+    } catch (err) {
+      console.error("Failed to load hot posts", err);
+    }
+  };
 
   const fetchPostById = async (postId) => {
     try {
@@ -99,10 +123,14 @@ export default function PostProvider({ children }) {
 
   const value = {
     posts,
+    trendingTags,
+    hotPosts,
+    loadHotPosts,
     loading,
     error,
     fetchPosts,
     fetchPostById,
+    fetchTrendingTags,
     addAnswerToPost,
     addQuestionToPage,
     handleVote,

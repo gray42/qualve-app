@@ -60,3 +60,16 @@ export const getPostsByUserId = async (req, res) => {
 		res.status(500).json({ message: "Failed to fetch user posts" });
 	}
 };
+
+export const getHotPosts = async (req, res) => {
+	try {
+		const hotPosts = await Post.find()
+			.sort({ upvotes: -1, createdAt: -1 }) // Most upvoted & recent
+			.limit(5); // Top 5 hot posts
+
+		res.json(hotPosts);
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ message: "Failed to fetch hot posts" });
+	}
+};

@@ -23,6 +23,30 @@ export const getPosts = async () => {
   }
 };
 
+export const getTrendingTags = async () => {
+  try {
+    const { data } = await api.get("/api/posts/trending-tags", {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error occurred fetching data", error);
+    throw error;
+  }
+};
+
+export const getHotPosts = async () => {
+  try {
+    const { data } = await api.get("/api/posts/hot", {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error occurred fetching data", error);
+    throw error;
+  }
+};
+
 //new function to fetch post by id
 export const getPostsById = async (postId) => {
   try {
