@@ -15,7 +15,7 @@ import {
   getHotPosts as fetchHotPosts,
 } from "../services/api";
 
-//TODO: add state managment for getPostsByUserId
+//TODO: add state management for getPostsByUserId
 
 // Create a context
 const PostContext = createContext();

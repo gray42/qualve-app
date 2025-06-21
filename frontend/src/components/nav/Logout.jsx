@@ -17,7 +17,7 @@ export default function Logout() {
   return (
     <li
       onClick={handleLogout}
-      className="cursor-pointer rounded-full px-2 py-2 text-black hover:bg-slate-200"
+      className="cursor-pointer rounded-md px-2 py-2 text-black hover:bg-slate-200"
     >
       Logout
     </li>
