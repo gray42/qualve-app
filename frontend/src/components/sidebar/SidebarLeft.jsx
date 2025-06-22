@@ -21,8 +21,8 @@ export default function SidebarLeft() {
   const navLinks = [
     { name: "Home", to: "/", icon: <HomeIcon className="h-5 w-5" /> },
     {
-      name: "Questions",
-      to: "/questions",
+      name: "Your Questions",
+      to: `/user/${user?._id}/questions`,
       icon: <QuestionMarkCircleIcon className="h-5 w-5" />,
     },
     { name: "Tags", to: "/tags", icon: <TagIcon className="h-5 w-5" /> },
@@ -48,7 +48,7 @@ export default function SidebarLeft() {
     },
   ];
   return (
-    <aside className="sticky top-6 flex h-[calc(100vh-1.5rem)] w-48 flex-col bg-white px-4 py-6 text-sm font-medium text-gray-700">
+    <aside className="sticky flex h-[calc(100vh-1.5rem)] w-48 flex-col px-4 py-6 text-sm font-medium text-gray-700">
       {/* Brand/Logo */}
       <Link
         to="/"

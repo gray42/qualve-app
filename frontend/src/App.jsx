@@ -8,6 +8,8 @@ import UserProvider from "./context/UserContext";
 import PostQuestion from "./pages/PostQuestion";
 import ProtectedRoute from "./services/ProtectedRoute";
 import ProfilePage from "./pages/ProfilePage";
+import UserPosts from "./pages/UserPosts";
+import HotPostsPage from "./pages/HotPostsPage";
 
 import MainLayout from "./components/layout/MainLayout";
 import SimpleLayout from "./components/layout/SimpleLayout";
@@ -21,8 +23,12 @@ function App() {
           <Routes>
             <Route path="/" element={<MainLayout />}>
               <Route index element={<HomePage />} />
-              {/* <Route path="hot" element={<HotPostsPage />} />
-              <Route path="trending" element={<TrendingPage />} /> */}
+              <Route path="/posts/:postId" element={<PostPage />} />
+              <Route path="/hot" element={<HotPostsPage />} />
+
+              {/* <Route path="/trending-tags" element={<TrendingPage />} /> */}
+
+              <Route path="/user/:userId/questions" element={<UserPosts />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/post/:postId" element={<PostPage />} />
                 <Route path="/post" element={<PostQuestion />} />

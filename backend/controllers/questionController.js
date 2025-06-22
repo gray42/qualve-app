@@ -63,9 +63,9 @@ export const getPostsByUserId = async (req, res) => {
 
 export const getHotPosts = async (req, res) => {
 	try {
-		const hotPosts = await Post.find()
-			.sort({ upvotes: -1, createdAt: -1 }) // Most upvoted & recent
-			.limit(5); // Top 5 hot posts
+		const hotPosts = await Post.find({ upvotes: { $gte: 1 } }) // Only posts with at least 1 upvote
+			.sort({ upvotes: -1, createdAt: -1 })
+			.limit(5);
 
 		res.json(hotPosts);
 	} catch (err) {

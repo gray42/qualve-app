@@ -2,13 +2,13 @@ import PostCard from "./PostCard";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 
-export default function PostList({ posts }) {
+export default function PostList({ posts, showWelcome = true }) {
   const { user } = useUser();
 
   return (
     <>
       <div className="w-full">
-        {user && (
+        {showWelcome && user && (
           <div className="mb-6 text-center">
             <h1 className="text-2xl font-bold">
               Welcome back, {user.username || "Guest"}!

@@ -1,16 +1,13 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserById } from "../services/api";
 import { usePosts } from "../context/PostContext";
 import UserProfileHeader from "../components/user/UserProfileHeader";
-import Tabs from "../components/user/Tabs";
 import UserPostsTab from "../components/user/UserPostsTab";
-import AboutTab from "../components/user/AboutTab";
 
 const ProfilePage = () => {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
-  const [activeTab, setActiveTab] = useState("posts");
 
   const { userPosts, fetchPostsByUserId } = usePosts();
 
@@ -29,18 +26,7 @@ const ProfilePage = () => {
   return (
     <div className="mx-auto max-w-4xl p-4">
       <UserProfileHeader user={user} />
-      <Tabs
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-        tabs={["posts", "about"]}
-      />
-      {activeTab === "posts" && <UserPostsTab posts={userPosts} />}
-      {activeTab === "about" && (
-        <AboutTab
-          user={user}
-          onUpdate={(updatedUser) => setUser(updatedUser)}
-        />
-      )}
+      <UserPostsTab posts={userPosts} />
     </div>
   );
 };

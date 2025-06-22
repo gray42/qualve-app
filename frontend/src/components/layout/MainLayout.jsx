@@ -7,14 +7,14 @@ export default function MainLayout() {
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Left Sidebar: full height */}
-      <aside className="fixed left-0 top-0 h-screen w-48 border-r border-gray-200 bg-white">
+      <aside className="border-black-200 fixed left-0 top-0 h-screen w-48 border-r border-black bg-white">
         <SidebarLeft />
       </aside>
 
       {/* Right section: navbar on top, content and right sidebar below */}
       <div className="ml-48 flex flex-1 flex-col">
         {/* Navbar */}
-        <header className="sticky top-0 z-30 border-b border-gray-200 bg-white drop-shadow-md">
+        <header className="top-0 z-30 border-b border-black">
           <Navbar />
         </header>
 
@@ -26,7 +26,7 @@ export default function MainLayout() {
           </main>
 
           {/* Right sidebar */}
-          <aside className="hidden w-40 overflow-auto border-l border-gray-200 bg-white xl:block">
+          <aside className="hidden w-40 overflow-auto border-l border-black xl:block">
             <SidebarRight />
           </aside>
         </div>

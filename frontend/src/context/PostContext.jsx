@@ -13,9 +13,8 @@ import {
   voteOnPost,
   getTrendingTags,
   getHotPosts as fetchHotPosts,
+  getPostsByUserId,
 } from "../services/api";
-
-//TODO: add state management for getPostsByUserId
 
 // Create a context
 const PostContext = createContext();
@@ -28,6 +27,7 @@ export default function PostProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
     fetchPosts();
@@ -44,6 +44,20 @@ export default function PostProvider({ children }) {
     } catch (error) {
       setError(error);
       console.error("Error loading posts", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const fetchPostsByUserId = useCallback(async (userId) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getPostsByUserId(userId);
+      setUserPosts(data);
+    } catch (error) {
+      setError(error);
+      console.error(`Error loading posts for user ${userId}`, error);
     } finally {
       setLoading(false);
     }
@@ -135,6 +149,8 @@ export default function PostProvider({ children }) {
     addQuestionToPage,
     handleVote,
     selectedPost,
+    userPosts,
+    fetchPostsByUserId,
   };
 
   return <PostContext.Provider value={value}>{children}</PostContext.Provider>;

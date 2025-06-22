@@ -26,7 +26,9 @@ export default function SidebarRight() {
 
       <section>
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-700">
-          Hot Posts
+          <Link to="/hot" className="hover:underline">
+            Hot Posts
+          </Link>
         </h2>
         <ul className="space-y-2">
           {hotPosts.map((post) => (
