@@ -28,7 +28,6 @@ router.get("/admin", authenticateToken, (req, res) => {
 
 router.get("/user", authenticateToken, async (req, res) => {
 	const user = await User.findById(req.user._id).select("-password");
-	console.log(user);
 	res.json(user);
 });
 
