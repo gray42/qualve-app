@@ -1,5 +1,6 @@
 import { useUser } from "../context/UserContext";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const { login } = useUser();
@@ -61,9 +62,9 @@ export default function Login() {
       </form>
       <p className="mt-4 text-center text-sm text-gray-600">
         Don&apos;t have an account?{" "}
-        <a className="text-indigo-600 hover:text-indigo-500" href="/signup">
+        <Link to="/register" className="text-indigo-600 hover:text-indigo-500">
           Sign up
-        </a>
+        </Link>
       </p>
     </div>
   );

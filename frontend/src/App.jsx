@@ -25,7 +25,7 @@ function App() {
               <Route index element={<HomePage />} />
               <Route path="/posts/:postId" element={<PostPage />} />
               <Route path="/hot" element={<HotPostsPage />} />
-
+              <Route path="/profile/:userId" element={<ProfilePage />} />
               {/* <Route path="/trending-tags" element={<TrendingPage />} /> */}
 
               <Route path="/user/:userId/questions" element={<UserPosts />} />
@@ -36,7 +36,6 @@ function App() {
             </Route>
 
             <Route element={<SimpleLayout />}>
-              <Route path="/profile/:userId" element={<ProfilePage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               {/* Add other minimal pages like Signup here */}
