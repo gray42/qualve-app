@@ -35,6 +35,18 @@ export const getTrendingTags = async () => {
   }
 };
 
+export const getPostsByTag = async (tag) => {
+  try {
+    const { data } = await api.get(`/api/posts/tags/${tag}`, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error fetching posts by tag", error);
+    throw error;
+  }
+};
+
 export const getHotPosts = async () => {
   try {
     const { data } = await api.get("/api/posts/hot", {

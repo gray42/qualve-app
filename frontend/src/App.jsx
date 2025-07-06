@@ -10,6 +10,7 @@ import ProtectedRoute from "./services/ProtectedRoute";
 import ProfilePage from "./pages/ProfilePage";
 import UserPosts from "./pages/UserPosts";
 import HotPostsPage from "./pages/HotPostsPage";
+import TagPostsPage from "./pages/TagPostsPage";
 
 import MainLayout from "./components/layout/MainLayout";
 import SimpleLayout from "./components/layout/SimpleLayout";
@@ -26,6 +27,7 @@ function App() {
               <Route path="/posts/:postId" element={<PostPage />} />
               <Route path="/hot" element={<HotPostsPage />} />
               <Route path="/profile/:userId" element={<ProfilePage />} />
+              <Route path="/tags/:tagId" element={<TagPostsPage />} />
               {/* <Route path="/trending-tags" element={<TrendingPage />} /> */}
 
               <Route path="/user/:userId/questions" element={<UserPosts />} />

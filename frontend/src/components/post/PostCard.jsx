@@ -1,9 +1,10 @@
 import TimeAgo from "../../utils/TimeAgo";
-
+import { Link } from "react-router-dom";
 //TODOS: finish up card layout - add individual question view page - home page
 
 // eslint-disable-next-line react/prop-types
 export default function PostCard({
+  postId,
   tags,
   title,
   author,
@@ -19,7 +20,14 @@ export default function PostCard({
         {/* may not need profile icon*/}
 
         <div>
-          <h2 className="text-lg font-bold">{title}</h2>
+          <h2 className="text-lg font-bold">
+            <Link
+              to={`/post/${postId}`}
+              className="block w-full hover:underline"
+            >
+              {title}
+            </Link>
+          </h2>
           <p className="text-sm text-gray-500">
             Posted <TimeAgo createdAt={time} /> by {author}
           </p>
@@ -43,12 +51,13 @@ export default function PostCard({
           {tags && tags.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-2">
               {tags.map((tag, index) => (
-                <span
+                <Link
+                  to={`/tags/${tag}`}
                   key={index}
-                  className="rounded bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700"
+                  className="inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 hover:bg-blue-100"
                 >
                   #{tag}
-                </span>
+                </Link>
               ))}
             </div>
           )}

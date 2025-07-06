@@ -14,6 +14,7 @@ import {
   getTrendingTags,
   getHotPosts as fetchHotPosts,
   getPostsByUserId,
+  getPostsByTag,
 } from "../services/api";
 
 // Create a context
@@ -69,6 +70,20 @@ export default function PostProvider({ children }) {
       setTrendingTags(tags);
     } catch (err) {
       console.error("Failed to fetch trending tags", err);
+    }
+  }, []);
+
+  const fetchPostsByTag = useCallback(async (tag) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getPostsByTag(tag);
+      setPosts(data);
+    } catch (error) {
+      setError(error);
+      console.error(`Error loading posts for tag ${tag}`, error);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -151,6 +166,7 @@ export default function PostProvider({ children }) {
     selectedPost,
     userPosts,
     fetchPostsByUserId,
+    fetchPostsByTag,
   };
 
   return <PostContext.Provider value={value}>{children}</PostContext.Provider>;

@@ -6,7 +6,10 @@ import {
 	getPostsByUserId,
 	getHotPosts,
 } from "../controllers/questionController.js";
-import { getTrendingTags } from "../controllers/tagController.js";
+import {
+	getTrendingTags,
+	getPostsByTag,
+} from "../controllers/tagController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { addAnswer } from "../controllers/answerController.js";
 import { getQuestionBySearch } from "../controllers/searchController.js";
@@ -39,5 +42,7 @@ router.post("/:postId/vote", authenticateToken, vote);
 
 // GET /api/posts/user/:userId
 router.get("/user/:userId", authenticateToken, getPostsByUserId);
+
+router.get("/tags/:tag", authenticateToken, getPostsByTag);
 
 export default router;

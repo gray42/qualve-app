@@ -13,34 +13,37 @@ export default function PostDetails({ post }) {
 
   return (
     //make the formatting better (MVP as of now)
-    <div className="m-4 mx-auto w-[50%] rounded-lg bg-white p-6 drop-shadow-md">
-      {/* post */}
-      <h1 className="mb-4 text-3xl font-semibold text-gray-900">
-        {post.title}
-      </h1>
+    <div className="my-6 w-full max-w-3xl rounded-2xl bg-white">
+      {/* Post Title */}
+      <h1 className="mb-6 text-4xl font-bold text-gray-900">{post.title}</h1>
 
-      <div className="space-y-2 text-gray-700">
+      {/* Author and Time */}
+      <div className="mb-6 text-sm text-gray-600">
         <p>
-          <strong className="text-gray-900">Author:</strong> {post.username}
+          <span className="font-medium text-gray-800">Author:</span>{" "}
+          {post.username}
         </p>
         <p>
-          <strong className="text-gray-900">Published:</strong>{" "}
+          <span className="font-medium text-gray-800">Published:</span>{" "}
           <TimeAgo createdAt={post.createdAt} />
         </p>
       </div>
 
-      <div className="mt-4 flex space-x-4">
+      {/* Voting Section */}
+      <div className="flex items-center space-x-6">
         <button
           onClick={() => handleVote(post._id, "upvote")}
-          className="text-green-500"
+          className="flex items-center space-x-1 text-sm font-medium text-green-600 hover:underline"
         >
-          ⬆️ {post.upvotes}
+          <span>⬆️</span>
+          <span>{post.upvotes}</span>
         </button>
         <button
           onClick={() => handleVote(post._id, "downvote")}
-          className="text-red-500"
+          className="flex items-center space-x-1 text-sm font-medium text-red-600 hover:underline"
         >
-          ⬇️ {post.downvotes}
+          <span>⬇️</span>
+          <span>{post.downvotes}</span>
         </button>
       </div>
     </div>
