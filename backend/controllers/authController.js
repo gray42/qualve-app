@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 //register
 export const register = async (req, res) => {
 	//request
-	const { username, email, password, role } = req.body;
+	const { username, email, password, role, age } = req.body;
 
 	//role
 	if (role !== "learner" && role !== "tutor") {
@@ -27,7 +27,13 @@ export const register = async (req, res) => {
 	const hashedPassword = await bcrypt.hash(password, 10);
 
 	//create new user
-	const newUser = new User({ username, email, password: hashedPassword, role });
+	const newUser = new User({
+		username,
+		email,
+		password: hashedPassword,
+		role,
+		age,
+	});
 	await newUser.save();
 
 	//sign token

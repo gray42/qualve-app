@@ -7,7 +7,7 @@ export default function Register() {
     username: "",
     email: "",
     password: "",
-    role: "",
+    role: "learner",
     age: "",
   });
 
@@ -18,6 +18,23 @@ export default function Register() {
   const registerUser = async (e) => {
     e.preventDefault();
     console.log("Registering user...");
+
+    if (!userData.username || !userData.email || !userData.password) {
+      alert("Please fill in username, email, and password");
+      return;
+    }
+
+    // Specifically check for role
+    if (!userData.role) {
+      alert("Please select a role (learner or tutor)");
+      return;
+    }
+
+    // Validate role value
+    if (userData.role !== "learner" && userData.role !== "tutor") {
+      alert("Please select a valid role");
+      return;
+    }
 
     try {
       await register(userData);

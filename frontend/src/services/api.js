@@ -129,6 +129,18 @@ export const voteOnPost = async (postId, voteType, answerId = null) => {
   }
 };
 
+export const isAnswered = async (postId) => {
+  try {
+    const { data } = await api.patch(`/api/posts/${postId}/answered`, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error occurred updating vote", error);
+    throw error;
+  }
+};
+
 //user calls
 
 export const getUser = async () => {

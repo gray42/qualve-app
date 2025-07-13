@@ -73,3 +73,30 @@ export const getHotPosts = async (req, res) => {
 		res.status(500).json({ message: "Failed to fetch hot posts" });
 	}
 };
+
+export const isAnswered = async (req, res) => {
+	const { postId } = req.params;
+	const userId = req.user._id;
+
+	try {
+		const post = await Post.findById(postId);
+		if (!post) return res.status(404).json({ message: "Post not found" });
+
+		// only user who posted can update status
+		if (post.author.toString() !== userId.toString()) {
+			return res
+				.status(403)
+				.json({ message: "Not authorized to update this post" });
+		}
+		post.isAnswered = !post.isAnswered;
+
+		const updatedPost = await post.save();
+
+		res.json({
+			message: "Post status updated successfully",
+			post: updatedPost,
+		});
+	} catch (error) {
+		res.status(500).json({ message: "failed to update question status" });
+	}
+};

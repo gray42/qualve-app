@@ -15,6 +15,7 @@ import {
   getHotPosts as fetchHotPosts,
   getPostsByUserId,
   getPostsByTag,
+  isAnswered,
 } from "../services/api";
 
 // Create a context
@@ -150,6 +151,27 @@ export default function PostProvider({ children }) {
     }
   };
 
+  const answered = async (postId) => {
+    try {
+      const data = await isAnswered(postId);
+
+      // Always update the posts array
+      setPosts((prevPosts) =>
+        prevPosts.map((post) => (post._id === postId ? data.post : post)),
+      );
+
+      // Also update selectedPost if it matches
+      if (selectedPost && selectedPost._id === postId) {
+        setSelectedPost(data.post);
+      }
+
+      return data.post;
+    } catch (error) {
+      console.error("Error voting", error);
+      throw error;
+    }
+  };
+
   const value = {
     posts,
     trendingTags,
@@ -167,6 +189,7 @@ export default function PostProvider({ children }) {
     userPosts,
     fetchPostsByUserId,
     fetchPostsByTag,
+    answered,
   };
 
   return <PostContext.Provider value={value}>{children}</PostContext.Provider>;

@@ -5,17 +5,16 @@ const UserPostsTab = ({ posts }) => (
     {posts.length > 0 ? (
       posts.map((post) => (
         <div key={post._id} className="">
-          <Link to={`/post/${post._id}`} className="block w-full">
-            <PostCard
-              title={post.title}
-              author={post.username || "Guest"}
-              upvotes={post.upvotes}
-              downvotes={post.downvotes}
-              time={post.createdAt}
-              answers={post.answers.length}
-              tags={post.tags}
-            />
-          </Link>
+          <PostCard
+            postId={post._id}
+            title={post.title}
+            author={post.username || "Guest"}
+            upvotes={post.upvotes}
+            downvotes={post.downvotes}
+            time={post.createdAt}
+            answers={post.answers.length}
+            tags={post.tags}
+          />
         </div>
       ))
     ) : (

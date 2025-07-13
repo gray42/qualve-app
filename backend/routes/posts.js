@@ -5,6 +5,7 @@ import {
 	getPostWithId,
 	getPostsByUserId,
 	getHotPosts,
+	isAnswered,
 } from "../controllers/questionController.js";
 import {
 	getTrendingTags,
@@ -15,6 +16,9 @@ import { addAnswer } from "../controllers/answerController.js";
 import { getQuestionBySearch } from "../controllers/searchController.js";
 import { vote } from "../controllers/votingController.js";
 const router = express.Router();
+
+// update question status
+router.patch("/:postId/answered", authenticateToken, isAnswered);
 
 //get all questions
 router.get("/", getPost);

@@ -1,15 +1,28 @@
 import PropTypes from "prop-types";
 import TimeAgo from "../../utils/TimeAgo";
 import { usePosts } from "../../context/PostContext";
+import { useState } from "react";
 
 //post details component to display individual post
 
 export default function PostDetails({ post }) {
-  const { handleVote } = usePosts();
+  const { handleVote, answered } = usePosts();
+  const [isUpdating, setIsUpdating] = useState(false);
 
   if (!post) {
     return <div className="text-center text-gray-600">Post not found...</div>;
   }
+
+  const handleToggleAnswered = async () => {
+    setIsUpdating(true);
+    try {
+      await answered(post._id);
+    } catch (error) {
+      alert("Failed to update post status");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   return (
     //make the formatting better (MVP as of now)
@@ -27,6 +40,28 @@ export default function PostDetails({ post }) {
           <span className="font-medium text-gray-800">Published:</span>{" "}
           <TimeAgo createdAt={post.createdAt} />
         </p>
+      </div>
+      <div>
+        <button
+          onClick={handleToggleAnswered}
+          disabled={isUpdating}
+          className={`rounded-lg px-4 py-2 font-medium transition-colors duration-200 ${
+            post.isAnswered
+              ? "bg-green-100 text-green-800 hover:bg-green-200"
+              : "bg-blue-100 text-blue-800 hover:bg-blue-200"
+          } disabled:cursor-not-allowed disabled:opacity-50`}
+        >
+          {isUpdating
+            ? "Updating..."
+            : post.isAnswered
+              ? "✓ Answered"
+              : "○ Mark as Answered"}
+        </button>
+        {post.isAnswered && (
+          <span className="rounded-full bg-green-500 px-3 py-1 text-sm font-medium text-white">
+            Resolved
+          </span>
+        )}
       </div>
 
       {/* Voting Section */}
