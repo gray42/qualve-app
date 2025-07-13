@@ -97,6 +97,8 @@ export const isAnswered = async (req, res) => {
 			post: updatedPost,
 		});
 	} catch (error) {
-		res.status(500).json({ message: "failed to update question status" });
+		res.status(500).json({
+			message: "Only the owner of this question can update its status.",
+		});
 	}
 };

@@ -31,10 +31,9 @@ function App() {
               {/* <Route path="/trending-tags" element={<TrendingPage />} /> */}
 
               <Route path="/user/:userId/questions" element={<UserPosts />} />
-              <Route element={<ProtectedRoute />}>
-                <Route path="/post/:postId" element={<PostPage />} />
-                <Route path="/post" element={<PostQuestion />} />
-              </Route>
+              <Route path="/post/:postId" element={<PostPage />} />
+              <Route path="/post" element={<PostQuestion />} />
+              <Route element={<ProtectedRoute />}></Route>
             </Route>
 
             <Route element={<SimpleLayout />}>
