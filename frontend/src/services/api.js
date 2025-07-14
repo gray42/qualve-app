@@ -197,8 +197,9 @@ export const signUserUp = async (credentials) => {
     });
     return data;
   } catch (error) {
-    console.error("Error signing user up", error);
-    throw error;
+    const message =
+      error?.response?.data?.message || "Registration failed. Try again.";
+    throw new Error(message);
   }
 };
 

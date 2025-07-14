@@ -38,9 +38,9 @@ export default function Register() {
 
     try {
       await register(userData);
+      alert("User registered successfully!");
     } catch (error) {
-      console.error("Error registering user", error);
-      throw error;
+      alert(error.message);
     }
   };
 

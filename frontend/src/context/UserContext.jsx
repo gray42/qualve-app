@@ -15,22 +15,29 @@ export default function UserProvider({ children }) {
         const user = await getUser();
         setUser(user);
       } catch (error) {
-        setUser(null);
-        console.error("Error fetching user:", error);
-        throw error;
+        if (error.response?.status === 401) {
+          // Not logged in — expected on public pages
+          setUser(null);
+        } else {
+          console.error("Unexpected error fetching user:", error);
+        }
       }
     };
     fetchUser();
-  }, [user]);
+  }, []);
 
   const login = async (credentials) => {
     try {
-      const { data } = await logUserIn(credentials, {
+      await logUserIn(credentials, {
         withCredentials: true,
       });
-      setUser(data);
+
+      // Fetch fresh user data after successful login
+      const user = await getUser();
+      setUser(user);
+
       navigate("/");
-      return data;
+      return user;
     } catch (error) {
       console.error("Error logging in user:", error);
       throw error;
@@ -43,7 +50,7 @@ export default function UserProvider({ children }) {
         withCredentials: true,
       });
       setUser(data);
-      navigate("/");
+      navigate("/login");
       return data;
     } catch (error) {
       console.error("Error logging in user:", error);
@@ -76,9 +83,9 @@ export default function UserProvider({ children }) {
 }
 
 export function useUser() {
-  const user = useContext(UserContext);
-  if (!user) {
+  const context = useContext(UserContext);
+  if (!context) {
     throw new Error("useUser must be used within a UserProvider");
   }
-  return user;
+  return context;
 }
