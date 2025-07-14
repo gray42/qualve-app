@@ -16,6 +16,7 @@ import {
   getPostsByUserId,
   getPostsByTag,
   isAnswered,
+  approveAnswerAPI,
 } from "../services/api";
 
 // Create a context
@@ -87,6 +88,28 @@ export default function PostProvider({ children }) {
       setLoading(false);
     }
   }, []);
+
+  const approveAnswer = useCallback(
+    async (postId, answerId) => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await approveAnswerAPI(postId, answerId);
+        // Optionally update the selectedPost state immediately
+        if (selectedPost && selectedPost._id === postId) {
+          setSelectedPost(data.post);
+        }
+        return data;
+      } catch (error) {
+        setError(error);
+        console.error("Error approving answer", error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [selectedPost],
+  );
 
   const loadHotPosts = async () => {
     try {
@@ -190,6 +213,7 @@ export default function PostProvider({ children }) {
     fetchPostsByUserId,
     fetchPostsByTag,
     answered,
+    approveAnswer,
   };
 
   return <PostContext.Provider value={value}>{children}</PostContext.Provider>;

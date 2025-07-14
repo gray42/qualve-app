@@ -12,13 +12,17 @@ import {
 	getPostsByTag,
 } from "../controllers/tagController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
-import { addAnswer } from "../controllers/answerController.js";
+import { addAnswer, approveAnswer } from "../controllers/answerController.js";
 import { getQuestionBySearch } from "../controllers/searchController.js";
 import { vote } from "../controllers/votingController.js";
 const router = express.Router();
 
 // update question status
-router.patch("/:postId/answered", authenticateToken, isAnswered);
+router.patch(
+	"/:postId/answers/:answerId/approve",
+	authenticateToken,
+	approveAnswer
+);
 
 //get all questions
 router.get("/", getPost);

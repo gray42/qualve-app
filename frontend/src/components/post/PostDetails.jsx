@@ -1,37 +1,14 @@
-import PropTypes from "prop-types";
 import TimeAgo from "../../utils/TimeAgo";
 import { usePosts } from "../../context/PostContext";
-import { useUser } from "../../context/UserContext";
-import { useState } from "react";
 
 //post details component to display individual post
 
 export default function PostDetails({ post }) {
-  const { user } = useUser();
-  const { handleVote, answered } = usePosts();
-  const [isUpdating, setIsUpdating] = useState(false);
+  const { handleVote } = usePosts();
 
   if (!post) {
     return <div className="text-center text-gray-600">Post not found...</div>;
   }
-
-  const handleToggleAnswered = async () => {
-    if (user.username !== post.username) {
-      alert("Only the question owner can update status!");
-      return;
-    }
-
-    setIsUpdating(true);
-    try {
-      await answered(post._id);
-    } catch (error) {
-      alert("Failed to update post status");
-    } finally {
-      setIsUpdating(false);
-    }
-  };
-
-  const isOwner = user && user.username === post.username;
 
   return (
     //make the formatting better (MVP as of now)
@@ -50,33 +27,6 @@ export default function PostDetails({ post }) {
           <TimeAgo createdAt={post.createdAt} />
         </p>
       </div>
-
-      {isOwner ? (
-        <button
-          onClick={handleToggleAnswered}
-          disabled={isUpdating}
-          className={`rounded-lg px-4 py-2 font-medium transition-colors duration-200 ${
-            post.isAnswered
-              ? "bg-green-100 text-green-800 hover:bg-green-200"
-              : "bg-blue-100 text-blue-800 hover:bg-blue-200"
-          } mb-4 mt-0 disabled:cursor-not-allowed disabled:opacity-50`}
-        >
-          {isUpdating
-            ? "Updating..."
-            : post.isAnswered
-              ? "✓ Answered"
-              : "Mark as Answered"}
-        </button>
-      ) : (
-        <button
-          onClick={() =>
-            alert("Only the post owner can update the answered status!")
-          }
-          className="cursor-not-allowed rounded-lg bg-gray-100 px-4 py-2 font-medium text-gray-500"
-        >
-          {post.isAnswered ? "✓ Answered" : "Mark as Answered"}
-        </button>
-      )}
 
       {/* Voting Section */}
       <div className="flex items-center space-x-6">

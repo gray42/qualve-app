@@ -15,6 +15,13 @@ const answerSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		isApproved: {
+			type: Boolean,
+			default: false,
+		},
+		approvedAt: {
+			type: Date,
+		},
 		upvotes: { type: Number, default: 0 },
 		downvotes: { type: Number, default: 0 },
 		voters: { type: Map, of: String, default: {} },

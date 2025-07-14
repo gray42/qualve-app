@@ -141,6 +141,21 @@ export const isAnswered = async (postId) => {
   }
 };
 
+export const approveAnswerAPI = async (postId, answerId) => {
+  try {
+    const { data } = await api.patch(
+      `/api/posts/${postId}/answers/${answerId}/approve`,
+      {
+        withCredentials: true,
+      },
+    );
+    return data;
+  } catch (error) {
+    console.error("Error occurred updating answer status", error);
+    throw error;
+  }
+};
+
 //user calls
 
 export const getUser = async () => {

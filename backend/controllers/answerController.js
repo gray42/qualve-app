@@ -24,4 +24,35 @@ export const addAnswer = async (req, res) => {
 	}
 };
 
-//PATCH /answers/:id/vote (upvote/downvote)
+//PATCH approve answer /:postId/answers/:answerId/approve
+export const approveAnswer = async (req, res) => {
+	try {
+		const { postId, answerId } = req.params;
+		const userId = req.user._id;
+
+		const post = await Post.findById(postId);
+
+		if (!post) {
+			return res.status(404).json({ message: "Post not found" });
+		}
+		// Check if the current user is the post author
+		if (post.author.toString() !== userId) {
+			return res
+				.status(403)
+				.json({ message: "Only the post author can approve answers" });
+		}
+
+		const answer = post.answers.id(answerId);
+		if (!answer) {
+			return res.status(404).json({ message: "Answer not found" });
+		}
+		answer.isApproved = true;
+		answer.approvedAt = new Date();
+		post.isAnswered = true;
+
+		await post.save();
+		res.status(201).json({ message: "Answer updated successfully.", post });
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
