@@ -53,6 +53,24 @@ const UserSchema = new mongoose.Schema(
 			type: Date,
 			default: null,
 		},
+		reputation: {
+			score: {
+				type: Number,
+				default: 0,
+			},
+			upvotes: {
+				type: Number,
+				default: 0,
+			},
+			downvotes: {
+				type: Number,
+				default: 0,
+			},
+			approvals: {
+				type: Number,
+				default: 0,
+			},
+		},
 	},
 	{ timestamps: true }
 );
