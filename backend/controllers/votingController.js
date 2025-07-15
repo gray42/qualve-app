@@ -63,7 +63,7 @@ export const vote = async (req, res) => {
 			} */
 			repChange = updateVotes(answer, userId, voteType, {
 				upvote: 10,
-				downvote: -2,
+				downvote: -5,
 			});
 
 			await User.findByIdAndUpdate(answer.author, {
@@ -78,8 +78,8 @@ export const vote = async (req, res) => {
 			} */
 
 			repChange = updateVotes(post, userId, voteType, {
-				upvote: 5,
-				downvote: -1,
+				upvote: 10,
+				downvote: -5,
 			});
 
 			await User.findByIdAndUpdate(post.author, {

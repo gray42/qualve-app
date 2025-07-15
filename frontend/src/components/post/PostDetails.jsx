@@ -113,6 +113,7 @@ export default function PostDetails({ post }) {
               </span>
             </button>
 
+            {/* onClick={() => handleAction("vote")} */}
             <button
               onClick={() => handleVote(post._id, "downvote")}
               className="flex items-center space-x-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:border-red-200 hover:bg-red-50 hover:text-red-700"
