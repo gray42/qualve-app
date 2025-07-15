@@ -36,13 +36,16 @@ export const createPost = async (req, res) => {
 	const { tags } = req.body;
 	try {
 		const newQuestion = new Post({
-			title: req.body.question,
+			title: req.body.title,
+			body: req.body.body,
 			author: req.user._id,
 			username: req.user.username,
 			tags,
 		});
 
-		await User.findByIdAndUpdate(req.user._id, { $inc: { reputation: 200 } });
+		await User.findByIdAndUpdate(req.user._id, {
+			$inc: { reputation: 200, "stats.questionsAsked": 1 },
+		});
 		const updatedUser = await User.findById(req.user._id).select("reputation");
 
 		await newQuestion.save();

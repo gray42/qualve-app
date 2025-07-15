@@ -18,6 +18,9 @@ export default function PostDetails({ post }) {
         <h1 className="mb-4 text-3xl font-bold leading-tight text-gray-900">
           {post.title}
         </h1>
+        <h2 className="mb-4 text-sm leading-tight text-gray-500">
+          {post.body}
+        </h2>
 
         {/* Author and Meta Info */}
         <div className="flex flex-wrap items-center justify-between gap-3">

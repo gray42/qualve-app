@@ -98,12 +98,15 @@ export default function PostProvider({ children }) {
       try {
         setLoading(true);
         setError(null);
-        const data = await approveAnswerAPI(postId, answerId);
+        const { post: newPost, updatedReputation } = await approveAnswerAPI(
+          postId,
+          answerId,
+        );
         // Optionally update the selectedPost state immediately
         if (selectedPost && selectedPost._id === postId) {
-          setSelectedPost(data.post);
+          setSelectedPost(newPost);
         }
-        return data;
+        updateReputation(updatedReputation);
       } catch (error) {
         setError(error);
         console.error("Error approving answer", error);
@@ -155,10 +158,11 @@ export default function PostProvider({ children }) {
     }
   };
 
-  const addQuestionToPage = async (question, selectedTags) => {
+  const addQuestionToPage = async (title, body, selectedTags) => {
     try {
       const { newQuestion: newPost, updatedReputation } = await addQuestion(
-        question,
+        title,
+        body,
         selectedTags,
       );
       setPosts((prevPosts) => [newPost, ...prevPosts]);

@@ -80,11 +80,11 @@ export const getPostsByUserId = async (userId) => {
   }
 };
 
-export const addQuestion = async (question, tagsArray) => {
+export const addQuestion = async (title, body, tagsArray) => {
   try {
     const { data } = await api.post(
       `/api/posts`,
-      { question: question, tags: tagsArray },
+      { title: title, body: body, tags: tagsArray },
       {
         withCredentials: true,
       },

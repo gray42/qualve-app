@@ -18,7 +18,9 @@ export const addAnswer = async (req, res) => {
 		};
 		post.answers.push(answer);
 
-		await User.findByIdAndUpdate(req.user._id, { $inc: { reputation: 100 } });
+		await User.findByIdAndUpdate(req.user._id, {
+			$inc: { reputation: 100, "stats.answersGiven": 1 },
+		});
 		const updatedUser = await User.findById(req.user._id).select("reputation");
 
 		await post.save();
@@ -54,8 +56,13 @@ export const approveAnswer = async (req, res) => {
 		answer.approvedAt = new Date();
 		post.isAnswered = true;
 
+		await User.findByIdAndUpdate(answer.author, {
+			$inc: { reputation: 150, "stats.answersApproved": 1 },
+		});
+		const updatedUser = await User.findById(answer.author).select("reputation");
+
 		await post.save();
-		res.status(201).json({ message: "Answer updated successfully.", post });
+		res.status(201).json({ post, updatedReputation: updatedUser.reputation });
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}

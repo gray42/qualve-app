@@ -61,13 +61,35 @@ export const vote = async (req, res) => {
 					.status(403)
 					.json({ message: "You can't vote on your own answer." });
 			} */
+			const currentVote = answer.voters.get(userId);
+			let upvoteDelta = 0;
+			let downvoteDelta = 0;
+
+			// Calculate deltas based on vote transitions
+			if (currentVote === voteType) {
+				// Removing vote
+				if (voteType === "upvote") upvoteDelta = -1;
+				if (voteType === "downvote") downvoteDelta = -1;
+			} else {
+				// Adding new vote (and potentially removing old)
+				if (currentVote === "upvote") upvoteDelta = -1;
+				if (currentVote === "downvote") downvoteDelta = -1;
+
+				if (voteType === "upvote") upvoteDelta += 1;
+				if (voteType === "downvote") downvoteDelta += 1;
+			}
+
 			repChange = updateVotes(answer, userId, voteType, {
 				upvote: 15,
 				downvote: 15,
 			});
 
 			await User.findByIdAndUpdate(answer.author, {
-				$inc: { reputation: repChange },
+				$inc: {
+					reputation: repChange,
+					"stats.upvotesReceived": upvoteDelta,
+					"stats.downvotesReceived": downvoteDelta,
+				},
 			});
 		} else {
 			// prevent voting on own post
@@ -76,6 +98,23 @@ export const vote = async (req, res) => {
 					.status(403)
 					.json({ message: "You can't vote on your own post." });
 			} */
+			const currentVote = post.voters.get(userId);
+			let upvoteDelta = 0;
+			let downvoteDelta = 0;
+
+			// Calculate deltas based on vote transitions
+			if (currentVote === voteType) {
+				// Removing vote
+				if (voteType === "upvote") upvoteDelta = -1;
+				if (voteType === "downvote") downvoteDelta = -1;
+			} else {
+				// Adding new vote (and potentially removing old)
+				if (currentVote === "upvote") upvoteDelta = -1;
+				if (currentVote === "downvote") downvoteDelta = -1;
+
+				if (voteType === "upvote") upvoteDelta += 1;
+				if (voteType === "downvote") downvoteDelta += 1;
+			}
 
 			repChange = updateVotes(post, userId, voteType, {
 				upvote: 10,
@@ -83,7 +122,11 @@ export const vote = async (req, res) => {
 			});
 
 			await User.findByIdAndUpdate(post.author, {
-				$inc: { reputation: repChange },
+				$inc: {
+					reputation: repChange,
+					"stats.upvotesReceived": upvoteDelta,
+					"stats.downvotesReceived": downvoteDelta,
+				},
 			});
 		}
 

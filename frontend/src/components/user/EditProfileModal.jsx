@@ -23,59 +23,96 @@ const EditProfileModal = ({ user, onClose, onSave }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md space-y-4 rounded bg-white p-6 shadow"
-      >
-        <h3 className="text-lg font-semibold">Edit Profile</h3>
-        <input
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Full Name"
-          className="w-full border p-2"
-        />
-        <input
-          name="classes"
-          value={formData.classes}
-          onChange={handleChange}
-          placeholder="Classes"
-          className="w-full border p-2"
-        />
-        <input
-          name="school"
-          value={formData.school}
-          onChange={handleChange}
-          placeholder="School"
-          className="w-full border p-2"
-        />
-        <input
-          name="birthday"
-          type="date"
-          value={formData.birthday}
-          onChange={handleChange}
-          className="w-full border p-2"
-        />
-        <textarea
-          name="bio"
-          value={formData.bio}
-          onChange={handleChange}
-          placeholder="Bio"
-          className="w-full border p-2"
-        />
-        <div className="flex justify-end space-x-2">
-          <button type="button" onClick={onClose} className="text-gray-500">
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="rounded bg-blue-500 px-4 py-1 text-white"
-          >
-            Save
-          </button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+      <div className="w-full max-w-lg rounded-lg bg-white shadow-xl">
+        <div className="border-b px-6 py-4">
+          <h3 className="text-xl font-semibold text-gray-800">Edit Profile</h3>
         </div>
-      </form>
+
+        <form onSubmit={handleSubmit} className="space-y-4 p-6">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              Full Name
+            </label>
+            <input
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              Classes
+            </label>
+            <input
+              name="classes"
+              value={formData.classes}
+              onChange={handleChange}
+              placeholder="e.g., Math 101, Physics 201"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              School
+            </label>
+            <input
+              name="school"
+              value={formData.school}
+              onChange={handleChange}
+              placeholder="University or Institution"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              Birthday
+            </label>
+            <input
+              name="birthday"
+              type="date"
+              value={formData.birthday}
+              onChange={handleChange}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              Bio
+            </label>
+            <textarea
+              name="bio"
+              value={formData.bio}
+              onChange={handleChange}
+              placeholder="Tell us about yourself..."
+              rows="4"
+              className="w-full resize-none rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="flex justify-end space-x-3 pt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-md bg-gray-100 px-4 py-2 font-medium text-gray-700 transition-colors hover:bg-gray-200"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

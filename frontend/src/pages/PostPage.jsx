@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import { usePosts } from "../context/PostContext";
 import { useUser } from "../context/UserContext";
 
+import MDEditor from "@uiw/react-md-editor";
+import ReactMarkdown from "react-markdown";
+
 export default function PostPage() {
   const { postId } = useParams();
   const { user } = useUser();
@@ -135,9 +138,9 @@ export default function PostPage() {
                   {/* Answer Content */}
                   <div className={`${answer.isApproved ? "pr-32" : ""}`}>
                     <div className="prose prose-gray max-w-none">
-                      <p className="text-base leading-relaxed text-gray-800">
+                      <ReactMarkdown className="text-base leading-relaxed text-gray-800">
                         {answer.body}
-                      </p>
+                      </ReactMarkdown>
                     </div>
                   </div>
 
@@ -271,11 +274,12 @@ export default function PostPage() {
               Add Your Answer
             </h2>
             <form onSubmit={handleSubmit} className="mt-4 space-y-4">
-              <textarea
+              <MDEditor
+                data-color-mode="light"
                 rows="4"
                 placeholder="Write your answer here..."
                 value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
+                onChange={setAnswer}
                 className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               />
               <button

@@ -57,6 +57,13 @@ const UserSchema = new mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
+		stats: {
+			questionsAsked: { type: Number, default: 0 },
+			answersGiven: { type: Number, default: 0 },
+			answersApproved: { type: Number, default: 0 },
+			upvotesReceived: { type: Number, default: 0 },
+			downvotesReceived: { type: Number, default: 0 },
+		},
 	},
 	{ timestamps: true }
 );

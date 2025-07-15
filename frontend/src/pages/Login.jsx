@@ -19,9 +19,9 @@ export default function Login() {
 
     try {
       await login(userData);
+      alert("User logged in!");
     } catch (error) {
-      console.error("Error logging in", error);
-      throw error;
+      alert(error.message);
     }
   };
 
