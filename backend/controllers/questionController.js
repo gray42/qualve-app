@@ -1,4 +1,5 @@
 import { Post } from "../models/postSchema.js";
+import { User } from "../models/userSchema.js";
 
 //get all questions
 export const getPost = async (req, res) => {
@@ -40,8 +41,14 @@ export const createPost = async (req, res) => {
 			username: req.user.username,
 			tags,
 		});
+
+		await User.findByIdAndUpdate(req.user._id, { $inc: { reputation: 200 } });
+		const updatedUser = await User.findById(req.user._id).select("reputation");
+
 		await newQuestion.save();
-		res.status(201).json(newQuestion);
+		res
+			.status(201)
+			.json({ newQuestion, updatedReputation: updatedUser.reputation });
 	} catch (error) {
 		console.error("Error during post-question:", error);
 		res.status(500).json({ message: error.message });

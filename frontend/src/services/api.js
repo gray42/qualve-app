@@ -84,7 +84,7 @@ export const addQuestion = async (question, tagsArray) => {
   try {
     const { data } = await api.post(
       `/api/posts`,
-      { question, tags: tagsArray },
+      { question: question, tags: tagsArray },
       {
         withCredentials: true,
       },

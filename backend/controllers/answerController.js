@@ -17,8 +17,12 @@ export const addAnswer = async (req, res) => {
 			createdAt: new Date(),
 		};
 		post.answers.push(answer);
+
+		await User.findByIdAndUpdate(req.user._id, { $inc: { reputation: 100 } });
+		const updatedUser = await User.findById(req.user._id).select("reputation");
+
 		await post.save();
-		res.status(201).json({ message: "Answer added successfully.", answer });
+		res.status(201).json({ answer, updatedReputation: updatedUser.reputation });
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}

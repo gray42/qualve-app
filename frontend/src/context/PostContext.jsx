@@ -141,10 +141,14 @@ export default function PostProvider({ children }) {
 
   const addAnswerToPost = async (postId, answer) => {
     try {
-      const updatedPost = await addAnswer(postId, answer);
+      const { answer: updatedPost, updatedReputation } = await addAnswer(
+        postId,
+        answer,
+      );
       setSelectedPost((prevPost) =>
         prevPost && prevPost.id === postId ? updatedPost : prevPost,
       );
+      updateReputation(updatedReputation);
     } catch (error) {
       setError(error);
       console.error("Error adding answer to post", error);
@@ -153,8 +157,12 @@ export default function PostProvider({ children }) {
 
   const addQuestionToPage = async (question, selectedTags) => {
     try {
-      const newPost = await addQuestion(question, selectedTags);
+      const { newQuestion: newPost, updatedReputation } = await addQuestion(
+        question,
+        selectedTags,
+      );
       setPosts((prevPosts) => [newPost, ...prevPosts]);
+      updateReputation(updatedReputation);
     } catch (error) {
       setError(error);
       console.error("Error adding answer to post", error);

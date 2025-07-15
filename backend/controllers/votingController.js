@@ -62,8 +62,8 @@ export const vote = async (req, res) => {
 					.json({ message: "You can't vote on your own answer." });
 			} */
 			repChange = updateVotes(answer, userId, voteType, {
-				upvote: 10,
-				downvote: -5,
+				upvote: 15,
+				downvote: 15,
 			});
 
 			await User.findByIdAndUpdate(answer.author, {
@@ -79,7 +79,7 @@ export const vote = async (req, res) => {
 
 			repChange = updateVotes(post, userId, voteType, {
 				upvote: 10,
-				downvote: -5,
+				downvote: 10,
 			});
 
 			await User.findByIdAndUpdate(post.author, {
