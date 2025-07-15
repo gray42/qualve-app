@@ -19,6 +19,8 @@ import {
   approveAnswerAPI,
 } from "../services/api";
 
+import { useUser } from "./UserContext";
+
 // Create a context
 const PostContext = createContext();
 
@@ -31,6 +33,8 @@ export default function PostProvider({ children }) {
   const [error, setError] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
+
+  const { updateReputation } = useUser();
 
   useEffect(() => {
     fetchPosts();
@@ -160,15 +164,21 @@ export default function PostProvider({ children }) {
   //manage votes
   const handleVote = async (postId, voteType, answerId = null) => {
     try {
-      const data = await voteOnPost(postId, voteType, answerId);
+      const { post: updatedPost, updatedReputation } = await voteOnPost(
+        postId,
+        voteType,
+        answerId,
+      );
 
       if (selectedPost && selectedPost._id === postId) {
-        setSelectedPost(data);
+        setSelectedPost(updatedPost);
       } else {
         setPosts((prevPosts) =>
-          prevPosts.map((post) => (post._id === postId ? data : post)),
+          prevPosts.map((post) => (post._id === postId ? updatedPost : post)),
         );
       }
+
+      updateReputation(updatedReputation);
     } catch (error) {
       console.error("Error voting", error);
     }

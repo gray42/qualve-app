@@ -26,6 +26,10 @@ export default function UserProvider({ children }) {
     fetchUser();
   }, []);
 
+  const updateReputation = (newRep) => {
+    setUser((prevUser) => ({ ...prevUser, reputation: newRep }));
+  };
+
   const login = async (credentials) => {
     try {
       await logUserIn(credentials, {
@@ -77,6 +81,7 @@ export default function UserProvider({ children }) {
     login,
     register,
     logout,
+    updateReputation,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
