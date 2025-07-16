@@ -28,35 +28,53 @@ export default function PostPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold text-gray-800">Post Question</h2>
-        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+    <div className="min-h-screen bg-gray-50 px-6 py-10 sm:px-12 lg:px-24">
+      <div className="mx-auto max-w-3xl">
+        <h2 className="mb-6 border-b border-gray-200 pb-2 text-2xl font-bold text-gray-900">
+          Post a Question
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-8">
           <div>
-            <h3>Question Title</h3>
+            <label
+              htmlFor="title"
+              className="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Question Title
+            </label>
             <textarea
-              rows="1"
-              placeholder="(ie) what is matrix multiplication..."
+              id="title"
+              rows={2}
+              placeholder="How would you summarize your question in one sentence?"
               value={formData.title}
               onChange={(e) =>
-                setFormData({ ...formData, title: e.target.value })
+                setFormData((prev) => ({ ...prev, title: e.target.value }))
               }
-              className="w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="w-full rounded-md border border-gray-300 p-3 text-gray-900 placeholder-gray-400 shadow-sm transition focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400"
             />
           </div>
 
           <div>
-            <h3>Question Body</h3>
+            <label
+              htmlFor="body"
+              className="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Question Body
+            </label>
             <MDEditor
+              id="body"
               data-color-mode="light"
               value={formData.body}
-              onChange={(value) => setFormData({ ...formData, body: value })}
-              className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              onChange={(value) =>
+                setFormData((prev) => ({ ...prev, body: value }))
+              }
+              className="w-full rounded-md border border-gray-300 p-3 text-gray-900 shadow-sm transition focus-within:border-indigo-600 focus-within:ring-2 focus-within:ring-indigo-400"
             />
           </div>
 
           <div>
-            <h3>Tags</h3>
+            <label className="mb-2 block text-sm font-semibold text-gray-700">
+              Tags
+            </label>
             <TagAutocomplete
               selectedTags={formData.tags}
               setSelectedTags={(tags) =>
@@ -66,8 +84,8 @@ export default function PostPage() {
           </div>
 
           <button
-            className="w-auto rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             type="submit"
+            className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-md transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Submit Question
           </button>
