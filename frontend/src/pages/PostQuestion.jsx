@@ -2,6 +2,8 @@ import { usePosts } from "../context/PostContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+import MDEditor from "@uiw/react-md-editor";
+
 export default function PostPage() {
   const { addQuestionToPage } = usePosts();
   const navigate = useNavigate();
@@ -37,26 +39,23 @@ export default function PostPage() {
           <div>
             <h3>Question Title</h3>
             <textarea
-              rows="4"
+              rows="1"
               placeholder="(ie) what is matrix multiplication..."
               value={formData.title}
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
               }
-              className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
 
           <div>
             <h3>Question Body</h3>
-            <textarea
-              rows="4"
-              placeholder="describe your problem..."
+            <MDEditor
+              data-color-mode="light"
               value={formData.body}
-              onChange={(e) =>
-                setFormData({ ...formData, body: e.target.value })
-              }
-              className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              onChange={(value) => setFormData({ ...formData, body: value })}
+              className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
 
@@ -73,7 +72,7 @@ export default function PostPage() {
           </div>
 
           <button
-            className="w-full rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="w-auto rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             type="submit"
           >
             Submit Question
