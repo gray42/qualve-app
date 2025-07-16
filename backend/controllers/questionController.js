@@ -6,6 +6,7 @@ export const getPost = async (req, res) => {
 	try {
 		const posts = await Post.find()
 			.populate("author", "username")
+			.populate("tags", "name")
 			.sort({ createdAt: -1 });
 		res.status(200).json(posts);
 	} catch (error) {
@@ -17,10 +18,9 @@ export const getPost = async (req, res) => {
 export const getPostWithId = async (req, res) => {
 	try {
 		const questionId = req.params.id;
-		const question = await Post.findById(questionId).populate(
-			"author",
-			"username"
-		);
+		const question = await Post.findById(questionId)
+			.populate("author", "username")
+			.populate("tags", "name");
 
 		if (!question) {
 			return res.status(404).json({ message: "post not found" });
@@ -63,6 +63,7 @@ export const getPostsByUserId = async (req, res) => {
 		const { userId } = req.params;
 		const posts = await Post.find({ author: userId })
 			.populate("author", "username")
+			.populate("tags", "name")
 			.sort({ createdAt: -1 });
 		res.status(200).json(posts);
 	} catch (error) {
@@ -73,7 +74,8 @@ export const getPostsByUserId = async (req, res) => {
 
 export const getHotPosts = async (req, res) => {
 	try {
-		const hotPosts = await Post.find({ upvotes: { $gte: 1 } }) // Only posts with at least 1 upvote
+		const hotPosts = await Post.find({ upvotes: { $gte: 1 } })
+			.populate("tags", "name") // Only posts with at least 1 upvote
 			.sort({ upvotes: -1, createdAt: -1 })
 			.limit(5);
 

@@ -14,10 +14,10 @@ export default function SidebarRight() {
           {trendingTags.map((tag) => (
             <li key={tag._id}>
               <Link
-                to={`/tags/${tag._id}`}
+                to={`/tags/${tag.name}`}
                 className="inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 hover:bg-blue-100"
               >
-                #{tag._id} ({tag.count})
+                #{tag.name} ({tag.count})
               </Link>
             </li>
           ))}

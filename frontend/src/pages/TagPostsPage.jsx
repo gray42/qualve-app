@@ -4,12 +4,12 @@ import { usePosts } from "../context/PostContext";
 import { useParams } from "react-router-dom";
 
 export default function TagPostsPage() {
-  const { tagId } = useParams();
+  const { tag } = useParams();
   const { posts, fetchPostsByTag, loading, error } = usePosts();
 
   useEffect(() => {
-    fetchPostsByTag(tagId);
-  }, [tagId, fetchPostsByTag]);
+    fetchPostsByTag(tag);
+  }, [tag, fetchPostsByTag]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -21,7 +21,8 @@ export default function TagPostsPage() {
 
   return (
     <>
-      <h2 className="mb-4 text-2xl font-bold">#{tagId}</h2>
+      <h1 className="text-3xl">#{tag}</h1>
+      {posts.length === 0 && <p>No posts found.</p>}
       <PostList posts={posts} showWelcome={false} />
     </>
   );

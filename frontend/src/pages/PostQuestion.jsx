@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import MDEditor from "@uiw/react-md-editor";
+import TagAutocomplete from "../components/tags/TagAutocomplete";
 
 export default function PostPage() {
   const { addQuestionToPage } = usePosts();
@@ -11,21 +12,16 @@ export default function PostPage() {
   const [formData, setFormData] = useState({
     title: "",
     body: "",
-    tags: "",
+    tags: [],
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const tagsArray = formData.tags
-      .split(",")
-      .map((tag) => tag.trim().toLowerCase())
-      .filter((tag) => tag !== "");
 
     try {
-      if (formData.title.trim()) {
-        await addQuestionToPage(formData.title, formData.body, tagsArray);
-        navigate("/");
-      }
+      const selectedTags = formData.tags.map((tag) => tag._id);
+      await addQuestionToPage(formData.title, formData.body, selectedTags);
+      navigate("/");
     } catch (error) {
       console.error("Error submitting question", error);
     }
@@ -61,12 +57,10 @@ export default function PostPage() {
 
           <div>
             <h3>Tags</h3>
-            <input
-              className="w-full rounded border p-2"
-              placeholder="Tags (comma-separated, e.g., coding,react)"
-              value={formData.tags}
-              onChange={(e) =>
-                setFormData({ ...formData, tags: e.target.value })
+            <TagAutocomplete
+              selectedTags={formData.tags}
+              setSelectedTags={(tags) =>
+                setFormData((prev) => ({ ...prev, tags }))
               }
             />
           </div>

@@ -27,7 +27,7 @@ function App() {
               <Route path="/posts/:postId" element={<PostPage />} />
               <Route path="/hot" element={<HotPostsPage />} />
               <Route path="/profile/:userId" element={<ProfilePage />} />
-              <Route path="/tags/:tagId" element={<TagPostsPage />} />
+              <Route path="/tags/:tag" element={<TagPostsPage />} />
               {/* <Route path="/trending-tags" element={<TrendingPage />} /> */}
 
               <Route path="/user/:userId/questions" element={<UserPosts />} />

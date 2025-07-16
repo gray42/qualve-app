@@ -80,16 +80,28 @@ export const getPostsByUserId = async (userId) => {
   }
 };
 
-export const addQuestion = async (title, body, tagsArray) => {
+export const addQuestion = async (title, body, selectedTags) => {
   try {
     const { data } = await api.post(
       `/api/posts`,
-      { title: title, body: body, tags: tagsArray },
+      { title: title, body: body, tags: selectedTags },
       {
         withCredentials: true,
       },
     );
 
+    return data;
+  } catch (error) {
+    console.error("Error occurred adding question", error);
+    throw error;
+  }
+};
+
+export const getTagSuggestions = async (query) => {
+  try {
+    const { data } = await api.get(`/api/tags/search?query=${query}`, {
+      withCredentials: true,
+    });
     return data;
   } catch (error) {
     console.error("Error occurred adding question", error);

@@ -52,11 +52,11 @@ export default function PostCard({
             <div className="mt-2 flex flex-wrap gap-2">
               {tags.map((tag, index) => (
                 <Link
-                  to={`/tags/${tag}`}
+                  to={`/tags/${tag.name}`}
                   key={index}
                   className="inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 hover:bg-blue-100"
                 >
-                  #{tag}
+                  #{tag.name}
                 </Link>
               ))}
             </div>

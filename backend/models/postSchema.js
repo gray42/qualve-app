@@ -48,7 +48,7 @@ const questionSchema = new mongoose.Schema(
 			type: String,
 			required: false,
 		},
-		tags: [{ type: String }],
+		tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
 		upvotes: { type: Number, default: 0 },
 		downvotes: { type: Number, default: 0 },
 		voters: { type: Map, of: String, default: {} },

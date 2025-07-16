@@ -79,11 +79,11 @@ export default function PostDetails({ post }) {
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag, index) => (
               <Link
-                to={`/tags/${tag}`}
+                to={`/tags/${tag.name}`}
                 key={index}
                 className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 transition-colors duration-200 hover:bg-blue-200"
               >
-                #{tag}
+                #{tag.name}
               </Link>
             ))}
           </div>
