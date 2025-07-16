@@ -3,6 +3,7 @@ import { usePosts } from "../../context/PostContext";
 import { Link } from "react-router-dom";
 
 //post details component to display individual post
+import ReactMarkdown from "react-markdown";
 
 export default function PostDetails({ post }) {
   const { handleVote } = usePosts();
@@ -18,9 +19,10 @@ export default function PostDetails({ post }) {
         <h1 className="mb-4 text-3xl font-bold leading-tight text-gray-900">
           {post.title}
         </h1>
-        <h2 className="mb-4 text-sm leading-tight text-gray-500">
+
+        <ReactMarkdown className="text-base leading-relaxed text-gray-800">
           {post.body}
-        </h2>
+        </ReactMarkdown>
 
         {/* Author and Meta Info */}
         <div className="flex flex-wrap items-center justify-between gap-3">
