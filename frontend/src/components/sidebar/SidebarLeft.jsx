@@ -54,7 +54,7 @@ export default function SidebarLeft() {
         to="/"
         className="mb-10 text-xl font-extrabold text-gray-900 hover:text-gray-700"
       >
-        MyStack
+        MyNav
       </Link>
 
       {/* Navigation */}

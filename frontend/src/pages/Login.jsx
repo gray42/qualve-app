@@ -8,6 +8,7 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -15,13 +16,31 @@ export default function Login() {
 
   const loginUser = async (e) => {
     e.preventDefault();
-    console.log("Registering user...");
+    setError(null);
 
     try {
       await login(userData);
       alert("User logged in!");
     } catch (error) {
-      alert(error.message);
+      if (error.response) {
+        // Backend responded with an error status
+        const status = error.response.status;
+        const backendError = error.response.data?.error || "An error occurred";
+
+        if (status === 404) {
+          setError("User not found. Please check your email.");
+        } else if (status === 400) {
+          setError("Invalid credentials. Please check your password.");
+        } else {
+          setError(backendError); // fallback to backend's message if available
+        }
+      } else if (error.request) {
+        setError(
+          "No response from server. Please check your internet connection.",
+        );
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
     }
   };
 
@@ -66,6 +85,7 @@ export default function Login() {
           Sign up
         </Link>
       </p>
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }

@@ -132,6 +132,7 @@ export const vote = async (req, res) => {
 
 		const updatedUser = await User.findById(userId).select("reputation");
 		await post.save();
+		await post.populate("tags");
 		res.status(200).json({ post, updatedReputation: updatedUser.reputation });
 	} catch (error) {
 		res.status(500).json({ message: error.message });
