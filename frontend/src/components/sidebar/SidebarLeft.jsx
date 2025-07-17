@@ -32,8 +32,8 @@ export default function SidebarLeft() {
       icon: <UserGroupIcon className="h-5 w-5" />,
     },
     {
-      name: "Bookmarks",
-      to: "/bookmarks",
+      name: "Saves",
+      to: "/saves",
       icon: <BookmarkIcon className="h-5 w-5" />,
     },
     {

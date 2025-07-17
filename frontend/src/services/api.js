@@ -23,18 +23,6 @@ export const getPosts = async () => {
   }
 };
 
-export const getTrendingTags = async () => {
-  try {
-    const { data } = await api.get("/api/posts/trending-tags", {
-      withCredentials: true,
-    });
-    return data;
-  } catch (error) {
-    console.error("Error occurred fetching data", error);
-    throw error;
-  }
-};
-
 export const getPostsByTag = async (tag) => {
   try {
     const { data } = await api.get(`/api/posts/tags/${tag}`, {
@@ -105,6 +93,30 @@ export const getTagSuggestions = async (query) => {
     return data;
   } catch (error) {
     console.error("Error occurred adding question", error);
+    throw error;
+  }
+};
+
+export const getTrendingTags = async () => {
+  try {
+    const { data } = await api.get("/api/posts/trending-tags", {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error occurred fetching data", error);
+    throw error;
+  }
+};
+
+export const getAllTags = async () => {
+  try {
+    const { data } = await api.get("/api/tags/", {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error occurred fetching data", error);
     throw error;
   }
 };

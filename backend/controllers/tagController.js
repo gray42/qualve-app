@@ -7,7 +7,7 @@ export const getTrendingTags = async (req, res) => {
 			{ $unwind: "$tags" }, // flatten tags array
 			{ $group: { _id: "$tags", count: { $sum: 1 } } }, // group by tag ObjectId and count
 			{ $sort: { count: -1 } }, // sort descending by count
-			{ $limit: 10 }, // top 10 tags
+			{ $limit: 5 }, // top 10 tags
 			{
 				$lookup: {
 					from: "tags", // name of the tags collection (usually lowercase plural)
@@ -57,5 +57,14 @@ export const searchTags = async (req, res) => {
 		res.json(tags);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
+	}
+};
+
+export const getTags = async (req, res) => {
+	try {
+		const tags = await Tag.find().sort({ createdAt: -1 });
+		res.status(200).json(tags);
+	} catch (error) {
+		res.status(500).json({ message: "error fetching posts", error });
 	}
 };

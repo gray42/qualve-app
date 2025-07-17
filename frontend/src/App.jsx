@@ -14,6 +14,8 @@ import TagPostsPage from "./pages/TagPostsPage";
 
 import MainLayout from "./components/layout/MainLayout";
 import SimpleLayout from "./components/layout/SimpleLayout";
+import TagPage from "./pages/TagPage";
+import TagProvider from "./context/TagContext";
 
 //need to wrap post provider outside with BrowserRouter?
 function App() {
@@ -21,30 +23,32 @@ function App() {
     <>
       <UserProvider>
         <PostProvider>
-          <Routes>
-            <Route path="/" element={<MainLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path="/posts/:postId" element={<PostPage />} />
-              <Route path="/hot" element={<HotPostsPage />} />
-              <Route path="/profile/:userId" element={<ProfilePage />} />
+          <TagProvider>
+            <Routes>
+              <Route path="/" element={<MainLayout />}>
+                <Route index element={<HomePage />} />
+                <Route path="/posts/:postId" element={<PostPage />} />
+                <Route path="/hot" element={<HotPostsPage />} />
+                <Route path="/profile/:userId" element={<ProfilePage />} />
 
-              {/* <Route path="/trending-tags" element={<TrendingPage />} /> */}
+                {/* <Route path="/trending-tags" element={<TrendingPage />} /> */}
 
-              <Route path="/user/:userId/questions" element={<UserPosts />} />
-              <Route path="/post/:postId" element={<PostPage />} />
-
-              <Route element={<ProtectedRoute />}>
-                <Route path="/tags/:tag" element={<TagPostsPage />} />
-                <Route path="/post" element={<PostQuestion />} />
+                <Route path="/user/:userId/questions" element={<UserPosts />} />
+                <Route path="/post/:postId" element={<PostPage />} />
+                <Route path="/tags" element={<TagPage />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/tags/:tag" element={<TagPostsPage />} />
+                  <Route path="/post" element={<PostQuestion />} />
+                </Route>
               </Route>
-            </Route>
 
-            <Route element={<SimpleLayout />}>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              {/* Add other minimal pages like Signup here */}
-            </Route>
-          </Routes>
+              <Route element={<SimpleLayout />}>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                {/* Add other minimal pages like Signup here */}
+              </Route>
+            </Routes>
+          </TagProvider>
         </PostProvider>
       </UserProvider>
     </>
