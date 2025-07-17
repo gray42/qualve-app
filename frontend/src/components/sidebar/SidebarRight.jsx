@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { usePosts } from "../../context/PostContext";
+import { useTags } from "../../context/TagContext";
 
 export default function SidebarRight() {
-  const { trendingTags, hotPosts } = usePosts();
+  const { hotPosts } = usePosts();
+  const { trendingTags } = useTags();
 
   return (
     <aside className="flex flex-col p-4">

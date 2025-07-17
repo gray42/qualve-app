@@ -25,7 +25,7 @@ const ProfilePage = () => {
 
   return (
     <div className="mx-auto max-w-4xl p-4">
-      <UserProfileHeader user={user} />
+      <h1 className="text-3xl">{user.name}s' Posts</h1>
       <UserPostsTab posts={userPosts} />
     </div>
   );

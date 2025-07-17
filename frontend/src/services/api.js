@@ -180,6 +180,17 @@ export const approveAnswerAPI = async (postId, answerId) => {
   }
 };
 
+export const getNotifications = async () => {
+  try {
+    const { data } = await api.get("/api/notifications/", {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error getting notifications", error);
+  }
+};
+
 //user calls
 
 export const getUser = async () => {

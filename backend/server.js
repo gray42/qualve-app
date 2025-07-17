@@ -9,6 +9,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.js";
 import postRoutes from "./routes/posts.js";
 import tagRoutes from "./routes/tags.js";
+import notiRoutes from "./routes/noti.js";
 
 //.env
 dotenv.config();
@@ -48,3 +49,4 @@ app.listen(port, () => {
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/tags", tagRoutes);
+app.use("/api/notifications", notiRoutes);

@@ -1,5 +1,6 @@
 import { User } from "../models/userSchema.js";
 import { Post } from "../models/postSchema.js";
+import { Notification } from "../models/notificationSchema.js";
 
 const updateVotes = (target, userId, voteType, repWeights) => {
 	const currentVote = target.voters.get(userId);
@@ -91,6 +92,29 @@ export const vote = async (req, res) => {
 					"stats.downvotesReceived": downvoteDelta,
 				},
 			});
+			try {
+				if (!answer.author.equals(userId)) {
+					await Notification.deleteMany({
+						userId: answer.author,
+						from: userId,
+						resourceId: answerId,
+						resourceType: "Answer",
+						type: { $in: ["upvote", "downvote"] },
+					});
+
+					if (currentVote !== voteType) {
+						await Notification.create({
+							userId: answer.author,
+							type: voteType,
+							from: userId,
+							resourceId: answerId,
+							resourceType: "Answer",
+						});
+					}
+				}
+			} catch (notificationError) {
+				console.error("Notification error:", notificationError);
+			}
 		} else {
 			// prevent voting on own post
 			/* if (post.author.equals(userId)) {
@@ -128,6 +152,29 @@ export const vote = async (req, res) => {
 					"stats.downvotesReceived": downvoteDelta,
 				},
 			});
+			try {
+				if (!post.author.equals(userId)) {
+					await Notification.deleteMany({
+						userId: post.author,
+						from: userId,
+						resourceId: postId,
+						resourceType: "Question",
+						type: { $in: ["upvote", "downvote"] },
+					});
+
+					if (currentVote !== voteType) {
+						await Notification.create({
+							userId: post.author,
+							type: voteType,
+							from: userId,
+							resourceId: postId,
+							resourceType: "Question",
+						});
+					}
+				}
+			} catch (notificationError) {
+				console.error("Notification error:", notificationError);
+			}
 		}
 
 		const updatedUser = await User.findById(userId).select("reputation");

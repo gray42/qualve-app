@@ -1,12 +1,14 @@
 import { usePosts } from "../context/PostContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useTags } from "../context/TagContext";
 
 import MDEditor from "@uiw/react-md-editor";
 import TagAutocomplete from "../components/tags/TagAutocomplete";
 
 export default function PostPage() {
   const { addQuestionToPage } = usePosts();
+  const { fetchTrendingTags } = useTags();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -21,6 +23,7 @@ export default function PostPage() {
     try {
       const selectedTags = formData.tags.map((tag) => tag._id);
       await addQuestionToPage(formData.title, formData.body, selectedTags);
+      fetchTrendingTags();
       navigate("/");
     } catch (error) {
       console.error("Error submitting question", error);

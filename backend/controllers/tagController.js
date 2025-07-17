@@ -4,10 +4,11 @@ import { Tag } from "../models/tagSchema.js";
 export const getTrendingTags = async (req, res) => {
 	try {
 		const tags = await Post.aggregate([
+			{ $match: { tags: { $exists: true, $ne: [] } } },
 			{ $unwind: "$tags" }, // flatten tags array
 			{ $group: { _id: "$tags", count: { $sum: 1 } } }, // group by tag ObjectId and count
-			{ $sort: { count: -1 } }, // sort descending by count
-			{ $limit: 5 }, // top 10 tags
+			{ $sort: { count: -1, _id: 1 } }, // sort descending by count
+			{ $limit: 5 }, // top 5 tags
 			{
 				$lookup: {
 					from: "tags", // name of the tags collection (usually lowercase plural)
