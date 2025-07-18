@@ -1,4 +1,7 @@
-const UserProfileHeader = ({ user }) => {
+import { Link } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
+
+const UserProfileHeader = ({ user, onEdit }) => {
   const getReputationLevel = (reputation) => {
     if (reputation < 100) return { level: "Novice", color: "text-gray-500" };
     if (reputation < 500)
@@ -9,6 +12,9 @@ const UserProfileHeader = ({ user }) => {
   };
 
   const repLevel = getReputationLevel(user.reputation);
+  // check for user profile ownership
+  const { user: currentUser } = useUser();
+  const isOwnProfile = currentUser?._id === user._id;
 
   return (
     <div className="mb-6 border-b pb-6">
@@ -71,6 +77,23 @@ const UserProfileHeader = ({ user }) => {
       {user.bio && (
         <div className="rounded-lg bg-gray-50 p-3">
           <p className="italic text-gray-700">{user.bio}</p>
+        </div>
+      )}
+
+      {isOwnProfile && ( // if the logged in user is the profile owner then display the ability to ask a question or edit profile
+        <div className="mt-4 flex gap-2">
+          <Link
+            to="/post"
+            className="mt-8 rounded bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white transition hover:bg-blue-700"
+          >
+            Ask Question
+          </Link>
+          <button
+            onClick={onEdit}
+            className="mt-8 rounded bg-gray-600 px-3 py-2 text-center text-sm font-semibold text-white transition hover:bg-gray-700"
+          >
+            Edit Profile
+          </button>
         </div>
       )}
     </div>

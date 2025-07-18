@@ -1,21 +1,15 @@
-import { useState } from "react";
 import { useUser } from "../../context/UserContext";
-import EditProfileModal from "./EditProfileModal";
 
-const AboutTab = ({ user, onUpdate }) => {
+const AboutTab = ({ user, onUpdate, onEdit }) => {
   const { user: currentUser } = useUser();
   const isOwnProfile = currentUser?._id === user._id;
-  const [editing, setEditing] = useState(false);
 
   return (
     <div className="rounded bg-white p-4 shadow">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-bold">About</h2>
         {isOwnProfile && (
-          <button
-            onClick={() => setEditing(true)}
-            className="text-blue-600 hover:underline"
-          >
+          <button onClick={onEdit} className="text-blue-600 hover:underline">
             Edit Profile
           </button>
         )}
@@ -46,14 +40,6 @@ const AboutTab = ({ user, onUpdate }) => {
           {user.classes || "Not provided"}
         </li>
       </ul>
-
-      {editing && (
-        <EditProfileModal
-          user={user}
-          onClose={() => setEditing(false)}
-          onSave={onUpdate}
-        />
-      )}
     </div>
   );
 };

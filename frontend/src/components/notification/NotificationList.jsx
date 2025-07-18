@@ -5,7 +5,7 @@ import { useUser } from "../../context/UserContext";
 
 export default function NotificationList() {
   const { user } = useUser();
-  const { notifications, markNotificationAsRead } = useNotifications();
+  const { notifications, markNotificationAsRead, loading } = useNotifications();
   const navigate = useNavigate();
 
   const handleClick = async (notification) => {
@@ -25,7 +25,9 @@ export default function NotificationList() {
       console.error("Error marking notification as read and rerouting", error);
     }
   };
-
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   if (!Array.isArray(notifications) || notifications.length === 0) {
     return <p>No notifications yet!</p>;
   }
@@ -46,12 +48,10 @@ export default function NotificationList() {
             <strong className="font-medium text-gray-900">
               {n.from.username}
             </strong>{" "}
-            {n.type === "upvote" || n.type === "downvote"
-              ? n.type + "d"
-              : n.type + "ed"}{" "}
-            your{" "}
+            {n.type === "answer" ? n.type + "ed" : n.type + "d"} your{" "}
             <span className="italic text-gray-700">
-              {n.resourceType.toLowerCase()}
+              {n.resourceType.toLowerCase()} <br />
+              {n.resourceText}
             </span>
           </p>
           <p className="mt-1 text-xs text-gray-500">

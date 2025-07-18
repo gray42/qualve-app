@@ -25,6 +25,9 @@ const notificationSchema = new mongoose.Schema(
 			type: String,
 			enum: ["Question", "Answer", "Vote"],
 		},
+		resourceText: {
+			type: String,
+		},
 		isRead: {
 			type: Boolean,
 			default: false,

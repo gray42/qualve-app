@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 
 export default function UserList() {
@@ -18,16 +18,17 @@ export default function UserList() {
       {users.map((u, idx) => (
         <div
           key={idx}
-          onClick={() => handleClick(u)}
           className={
             "cursor-pointer rounded-xl border p-4 shadow-sm transition-all duration-150 hover:shadow-md"
           }
         >
-          <p className="text-sm text-gray-800">
-            <strong className="font-medium text-gray-900">
-              {u.name || u.username}
-            </strong>
-          </p>
+          <Link to={`/${u._id}/public-profile`}>
+            <p className="text-sm text-gray-800">
+              <strong className="font-medium text-gray-900">
+                {u.name || u.username}
+              </strong>
+            </p>
+          </Link>
         </div>
       ))}
     </div>

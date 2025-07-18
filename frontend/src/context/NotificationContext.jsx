@@ -5,6 +5,7 @@ const NotificationContext = createContext();
 export default function NotificationProvider({ children }) {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const fetchNotifications = async () => {
     try {
@@ -18,6 +19,7 @@ export default function NotificationProvider({ children }) {
 
   const markNotificationAsRead = async (id) => {
     try {
+      setLoading(true);
       await markAsReadAPI(id);
       // only update notification that changed isRead state - else keep notifications the same
       setNotifications((prev) => {
@@ -27,6 +29,8 @@ export default function NotificationProvider({ children }) {
       setUnreadCount((prev) => (prev > 0 ? prev - 1 : 0));
     } catch (error) {
       console.error("Error marking notification as read", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -45,6 +49,7 @@ export default function NotificationProvider({ children }) {
     unreadCount,
     fetchNotifications,
     markNotificationAsRead,
+    loading,
   };
 
   return (
