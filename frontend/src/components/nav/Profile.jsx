@@ -3,13 +3,14 @@ import { useEffect, useState, useRef, useContext } from "react";
 import Logout from "./Logout";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-//TODOS: fix hover background layout
+import { useNotifications } from "../../context/NotificationContext";
 
 export default function Profile() {
   const { user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
+  const { unreadCount } = useNotifications();
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -157,10 +158,11 @@ export default function Profile() {
                 />
               </svg>
               Notifications
-              {/* Optional: Add notification badge */}
-              <span className="ml-auto inline-flex items-center justify-center rounded-full bg-red-600 px-2 py-1 text-xs font-bold leading-none text-red-100">
-                3
-              </span>
+              {unreadCount > 0 && (
+                <span className="ml-auto inline-flex items-center justify-center rounded-full bg-red-600 px-2 py-1 text-xs font-bold leading-none text-red-100">
+                  {unreadCount > 10 ? "10+" : unreadCount}
+                </span>
+              )}
             </Link>
 
             <div className="my-1 border-t border-gray-100"></div>

@@ -7,6 +7,7 @@ import {
 } from "../controllers/authController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { User } from "../models/userSchema.js";
+import { getAllUsers } from "../controllers/userController.js";
 const router = express.Router();
 
 //register
@@ -30,6 +31,8 @@ router.get("/user", authenticateToken, async (req, res) => {
 	const user = await User.findById(req.user._id).select("-password");
 	res.json(user);
 });
+
+router.get("/all-users", getAllUsers);
 
 router.get("/users/:id", async (req, res) => {
 	try {

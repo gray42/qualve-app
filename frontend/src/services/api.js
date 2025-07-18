@@ -191,6 +191,17 @@ export const getNotifications = async () => {
   }
 };
 
+export const markAsReadAPI = async (id) => {
+  try {
+    const { data } = await api.get(`/api/notifications/${id}/read`, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error marking notification as read", error);
+  }
+};
+
 //user calls
 
 export const getUser = async () => {
@@ -199,6 +210,18 @@ export const getUser = async () => {
     return data;
   } catch (error) {
     console.error("User not authenticated", error);
+    throw error;
+  }
+};
+
+export const getAllUsersAPI = async () => {
+  try {
+    const { data } = await api.get("/api/auth/all-users", {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error getting all users", error);
     throw error;
   }
 };

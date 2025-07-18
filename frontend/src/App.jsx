@@ -11,6 +11,8 @@ import HotPostsPage from "./pages/HotPostsPage";
 import TagPostsPage from "./pages/TagPostsPage";
 import TagPage from "./pages/TagPage";
 import NotificationPage from "./pages/NotificationPage";
+import UserPage from "./pages/UserPage";
+
 import MainLayout from "./components/layout/MainLayout";
 import SimpleLayout from "./components/layout/SimpleLayout";
 
@@ -42,6 +44,7 @@ function App() {
                   />
                   <Route path="/post/:postId" element={<PostPage />} />
                   <Route path="/tags" element={<TagPage />} />
+                  <Route path="/users" element={<UserPage />} />
                   <Route path="/notifications" element={<NotificationPage />} />
                   <Route element={<ProtectedRoute />}>
                     <Route path="/tags/:tag" element={<TagPostsPage />} />

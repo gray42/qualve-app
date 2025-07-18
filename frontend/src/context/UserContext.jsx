@@ -1,5 +1,11 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { logUserIn, getUser, signUserUp, logUserOut } from "../services/api";
+import {
+  logUserIn,
+  getUser,
+  signUserUp,
+  logUserOut,
+  getAllUsersAPI,
+} from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
@@ -7,6 +13,7 @@ const UserContext = createContext();
 // eslint-disable-next-line react/prop-types
 export default function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -75,6 +82,16 @@ export default function UserProvider({ children }) {
     }
   };
 
+  const getAllUsers = async () => {
+    try {
+      const { users } = await getAllUsersAPI();
+      setUsers(users);
+    } catch (error) {
+      console.error("Error getting all users", error);
+      throw error;
+    }
+  };
+
   const value = {
     user,
     setUser,
@@ -82,6 +99,8 @@ export default function UserProvider({ children }) {
     register,
     logout,
     updateReputation,
+    getAllUsers,
+    users,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
