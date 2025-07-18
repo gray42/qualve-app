@@ -75,22 +75,22 @@ const UserProfileHeader = ({ user, onEdit }) => {
 
       {/* Bio */}
       {user.bio && (
-        <div className="rounded-lg bg-gray-50 p-3">
+        <div className="rounded-lg bg-gray-50 p-3 pl-0">
           <p className="italic text-gray-700">{user.bio}</p>
         </div>
       )}
 
       {isOwnProfile && ( // if the logged in user is the profile owner then display the ability to ask a question or edit profile
-        <div className="mt-4 flex gap-2">
+        <div className="mt-2 flex gap-2">
           <Link
             to="/post"
-            className="mt-8 rounded bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white transition hover:bg-blue-700"
+            className="rounded bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             Ask Question
           </Link>
           <button
             onClick={onEdit}
-            className="mt-8 rounded bg-gray-600 px-3 py-2 text-center text-sm font-semibold text-white transition hover:bg-gray-700"
+            className="rounded bg-gray-600 px-3 py-2 text-center text-sm font-semibold text-white transition hover:bg-gray-700"
           >
             Edit Profile
           </button>
