@@ -19,7 +19,7 @@ export default function SidebarRight() {
                 to={`/tags/${tag.name}`}
                 className="inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 hover:bg-blue-100"
               >
-                #{tag.name} ({tag.count})
+                #{tag.name} ({tag.usageCount ?? 0})
               </Link>
             </li>
           ))}

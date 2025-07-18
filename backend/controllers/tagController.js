@@ -3,29 +3,10 @@ import { Tag } from "../models/tagSchema.js";
 
 export const getTrendingTags = async (req, res) => {
 	try {
-		const tags = await Post.aggregate([
-			{ $match: { tags: { $exists: true, $ne: [] } } },
-			{ $unwind: "$tags" }, // flatten tags array
-			{ $group: { _id: "$tags", count: { $sum: 1 } } }, // group by tag ObjectId and count
-			{ $sort: { count: -1, _id: 1 } }, // sort descending by count
-			{ $limit: 5 }, // top 5 tags
-			{
-				$lookup: {
-					from: "tags", // name of the tags collection (usually lowercase plural)
-					localField: "_id", // field from the Post aggregation (_id = tag ObjectId)
-					foreignField: "_id", // field from the tags collection
-					as: "tagInfo",
-				},
-			},
-			{ $unwind: "$tagInfo" }, // convert tagInfo array to object
-			{
-				$project: {
-					_id: 1,
-					count: 1,
-					name: "$tagInfo.name", // include tag name in output
-				},
-			},
-		]);
+		const tags = await Tag.find({})
+			.sort({ usageCount: -1 })
+			.limit(5)
+			.select("name usageCount");
 		res.json(tags);
 	} catch (err) {
 		res.status(500).json({ error: err.message });

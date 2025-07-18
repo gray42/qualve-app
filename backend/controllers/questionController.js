@@ -1,12 +1,13 @@
 import { Post } from "../models/postSchema.js";
 import { User } from "../models/userSchema.js";
+import { Tag } from "../models/tagSchema.js";
 
 //get all questions
 export const getPost = async (req, res) => {
 	try {
 		const posts = await Post.find()
 			.populate("author", "username")
-			.populate("tags", "name")
+			.populate("tags", "name usageCount")
 			.sort({ createdAt: -1 });
 		res.status(200).json(posts);
 	} catch (error) {
@@ -47,6 +48,14 @@ export const createPost = async (req, res) => {
 			$inc: { reputation: 200, "stats.questionsAsked": 1 },
 		});
 		const updatedUser = await User.findById(req.user._id).select("reputation");
+
+		try {
+			for (const tag of tags) {
+				await Tag.updateOne({ _id: tag }, { $inc: { usageCount: 1 } });
+			}
+		} catch (error) {
+			console.error("Error updating tag count", error);
+		}
 
 		await newQuestion.save();
 		res
