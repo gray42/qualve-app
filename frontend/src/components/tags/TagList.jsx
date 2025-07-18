@@ -33,11 +33,28 @@ export default function TagList({ tags }) {
             filteredTags.map((tag) => (
               <div
                 key={tag._id}
-                className="inline-block rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700 transition hover:bg-blue-200"
+                className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md"
               >
-                <Link to={`/tags/${tag.name}`} className="text-blue-600">
-                  {tag.name}
+                <Link
+                  to={`/tags/${encodeURIComponent(tag.name)}`}
+                  className="text-lg font-semibold text-blue-600 hover:underline"
+                >
+                  #{tag.name}
                 </Link>
+                <p className="mt-2 text-sm text-gray-600">
+                  {tag.description || "No description provided."}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2 text-xs text-gray-500">
+                  {tag.category && (
+                    <span className="rounded-full bg-gray-100 px-2 py-1">
+                      Subject: {tag.category}
+                    </span>
+                  )}
+
+                  <span className="rounded-full bg-gray-100 px-2 py-1">
+                    {tag.usageCount ?? 0} questions asked
+                  </span>
+                </div>
               </div>
             ))
           ) : (
