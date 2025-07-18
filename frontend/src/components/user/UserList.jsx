@@ -14,9 +14,9 @@ export default function UserList() {
   const filteredUsers = users
     .filter(
       (u) =>
-        (u._id !== currentUser?._id &&
-          u.username.toLowerCase().includes(query.trim().toLowerCase())) ||
-        u.name.toLowerCase().includes(query.trim().toLowerCase()),
+        u._id !== currentUser?._id &&
+        (u.username.toLowerCase().includes(query.trim().toLowerCase()) ||
+          u.name?.toLowerCase().includes(query.trim().toLowerCase())),
     )
     .sort((a, b) => (b.reputation || 0) - (a.reputation || 0));
 
