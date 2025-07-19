@@ -1,5 +1,6 @@
 import { useUser } from "../context/UserContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const { register } = useUser();
@@ -10,6 +11,7 @@ export default function Register() {
     role: "learner",
     age: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -38,7 +40,7 @@ export default function Register() {
 
     try {
       await register(userData);
-      alert("User registered successfully!");
+      navigate("/check-email");
     } catch (error) {
       alert(error.message);
     }

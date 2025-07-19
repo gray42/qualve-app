@@ -21,6 +21,8 @@ import TagProvider from "./context/TagContext";
 import UserProvider from "./context/UserContext";
 import PostProvider from "./context/PostContext";
 import NotificationProvider from "./context/NotificationContext";
+import CheckEmailPage from "./pages/verify/CheckEmailPage";
+import VerifiedSuccessPage from "./pages/verify/VerifiedSuccessPage";
 
 //need to wrap post provider outside with BrowserRouter?
 function App() {
@@ -45,6 +47,11 @@ function App() {
                   <Route
                     path="/:userId/public-profile"
                     element={<UserProfilePage />}
+                  />
+                  <Route path="/check-email" element={<CheckEmailPage />} />
+                  <Route
+                    path="/verified-success"
+                    element={<VerifiedSuccessPage />}
                   />
 
                   <Route path="/post/:postId" element={<PostPage />} />

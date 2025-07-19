@@ -1,6 +1,11 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/userSchema.js";
 import bcrypt from "bcrypt";
+import { Resend } from "resend";
+import dotenv from "dotenv"; // just imported and configured b/c of errors with dotenv
+dotenv.config();
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 //register
 export const register = async (req, res) => {
@@ -22,6 +27,11 @@ export const register = async (req, res) => {
 			message: "User already exists. Please select a different email.",
 		});
 	}
+
+	// email must be school email
+	/* if (!email.endsWith("@school.org")) {
+		return res.status(400).json({ message: "Must use school email address!" });
+	} */
 
 	//password encryption
 	const hashedPassword = await bcrypt.hash(password, 10);
@@ -47,7 +57,35 @@ export const register = async (req, res) => {
 		httpOnly: true,
 		expires: new Date(Date.now() + 2 * 3600000),
 	});
-	res.status(200).send("User created!");
+
+	const port = process.env.PORT;
+	const verificationLink = `http://localhost:${port}/api/auth/verify/${token}`; // backend verification link to verifyToken function
+
+	resend.emails.send({
+		from: "onboarding@resend.dev", // from resend
+		to: email, // to inputed email
+		subject: "Verify your email",
+		html: `<p>Click <a href="${verificationLink}">here</a> to verify your email.</p>`, // link
+	});
+
+	res.status(200).send("User created and verification email sent!");
+};
+
+export const verifyToken = async (req, res) => {
+	try {
+		const URL = process.env.CLIENT_URL;
+		const decoded = jwt.verify(req.params.token, process.env.JWT_SECRET); // verify token with secret key (decodes)
+		const user = await User.findById(decoded._id); // find user using decoded token storing user's _id
+
+		if (!user) return res.status(404).json({ error: "User not found" });
+
+		user.verified = true; // set verification status to true
+		await user.save(); // save
+		console.log("Redirecting to:", `${URL}/verified-success`);
+		res.redirect(`${URL}/verified-success`); // redirect to verified success page on frontend
+	} catch (err) {
+		return res.status(400).json({ error: "Invalid or expired token" });
+	}
 };
 
 //login
