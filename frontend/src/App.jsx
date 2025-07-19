@@ -23,6 +23,8 @@ import PostProvider from "./context/PostContext";
 import NotificationProvider from "./context/NotificationContext";
 import CheckEmailPage from "./pages/verify/CheckEmailPage";
 import VerifiedSuccessPage from "./pages/verify/VerifiedSuccessPage";
+import ForgotPasswordPage from "./pages/password/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/password/ResetPasswordPage";
 
 //need to wrap post provider outside with BrowserRouter?
 function App() {
@@ -48,11 +50,6 @@ function App() {
                     path="/:userId/public-profile"
                     element={<UserProfilePage />}
                   />
-                  <Route path="/check-email" element={<CheckEmailPage />} />
-                  <Route
-                    path="/verified-success"
-                    element={<VerifiedSuccessPage />}
-                  />
 
                   <Route path="/post/:postId" element={<PostPage />} />
                   <Route path="/tags" element={<TagPage />} />
@@ -67,7 +64,19 @@ function App() {
                 <Route element={<SimpleLayout />}>
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
-                  {/* Add other minimal pages like Signup here */}
+                  <Route path="/check-email" element={<CheckEmailPage />} />
+                  <Route
+                    path="/verified-success"
+                    element={<VerifiedSuccessPage />}
+                  />
+                  <Route
+                    path="/forgot-password"
+                    element={<ForgotPasswordPage />}
+                  />
+                  <Route
+                    path="/reset-password/:token"
+                    element={<ResetPasswordPage />}
+                  />
                 </Route>
               </Routes>
             </TagProvider>

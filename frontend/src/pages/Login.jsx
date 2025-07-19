@@ -85,6 +85,14 @@ export default function Login() {
           Sign up
         </Link>
       </p>
+      <p className="mt-2 text-center text-sm text-gray-600">
+        <Link
+          to="/forgot-password"
+          className="text-indigo-600 hover:text-indigo-500"
+        >
+          Forgot your password?
+        </Link>
+      </p>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );

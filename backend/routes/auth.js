@@ -5,6 +5,8 @@ import {
 	logout,
 	updateUser,
 	verifyToken,
+	requestPasswordReset,
+	resetPassword,
 } from "../controllers/authController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { User } from "../models/userSchema.js";
@@ -15,6 +17,13 @@ const router = express.Router();
 router.post("/register", register);
 
 router.get("/verify/:token", verifyToken);
+
+// request password reset
+router.post("/request-reset-password", requestPasswordReset);
+
+// reset password
+router.post("/reset-password/:token", resetPassword);
+
 //login
 router.post("/login", login);
 //logout

@@ -288,3 +288,35 @@ export const updateUserById = async (userId, updatedData) => {
     throw error;
   }
 };
+
+export const requestPasswordResetAPI = async (email) => {
+  try {
+    const { data } = await api.post(
+      "/api/auth/request-reset-password",
+      { email }, // send email to backend
+      {
+        withCredentials: true,
+      },
+    );
+    return data;
+  } catch (error) {
+    console.error("Error marking notification as read", error);
+    throw error;
+  }
+};
+
+export const resetPasswordAPI = async (token, newPassword) => {
+  try {
+    const { data } = await api.post(
+      `/api/auth/reset-password/${token}`,
+      { newPassword }, // send new password to backend
+      {
+        withCredentials: true,
+      },
+    );
+    return data;
+  } catch (error) {
+    console.error("Error marking notification as read", error);
+    throw error;
+  }
+};

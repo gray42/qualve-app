@@ -1,13 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getNotifications, markAsReadAPI } from "../services/api";
+import { useUser } from "./UserContext";
 const NotificationContext = createContext();
 
 export default function NotificationProvider({ children }) {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const { user } = useUser();
 
   const fetchNotifications = async () => {
+    if (!user) return; // fix infinite loop for users not logged in
     try {
       const { notifications } = await getNotifications();
       setNotifications(notifications);

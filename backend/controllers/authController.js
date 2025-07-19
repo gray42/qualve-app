@@ -61,7 +61,7 @@ export const register = async (req, res) => {
 	const port = process.env.PORT;
 	const verificationLink = `http://localhost:${port}/api/auth/verify/${token}`; // backend verification link to verifyToken function
 
-	resend.emails.send({
+	await resend.emails.send({
 		from: "onboarding@resend.dev", // from resend
 		to: email, // to inputed email
 		subject: "Verify your email",
@@ -71,6 +71,7 @@ export const register = async (req, res) => {
 	res.status(200).send("User created and verification email sent!");
 };
 
+// verify user
 export const verifyToken = async (req, res) => {
 	try {
 		const URL = process.env.CLIENT_URL;
@@ -81,10 +82,69 @@ export const verifyToken = async (req, res) => {
 
 		user.verified = true; // set verification status to true
 		await user.save(); // save
-		console.log("Redirecting to:", `${URL}/verified-success`);
+
 		res.redirect(`${URL}/verified-success`); // redirect to verified success page on frontend
 	} catch (err) {
 		return res.status(400).json({ error: "Invalid or expired token" });
+	}
+};
+
+// request a password reset
+export const requestPasswordReset = async (req, res) => {
+	try {
+		const URL = process.env.CLIENT_URL; // frontend URL
+		const { email } = req.body; // user's email
+		if (!email) return res.status(400).json({ error: "Email is required" });
+		const user = await User.findOne({ email });
+		if (!user) return res.status(404).json({ error: "User not found" });
+
+		const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+			expiresIn: "15m",
+		}); // sign token
+
+		user.resetPasswordToken = token;
+		user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
+		await user.save();
+
+		const resetLink = `${URL}/reset-password/${token}`;
+
+		await resend.emails.send({
+			// send email with link to reset their password using token
+			from: "onboarding@resend.dev", // from resend
+			to: email, // to inputed email
+			subject: "Reset your password",
+			html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`, // link
+		});
+
+		res.status(200).json({ message: "Password reset email sent!" });
+	} catch (error) {
+		console.error("Unexpected error in password reset:", error);
+		return res.status(400).json({ error: error.message || "Unknown error" });
+	}
+};
+
+// reset password
+export const resetPassword = async (req, res) => {
+	const { token } = req.params;
+	const { newPassword } = req.body;
+
+	try {
+		const decoded = jwt.verify(token, process.env.JWT_SECRET); // decode token
+		const user = await User.findOne({
+			_id: decoded._id,
+			resetPasswordToken: token,
+			resetPasswordExpires: { $gt: Date.now() },
+		});
+		if (!user) return res.status(404).json({ error: "User not found" });
+
+		user.password = await bcrypt.hash(newPassword, 10); // set new user's password
+		user.resetPasswordExpires = undefined;
+		user.resetPasswordToken = undefined;
+		await user.save();
+
+		res.status(200).json({ message: "Password has been reset!" });
+	} catch (error) {
+		return res.status(400).json({ error: "Error resetting password" });
 	}
 };
 
