@@ -85,7 +85,7 @@ export const getHotPosts = async (req, res) => {
 	try {
 		const hotPosts = await Post.find({ upvotes: { $gte: 1 } })
 			.populate("tags", "name") // Only posts with at least 1 upvote
-			.sort({ upvotes: -1, createdAt: -1 })
+			.sort({ score: -1, createdAt: -1 })
 			.limit(5);
 
 		res.json(hotPosts);

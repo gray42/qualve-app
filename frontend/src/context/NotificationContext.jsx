@@ -10,7 +10,6 @@ export default function NotificationProvider({ children }) {
   const { user } = useUser();
 
   const fetchNotifications = async () => {
-    if (!user) return; // fix infinite loop for users not logged in
     try {
       const { notifications } = await getNotifications();
       setNotifications(notifications);

@@ -51,6 +51,7 @@ const questionSchema = new mongoose.Schema(
 		tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
 		upvotes: { type: Number, default: 0 },
 		downvotes: { type: Number, default: 0 },
+		score: { type: Number, default: 0 },
 		voters: { type: Map, of: String, default: {} },
 		numAnswers: {
 			type: Number,
@@ -68,6 +69,12 @@ const questionSchema = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
+
+// pre-calc score
+questionSchema.pre("save", function (next) {
+	this.score = this.upvotes - this.downvotes;
+	next();
+});
 
 // Create a model from the schema
 export const Post = mongoose.model("Post", questionSchema);

@@ -10,7 +10,7 @@ export default function SidebarRight() {
     <aside className="flex flex-col p-4">
       <section className="mb-8">
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-700">
-          Trending Tags
+          Trending Tags ({trendingTags.length})
         </h2>
         <ul className="space-y-2">
           {trendingTags.map((tag) => (
@@ -29,7 +29,7 @@ export default function SidebarRight() {
       <section>
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-700">
           <Link to="/hot" className="hover:underline">
-            Hot Posts
+            Hot Posts ({hotPosts.length})
           </Link>
         </h2>
         <ul className="space-y-2">
@@ -43,6 +43,9 @@ export default function SidebarRight() {
               </Link>
               <div className="text-sm text-gray-500">
                 Score: {post.upvotes - post.downvotes}
+                <br />
+                Actual score count: {post.score ?? 0}{" "}
+                {/* for now some questions don't have this updated */}
               </div>
             </li>
           ))}

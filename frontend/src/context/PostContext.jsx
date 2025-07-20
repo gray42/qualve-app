@@ -191,6 +191,7 @@ export default function PostProvider({ children }) {
       }
 
       updateReputation(updatedReputation);
+      await loadHotPosts();
     } catch (error) {
       console.error("Error voting", error);
     }
