@@ -14,6 +14,7 @@ const UserContext = createContext();
 export default function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +29,8 @@ export default function UserProvider({ children }) {
         } else {
           console.error("Unexpected error fetching user:", error);
         }
+      } finally {
+        setLoading(false); // Set loading to false after fetching
       }
     };
     fetchUser();
@@ -94,6 +97,7 @@ export default function UserProvider({ children }) {
 
   const value = {
     user,
+    loading,
     setUser,
     login,
     register,
