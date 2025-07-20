@@ -202,6 +202,18 @@ export const markAsReadAPI = async (id) => {
   }
 };
 
+// search api call
+export const searchAPI = async (q) => {
+  try {
+    const { data } = await api.get(`/api/search?q=${q}`, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error marking notification as read", error);
+  }
+};
+
 //user calls
 
 export const getUser = async () => {

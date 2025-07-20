@@ -10,7 +10,7 @@ export default function Navbar() {
   const { unreadCount } = useNotifications();
 
   return (
-    <nav className="flex items-center justify-between px-6 py-3">
+    <nav className="flex w-full flex-wrap items-center justify-between gap-4 px-6 py-3">
       <Link to="/">
         <h1 className="font-lato text-2xl text-black">Qualve</h1>
       </Link>
@@ -31,7 +31,10 @@ export default function Navbar() {
           </>
         )}
 
-        <Searchbar />
+        <div className="flex max-w-4xl flex-1 justify-center">
+          <Searchbar />
+        </div>
+
         <Link to="/notifications">
           <div className="relative">
             <svg

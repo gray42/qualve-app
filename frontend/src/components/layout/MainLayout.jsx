@@ -12,7 +12,7 @@ export default function MainLayout() {
       </aside>
 
       {/* Right section: navbar on top, content and right sidebar below */}
-      <div className="ml-48 flex flex-1 flex-col">
+      <div className="ml-48 flex min-h-screen flex-1 flex-col">
         {/* Navbar */}
         <header className="top-0 z-30 border-b border-black">
           <Navbar />

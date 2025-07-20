@@ -1,16 +1,21 @@
 import { Post } from "../models/postSchema.js";
+import { User } from "../models/userSchema.js";
+import { Tag } from "../models/tagSchema.js";
 
-export const getQuestionBySearch = async (req, res) => {
+export const searchQ = async (req, res) => {
+	const q = req.query.q || "";
+	const regex = RegExp(q, "i");
 	try {
-		const { title, body, tag } = req.query;
-		const query = {};
+		const users = await User.find({ username: regex }).limit(5);
+		const posts = await Post.find({ title: regex }).limit(5);
+		const tags = await Tag.find({ name: regex }).limit(5);
 
-		if (tag) query.tags = { $in: [tag] };
-		if (title) query.title = { $regex: title, $options: "i" };
-		if (body) query.body = { $regex: body, $options: "i" };
-
-		const posts = await Post.find(query);
-		res.status(200).json(posts);
+		res.json({
+			// send results back
+			users,
+			posts,
+			tags,
+		});
 	} catch (err) {
 		res.status(500).json({ message: err });
 	}

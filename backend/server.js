@@ -10,6 +10,7 @@ import authRoutes from "./routes/auth.js";
 import postRoutes from "./routes/posts.js";
 import tagRoutes from "./routes/tags.js";
 import notiRoutes from "./routes/noti.js";
+import searchRoutes from "./routes/search.js";
 
 //.env
 dotenv.config();
@@ -50,3 +51,4 @@ app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/tags", tagRoutes);
 app.use("/api/notifications", notiRoutes);
+app.use("/api/search", searchRoutes);
