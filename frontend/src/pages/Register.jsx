@@ -49,7 +49,7 @@ export default function Register() {
   return (
     <div className="mx-auto my-10 max-w-md rounded-lg border border-gray-300 bg-white p-6 shadow-lg">
       <h1 className="mb-4 text-left text-xl text-indigo-900">Qualve</h1>
-      <h2 className="mb-6 text-center text-2xl font-bold">Register</h2>
+      <h2 className="mb-6 text-center text-2xl font-bold">Sign up now</h2>
 
       <form onSubmit={registerUser} className="space-y-4">
         <label className="block text-sm font-medium text-gray-700">
@@ -64,13 +64,15 @@ export default function Register() {
           className="sm:text mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
           required
         />
-        <label className="block text-sm font-medium text-gray-700">Email</label>
+        <label className="block text-sm font-medium text-gray-700">
+          School Email
+        </label>
         <input
           type="text"
           name="email"
           value={userData.email}
           onChange={handleChange}
-          placeholder="Enter an email..."
+          placeholder="Enter a school email..."
           className="sm:text mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
           required
         />
