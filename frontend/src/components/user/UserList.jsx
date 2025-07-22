@@ -56,11 +56,15 @@ export default function UserList() {
                       </strong>{" "}
                       <br />
                       <span className="font-xs text-gray-900">{u.name}</span>
+                      <br />
+                      {u.grade && (
+                        <span className="font-xs text-slate-500">
+                          {u.grade}th grade
+                        </span>
+                      )}
                     </p>
                   </Link>
-                  <p className="mt-2 text-sm text-gray-600">
-                    {u.classes || "No description provided."}
-                  </p>
+
                   <div className="mt-3 flex flex-wrap gap-2 text-xs text-gray-500">
                     <span className="rounded-full bg-gray-100 px-2 py-1">
                       Reputation: {u.reputation}

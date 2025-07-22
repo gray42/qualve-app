@@ -1,4 +1,3 @@
-import React from "react";
 import Hero from "../../components/landing/Hero";
 import LandingNavbar from "../../components/landing/LandingNavbar";
 import Qualve from "../../components/landing/Qualve";

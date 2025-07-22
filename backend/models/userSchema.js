@@ -46,13 +46,21 @@ const UserSchema = new mongoose.Schema(
 			default: "",
 		},
 		classes: {
-			type: String,
-			default: "",
+			english: { type: String, default: "" },
+			math: { type: String, default: "" },
+			history: { type: String, default: "" },
+			science: { type: String, default: "" },
+			other: { type: String, default: "" },
+		},
+		grade: {
+			type: Number,
+			enum: [9, 10, 11, 12],
 		},
 		birthday: {
 			type: Date,
 			default: null,
 		},
+		academicInterests: [{ type: String }],
 		reputation: {
 			type: Number,
 			default: 0,

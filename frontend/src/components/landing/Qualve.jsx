@@ -6,7 +6,7 @@ export default function Qualve() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-16 text-center">
-          <h2 className="mb-6 bg-gradient-to-r bg-clip-text text-4xl font-bold text-slate-800 text-transparent md:text-5xl">
+          <h2 className="mb-6 bg-gradient-to-r bg-clip-text text-4xl font-bold text-slate-800 md:text-5xl">
             What is Qualve?
           </h2>
           <p className="mx-auto max-w-3xl text-lg text-slate-600">

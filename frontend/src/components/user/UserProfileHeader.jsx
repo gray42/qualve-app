@@ -90,7 +90,7 @@ const UserProfileHeader = ({ user, onEdit }) => {
           </Link>
           <button
             onClick={onEdit}
-            className="rounded bg-gray-600 px-3 py-2 text-center text-sm font-semibold text-white transition hover:bg-gray-700"
+            className="rounded bg-gray-200 px-3 py-2 text-center text-sm font-semibold text-slate-600 transition hover:bg-gray-400"
           >
             Edit Profile
           </button>
