@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { usePosts } from "../context/PostContext";
 import { useUser } from "../context/UserContext";
+import { Link } from "react-router-dom";
 
 import MDEditor from "@uiw/react-md-editor";
 import ReactMarkdown from "react-markdown";
@@ -155,8 +156,13 @@ export default function PostPage() {
                               {(answer.username || "U").charAt(0).toUpperCase()}
                             </span>
                           </div>
-                          <span className="font-medium">
-                            {answer.username || "Unknown"}
+                          <span className="font-medium text-gray-800">
+                            <Link
+                              to={`/${answer.author}/public-profile`}
+                              className="hover:underline"
+                            >
+                              {answer.username}
+                            </Link>
                           </span>
                         </div>
                         <span className="text-gray-300">•</span>

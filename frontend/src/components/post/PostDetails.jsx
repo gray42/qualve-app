@@ -31,7 +31,14 @@ export default function PostDetails({ post }) {
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-xs font-medium text-white">
                 {post.username?.charAt(0).toUpperCase() || "A"}
               </div>
-              <span className="font-medium text-gray-800">{post.username}</span>
+              <span className="font-medium text-gray-800">
+                <Link
+                  to={`/${post.author._id}/public-profile`}
+                  className="hover:underline"
+                >
+                  {post.username}
+                </Link>
+              </span>
             </div>
             <span className="text-gray-400">•</span>
             <TimeAgo createdAt={post.createdAt} />

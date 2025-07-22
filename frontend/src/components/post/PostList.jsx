@@ -25,7 +25,7 @@ export default function PostList({ posts, showWelcome = true }) {
               <PostCard
                 postId={post._id}
                 title={post.title}
-                author={post.username || "Guest"}
+                author={post.author || "Guest"}
                 upvotes={post.upvotes}
                 downvotes={post.downvotes}
                 time={post.createdAt}

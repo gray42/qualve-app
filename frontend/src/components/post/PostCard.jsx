@@ -29,7 +29,13 @@ export default function PostCard({
             </Link>
           </h2>
           <p className="text-sm text-gray-500">
-            Posted <TimeAgo createdAt={time} /> by {author}
+            Posted <TimeAgo createdAt={time} /> by{" "}
+            <Link
+              to={`/${author._id}/public-profile`}
+              className="hover:underline"
+            >
+              {author.username}
+            </Link>
           </p>
         </div>
       </div>
