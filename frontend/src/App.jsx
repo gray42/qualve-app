@@ -27,6 +27,9 @@ import ForgotPasswordPage from "./pages/password/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/password/ResetPasswordPage";
 import LandingPage from "./pages/landing/LandingPage";
 
+import AdminRoute from "./services/AdminRoute";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+
 //need to wrap post provider outside with BrowserRouter?
 function App() {
   return (
@@ -81,6 +84,12 @@ function App() {
                     <Route path="/post" element={<PostQuestion />} />
                     <Route path="/profile/:userId" element={<ProfilePage />} />
                   </Route>
+                </Route>
+
+                {/* ADMIN ROUTE */}
+                <Route path="/admin" element={<AdminRoute />}>
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="dashboard" element={<AdminDashboard />} />
                 </Route>
               </Routes>
             </TagProvider>

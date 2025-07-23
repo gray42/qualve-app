@@ -332,3 +332,17 @@ export const resetPasswordAPI = async (token, newPassword) => {
     throw error;
   }
 };
+
+//admin
+
+export const getAdminAnalyticsAPI = async () => {
+  try {
+    const { data } = await api.get("/api/admin/", {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error marking notification as read", error);
+    throw error;
+  }
+};
