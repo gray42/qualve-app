@@ -1,6 +1,7 @@
 import { useUser } from "../context/UserContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Register() {
   const { register } = useUser();
@@ -22,27 +23,28 @@ export default function Register() {
     console.log("Registering user...");
 
     if (!userData.username || !userData.email || !userData.password) {
-      alert("Please fill in username, email, and password");
+      toast.error("Please fill in username, email, and password");
       return;
     }
 
     // Specifically check for role
     if (!userData.role) {
-      alert("Please select a role (learner or tutor)");
+      toast.error("Please select a role (learner or tutor)");
       return;
     }
 
     // Validate role value
     if (userData.role !== "learner" && userData.role !== "tutor") {
-      alert("Please select a valid role");
+      toast.error("Please select a valid role");
       return;
     }
 
     try {
       await register(userData);
+      toast.success("User signed up!");
       navigate("/check-email");
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { usePosts } from "../context/PostContext";
 import { useUser } from "../context/UserContext";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import MDEditor from "@uiw/react-md-editor";
 import ReactMarkdown from "react-markdown";
@@ -34,9 +35,11 @@ export default function PostPage() {
         await addAnswerToPost(postId, answer);
         await fetchPostById(postId);
         setAnswer("");
+        toast.success("Answer submitted!");
       }
     } catch (error) {
       console.error("Error submitting answer", error);
+      toast.error("Error submitting answer");
     }
   };
 
@@ -44,9 +47,10 @@ export default function PostPage() {
     try {
       await approveAnswer(postId, answerId);
       await fetchPostById(postId);
+      toast.success("Answer approved!");
     } catch (error) {
       console.error("Error approving answer:", error);
-      alert(error.response?.data?.message || "Error approving answer");
+      toast.error(error.response?.data?.message || "Error approving answer");
     }
   };
 

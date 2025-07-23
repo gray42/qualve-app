@@ -7,6 +7,7 @@ import Tabs from "../components/user/Tabs";
 import UserPostsTab from "../components/user/UserPostsTab";
 import AboutTab from "../components/user/AboutTab";
 import EditProfileModal from "../components/user/EditProfileModal";
+import toast from "react-hot-toast";
 
 const ProfilePage = () => {
   const { userId } = useParams();
@@ -30,6 +31,7 @@ const ProfilePage = () => {
     // function to update user profile upon edit
     setUser(updatedUser);
     setEditing(false);
+    toast.success("Profile updated!");
   };
 
   if (!user) return <div>Loading...</div>;

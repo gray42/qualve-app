@@ -29,6 +29,7 @@ import LandingPage from "./pages/landing/LandingPage";
 
 import AdminRoute from "./services/AdminRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import { Toaster } from "react-hot-toast";
 
 //need to wrap post provider outside with BrowserRouter?
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <NotificationProvider>
           <PostProvider>
             <TagProvider>
+              <Toaster />
               <Routes>
                 {/* PUBLIC ROUTES */}
                 <Route path="/landing" element={<LandingPage />} />

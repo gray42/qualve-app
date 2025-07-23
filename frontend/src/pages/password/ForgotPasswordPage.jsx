@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { requestPasswordResetAPI } from "../../services/api";
+import toast from "react-hot-toast";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -8,19 +9,20 @@ export default function ForgotPasswordPage() {
   const handleSubmit = async () => {
     try {
       if (!email) {
-        alert("No email entered");
+        toast.error("No email entered");
         return;
       }
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        alert("Please enter a valid email address");
+        toast.error("Please enter a valid email address");
         return;
       }
       await requestPasswordResetAPI(email);
+      toast.success("Reset password link sent!");
       setSent(true);
     } catch (error) {
       console.error("Error sending reset password link", error);
-      alert(error.response?.data?.error || "Error sending reset email");
+      toast.error(error.response?.data?.error || "Error sending reset email");
     }
   };
   return (

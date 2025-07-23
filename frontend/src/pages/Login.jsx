@@ -1,6 +1,7 @@
 import { useUser } from "../context/UserContext";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const { login } = useUser();
@@ -8,7 +9,6 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -16,11 +16,10 @@ export default function Login() {
 
   const loginUser = async (e) => {
     e.preventDefault();
-    setError(null);
 
     try {
       await login(userData);
-      alert("User logged in!");
+      toast.success("User logged in!");
     } catch (error) {
       if (error.response) {
         // Backend responded with an error status
@@ -28,18 +27,18 @@ export default function Login() {
         const backendError = error.response.data?.error || "An error occurred";
 
         if (status === 404) {
-          setError("User not found. Please check your email.");
+          toast.error("User not found. Please check your email.");
         } else if (status === 400) {
-          setError("Invalid credentials. Please check your password.");
+          toast.error("Invalid credentials. Please check your password.");
         } else {
-          setError(backendError); // fallback to backend's message if available
+          toast.error(backendError); // fallback to backend's message if available
         }
       } else if (error.request) {
-        setError(
+        toast.error(
           "No response from server. Please check your internet connection.",
         );
       } else {
-        setError("An unexpected error occurred. Please try again.");
+        toast.error("An unexpected error occurred. Please try again.");
       }
     }
   };
@@ -99,7 +98,6 @@ export default function Login() {
             Forgot your password?
           </Link>
         </p>
-        {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
     </>
   );
