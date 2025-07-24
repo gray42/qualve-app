@@ -8,31 +8,26 @@ export default function FAQ() {
       id: 1,
       question: "What is Qualve and how does it work?",
       answer:
-        "Qualve is a comprehensive platform designed to streamline your academic workflow. It provides tools for project management, collaboration, and academic tracking to help students and educators achieve better results.",
+        "Qualve is an interactive academic forum for students to share and answer questions related to their studies, designed to allow older students to provide meaningful insight to younger students in common classes. Qualve aims to build authentic discourse to drive positive learning, while also identifying areas of general academic strength and weakness.",
     },
     {
       id: 2,
-      question: "How much does Qualve cost?",
+      question: "Why should I use Qualve?",
       answer:
-        "We offer flexible pricing plans to suit different needs. Our basic plan starts at $9.99/month, with premium features available in our Pro plan at $19.99/month. We also offer student discounts and institutional pricing.",
+        "Qualve is your academic companion. With the knowledge of students who were once in your own shoes, puzzling problems and general questions are easy to ask and solve. Qualve allows you to engage with students typically outside of your communication zone. The process of formulating a thoughtful question is a progression to advanced criticial thinking, allowing real learning to occur.",
     },
     {
       id: 3,
-      question: "Is there a free trial available?",
+      question: "How do I use Qualve?",
       answer:
-        "Yes! We offer a 14-day free trial for all new users. No credit card required. You can explore all features and see how Qualve fits your needs before making any commitment.",
+        "To use Qualve, register with your school email address and verify your account. Then, fill out your personal information, and begin browsing or answering questions!",
     },
+
     {
       id: 4,
-      question: "Can I integrate Qualve with other tools?",
-      answer:
-        "Absolutely! Qualve integrates with popular tools like Google Drive, Microsoft Office, Slack, and many learning management systems. Our API also allows for custom integrations.",
-    },
-    {
-      id: 5,
       question: "Is my data secure on Qualve?",
       answer:
-        "Security is our top priority. We use enterprise-grade encryption, regular security audits, and comply with GDPR and other privacy regulations to ensure your data is always protected.",
+        "Privacy is our top priority. All users are monitored to ensure academic integrity and to record analytics.",
     },
   ];
 

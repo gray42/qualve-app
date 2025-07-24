@@ -46,7 +46,7 @@ export default function NotificationList() {
         >
           <p className="text-sm text-gray-800">
             <strong className="font-medium text-gray-900">
-              {n.from.username}
+              {n.from?.username || "Someone"}
             </strong>{" "}
             {n.type === "answer" ? n.type + "ed" : n.type + "d"} your{" "}
             <span className="italic text-gray-700">
