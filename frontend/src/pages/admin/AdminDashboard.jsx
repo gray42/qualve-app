@@ -79,7 +79,7 @@ export default function AdminDashboard() {
   });
 
   const dailyPostsData = dailyPosts?.map((entry) => ({
-    date: new Date(entry._id).toLocaleDateString("en-US", { timeZone: "UTC" }),
+    date: entry.date,
     posts: entry.count,
   }));
 
@@ -96,33 +96,6 @@ export default function AdminDashboard() {
           <h1 className="text-3xl font-bold text-gray-900">
             Qualve Admin Dashboard
           </h1>
-        </div>
-
-        {/* Date Range Picker */}
-        <div className="mb-8 flex flex-wrap items-center gap-4">
-          <label className="font-medium text-gray-700">
-            Start Date:
-            <input
-              type="date"
-              name="start"
-              value={date.start}
-              onChange={handleDateChange}
-              className="ml-2 rounded border border-gray-300 px-2 py-1"
-              max={date.end || undefined}
-            />
-          </label>
-          <label className="font-medium text-gray-700">
-            End Date:
-            <input
-              type="date"
-              name="end"
-              value={date.end}
-              onChange={handleDateChange}
-              className="ml-2 rounded border border-gray-300 px-2 py-1"
-              min={date.start || undefined}
-              max={new Date().toISOString().split("T")[0]}
-            />
-          </label>
         </div>
 
         {stats ? (
@@ -319,6 +292,105 @@ export default function AdminDashboard() {
                 </ResponsiveContainer>
               </div>
 
+              {/* Tag Usage Chart */}
+              <div className="rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-200">
+                <h3 className="mb-4 text-lg font-medium text-gray-900">
+                  Most Popular Tags
+                </h3>
+                <ResponsiveContainer width="100%" height={400}>
+                  <BarChart
+                    data={tagUsage}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 80 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                    <XAxis
+                      dataKey="name"
+                      angle={-45}
+                      textAnchor="end"
+                      interval={0}
+                      height={80}
+                      tick={{ fontSize: 12 }}
+                    />
+                    <YAxis tick={{ fontSize: 12 }} />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#fff",
+                        border: "1px solid #e5e7eb",
+                        borderRadius: "8px",
+                        boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                      }}
+                    />
+                    <Legend />
+                    <Bar
+                      dataKey="usageCount"
+                      fill="#f59e0b"
+                      name="Usage Count"
+                      radius={[4, 4, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+
+              {/* Date Range Picker */}
+              <div className="mb-8 flex flex-wrap items-center gap-4">
+                <label className="font-medium text-gray-700">
+                  Start Date:
+                  <input
+                    type="date"
+                    name="start"
+                    value={date.start}
+                    onChange={handleDateChange}
+                    className="ml-2 rounded border border-gray-300 px-2 py-1"
+                    max={date.end || undefined}
+                  />
+                </label>
+                <label className="font-medium text-gray-700">
+                  End Date:
+                  <input
+                    type="date"
+                    name="end"
+                    value={date.end}
+                    onChange={handleDateChange}
+                    className="ml-2 rounded border border-gray-300 px-2 py-1"
+                    min={date.start || undefined}
+                    max={new Date().toISOString().split("T")[0]}
+                  />
+                </label>
+              </div>
+
+              {/* Quick Date Range Dropdown */}
+              <div className="mb-4 flex items-center gap-4">
+                <label className="font-medium text-gray-700">
+                  Quick Range:
+                  <select
+                    className="ml-2 rounded border border-gray-300 px-2 py-1"
+                    onChange={(e) => {
+                      const today = new Date();
+                      let start = "";
+                      let end = today.toISOString().split("T")[0];
+                      if (e.target.value === "week") {
+                        const weekAgo = new Date();
+                        weekAgo.setDate(today.getDate() - 6);
+                        start = weekAgo.toISOString().split("T")[0];
+                      } else if (e.target.value === "month") {
+                        const monthAgo = new Date();
+                        monthAgo.setMonth(today.getMonth() - 1);
+                        start = monthAgo.toISOString().split("T")[0];
+                      } else if (e.target.value === "all") {
+                        start = "2025-01-01";
+                      }
+                      setDate({ start, end });
+                    }}
+                    defaultValue=""
+                  >
+                    <option value="">Custom</option>
+                    <option value="week">Past Week</option>
+                    <option value="month">Past Month</option>
+                    <option value="all">All Time</option>
+                  </select>
+                </label>
+              </div>
+
               {/* Daily Posts Chart */}
               <div className="rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-200">
                 <h3 className="mb-4 text-lg font-medium text-gray-900">
@@ -378,45 +450,6 @@ export default function AdminDashboard() {
                       activeDot={{ r: 6, stroke: "#b91048", strokeWidth: 2 }}
                     />
                   </LineChart>
-                </ResponsiveContainer>
-              </div>
-
-              {/* Tag Usage Chart */}
-              <div className="rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-200">
-                <h3 className="mb-4 text-lg font-medium text-gray-900">
-                  Most Popular Tags
-                </h3>
-                <ResponsiveContainer width="100%" height={400}>
-                  <BarChart
-                    data={tagUsage}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 80 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis
-                      dataKey="name"
-                      angle={-45}
-                      textAnchor="end"
-                      interval={0}
-                      height={80}
-                      tick={{ fontSize: 12 }}
-                    />
-                    <YAxis tick={{ fontSize: 12 }} />
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: "#fff",
-                        border: "1px solid #e5e7eb",
-                        borderRadius: "8px",
-                        boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-                      }}
-                    />
-                    <Legend />
-                    <Bar
-                      dataKey="usageCount"
-                      fill="#f59e0b"
-                      name="Usage Count"
-                      radius={[4, 4, 0, 0]}
-                    />
-                  </BarChart>
                 </ResponsiveContainer>
               </div>
             </div>

@@ -41,30 +41,7 @@ export const adminAnalytics = async (req, res) => {
 			},
 			{ $sort: { _id: 1 } },
 		]);
-		const postsPerDay = await Post.aggregate([
-			{
-				$match: {
-					// match date params
-					createdAt: {
-						$gte: startDate,
-						$lte: endDate,
-					},
-				},
-			},
-			{
-				$group: {
-					_id: {
-						$dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
-					},
-					count: { $sum: 1 },
-				},
-			},
-			{ $sort: { _id: 1 } },
-		]);
-		/* const end = new Date();
-		end.setHours(0, 0, 0, 0);
-		const start = new Date(end);
-		start.setDate(end.getDate() - 6); // a week in the past */
+		const postsPerDay = await getDailyPostData(startDate, endDate);
 		const answersPerDay = await getDailyAnswerData(startDate, endDate);
 		const tagUsage = await Tag.find(
 			{},
@@ -121,6 +98,45 @@ const getDailyAnswerData = async (startDate, endDate) => {
 		return dateArray.map((date) => {
 			// for each date in the array, map the answer to the correct date
 			const foundData = answersPerDay.find((a) => a._id === date);
+
+			return {
+				date,
+				count: foundData?.count || 0,
+			};
+		});
+	} catch (error) {
+		throw error;
+	}
+};
+
+const getDailyPostData = async (startDate, endDate) => {
+	try {
+		const postsPerDay = await Post.aggregate([
+			{
+				$match: {
+					// match date params
+					createdAt: {
+						$gte: startDate,
+						$lte: endDate,
+					},
+				},
+			},
+			{
+				$group: {
+					_id: {
+						$dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+					},
+					count: { $sum: 1 },
+				},
+			},
+			{ $sort: { _id: 1 } },
+		]);
+
+		const dateArray = getDatesInRange(startDate, endDate); // initialize date array
+
+		return dateArray.map((date) => {
+			// for each date in the array, map the answer to the correct date
+			const foundData = postsPerDay.find((p) => p._id === date);
 
 			return {
 				date,
