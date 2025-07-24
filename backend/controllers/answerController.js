@@ -19,6 +19,7 @@ export const addAnswer = async (req, res) => {
 			createdAt: new Date(),
 		};
 		post.answers.push(answer);
+		post.numAnswers = (post.numAnswers || 0) + 1;
 
 		await User.findByIdAndUpdate(req.user._id, {
 			$inc: { reputation: 100, "stats.answersGiven": 1 },
