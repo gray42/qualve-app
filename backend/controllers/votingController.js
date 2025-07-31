@@ -1,6 +1,7 @@
 import { User } from "../models/userSchema.js";
 import { Post } from "../models/postSchema.js";
 import { Notification } from "../models/notificationSchema.js";
+import { io, onlineUsers } from "../server.js";
 
 const updateVotes = (target, userId, voteType, repWeights) => {
 	const currentVote = target.voters.get(userId);
@@ -103,13 +104,22 @@ export const vote = async (req, res) => {
 					});
 
 					if (currentVote !== voteType) {
-						await Notification.create({
+						const newNotification = await Notification.create({
 							userId: answer.author,
 							type: voteType,
 							from: userId,
 							resourceId: answerId,
 							resourceType: "Answer",
 						});
+
+						const populated = await Notification.findById(
+							newNotification._id
+						).populate("from", "username");
+
+						const socketId = onlineUsers.get(answer.author.toString());
+						if (socketId) {
+							io.to(socketId).emit("new_notification", populated);
+						}
 					}
 				}
 			} catch (notificationError) {
@@ -163,13 +173,22 @@ export const vote = async (req, res) => {
 					});
 
 					if (currentVote !== voteType) {
-						await Notification.create({
+						const newNotification = await Notification.create({
 							userId: post.author,
 							type: voteType,
 							from: userId,
 							resourceId: postId,
 							resourceType: "Question",
 						});
+
+						const populated = await Notification.findById(
+							newNotification._id
+						).populate("from", "username");
+
+						const socketId = onlineUsers.get(post.author.toString());
+						if (socketId) {
+							io.to(socketId).emit("new_notification", populated);
+						}
 					}
 				}
 			} catch (notificationError) {

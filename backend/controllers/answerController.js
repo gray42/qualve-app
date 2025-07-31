@@ -1,6 +1,7 @@
 import { Post } from "../models/postSchema.js";
 import { User } from "../models/userSchema.js";
 import { Notification } from "../models/notificationSchema.js";
+import { io, onlineUsers } from "../server.js";
 
 //POST /:id/answer (add answer to question)
 export const addAnswer = async (req, res) => {
@@ -29,7 +30,7 @@ export const addAnswer = async (req, res) => {
 		try {
 			// create notification when answer is approved
 			if (!post.author.equals(answerUserId)) {
-				await Notification.create({
+				const newNotification = await Notification.create({
 					userId: post.author, // send it to
 					type: "answer",
 					from: answerUserId,
@@ -37,6 +38,16 @@ export const addAnswer = async (req, res) => {
 					resourceType: "Question",
 					resourceText: req.body.answer.slice(0, 100),
 				});
+
+				const populated = await Notification.findById(
+					newNotification._id
+				).populate("from", "username");
+
+				const socketId = onlineUsers.get(post.author.toString());
+
+				if (socketId) {
+					io.to(socketId).emit("new_notification", populated);
+				}
 			}
 		} catch (notificationError) {
 			console.error("Notification error:", notificationError);
@@ -83,13 +94,23 @@ export const approveAnswer = async (req, res) => {
 		try {
 			// create notification when answer is approved
 			if (!answer.author.equals(userId)) {
-				await Notification.create({
+				const newNotification = await Notification.create({
 					userId: answer.author,
 					type: "approve",
 					from: userId,
 					resourceId: postId,
 					resourceType: "Answer",
 				});
+
+				const populated = await Notification.findById(
+					newNotification._id
+				).populate("from", "username");
+
+				const socketId = onlineUsers.get(answer.author.toString());
+
+				if (socketId) {
+					io.to(socketId).emit("new_notification", populated);
+				}
 			}
 		} catch (notificationError) {
 			console.error("Notification error:", notificationError);

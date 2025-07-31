@@ -5,6 +5,10 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
+// socket io
+import http from "http";
+import { Server as SocketServer } from "socket.io";
+
 //route imports
 import authRoutes from "./routes/auth.js";
 import postRoutes from "./routes/posts.js";
@@ -32,6 +36,37 @@ app.use(
 //cookie parser
 app.use(cookieParser());
 
+// server + socket.io
+const server = http.createServer(app);
+
+const io = new SocketServer(server, {
+	cors: {
+		origin: process.env.CLIENT_URL,
+		credentials: true,
+	},
+});
+
+// Store userId → socketId
+const onlineUsers = new Map();
+
+io.on("connection", (socket) => {
+	console.log("Socket connected:", socket.id);
+
+	socket.on("register", (userId) => {
+		onlineUsers.set(userId, socket.id);
+	});
+
+	socket.on("disconnect", () => {
+		for (const [userId, socketId] of onlineUsers.entries()) {
+			if (socketId === socket.id) {
+				onlineUsers.delete(userId);
+				break;
+			}
+		}
+		console.log("Socket disconnected:", socket.id);
+	});
+});
+
 //server connection
 mongoose
 	.connect(process.env.MONGO_URI)
@@ -42,7 +77,8 @@ mongoose
 
 //server start
 const port = process.env.PORT;
-app.listen(port, () => {
+// changed from app to server for socket io
+server.listen(port, () => {
 	console.log(`Server running on http://localhost:${port}`);
 	console.log("Connected to QualveDB!");
 });
@@ -54,3 +90,6 @@ app.use("/api/tags", tagRoutes);
 app.use("/api/notifications", notiRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/admin", adminRoutes);
+
+// socket io
+export { io, onlineUsers };
