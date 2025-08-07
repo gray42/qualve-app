@@ -76,7 +76,7 @@ mongoose
 	});
 
 //server start
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 // changed from app to server for socket io
 server.listen(port, () => {
 	console.log(`Server running on http://localhost:${port}`);
