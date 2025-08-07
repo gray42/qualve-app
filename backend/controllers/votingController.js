@@ -110,6 +110,7 @@ export const vote = async (req, res) => {
 							from: userId,
 							resourceId: answerId,
 							resourceType: "Answer",
+							resourceTitle: post.title,
 						});
 
 						const populated = await Notification.findById(
@@ -179,6 +180,7 @@ export const vote = async (req, res) => {
 							from: userId,
 							resourceId: postId,
 							resourceType: "Question",
+							resourceTitle: post.title,
 						});
 
 						const populated = await Notification.findById(

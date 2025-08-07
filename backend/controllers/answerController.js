@@ -37,6 +37,7 @@ export const addAnswer = async (req, res) => {
 					resourceId: questionId,
 					resourceType: "Question",
 					resourceText: req.body.answer.slice(0, 100),
+					resourceTitle: post.title,
 				});
 
 				const populated = await Notification.findById(
@@ -100,6 +101,7 @@ export const approveAnswer = async (req, res) => {
 					from: userId,
 					resourceId: postId,
 					resourceType: "Answer",
+					resourceTitle: post.title,
 				});
 
 				const populated = await Notification.findById(

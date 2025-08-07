@@ -51,9 +51,19 @@ export default function NotificationList() {
             {n.type === "answer" ? n.type + "ed" : n.type + "d"} your{" "}
             <span className="italic text-gray-700">
               {n.resourceType.toLowerCase()} <br />
-              {n.resourceText}
             </span>
           </p>
+          {(n.type === "answer" || n.type === "approve") && (
+            <div className="pl-2 text-sm text-gray-700">
+              <strong>Question:</strong> {n.resourceTitle} <br />
+              <strong>Answer:</strong> {n.resourceText}
+            </div>
+          )}
+          {(n.type === "upvote" || n.type === "downvote") && (
+            <div className="pl-2 text-sm text-gray-700">
+              <strong>Question:</strong> {n.resourceTitle} <br />
+            </div>
+          )}
           <p className="mt-1 text-xs text-gray-500">
             {new Date(n.createdAt).toLocaleDateString()}
           </p>
