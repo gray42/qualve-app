@@ -31,11 +31,11 @@ export default function SidebarLeft() {
       to: "/users",
       icon: <UserGroupIcon className="h-5 w-5" />,
     },
-    {
+    /* {
       name: "Saves",
       to: "/saves",
       icon: <BookmarkIcon className="h-5 w-5" />,
-    },
+    }, */
     {
       name: "Notifications",
       to: "/notifications",
